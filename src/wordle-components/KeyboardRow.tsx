@@ -1,19 +1,22 @@
-import { BoardsContext, RefsApi } from "../providors/boardslogic-context";
-import {useContext} from 'react';
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
 import { useKeyboardRow } from "../custom-hooks/useKeyboardRow";
-import { addInputLetter, updateNextInput, updateBackInput, updateNextRow, removeInputLetter, updateInputClassName } from "../redux/features/InputState";
+import { addInputLetter, moveToNextInput, moveBackInput, updateNextRow, removeInputLetter, updateInputClassName } from "../redux/features/InputState";
 import { addCorrectLetter, addWrongLetter, addPresentLetter, removeGussedLetter, resetGuess } from "../redux/features/LettersState"; 
 import { addGussedLetter } from "../redux/features/LettersState";
 import { setFailure, setSuccess } from "../redux/features/GameState";
-import { setButtonClassname, setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
+import {  setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
+import { RowsProps } from "./InputRow";
+
+export interface ClassesColors {
+    correct: string[],
+    present: string[],
+    wrong: string[],
+}
+
+export function KeyboardRow({ rowIndex, refs}:RowsProps) {
 
 
-
-export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: string]: React.RefObject<HTMLInputElement>;}}) {
-
-
-    const currentInputId = useAppSelector(state => state.inputs.currentInput);
+    const currentInputId = useAppSelector(state => state.inputs.currentInputId);
     const word = useAppSelector(state => state.game.word)
     const dispatch = useAppDispatch();
     const buttons = useKeyboardRow(rowIndex);
@@ -22,43 +25,45 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
     const correct = useAppSelector(state => state.letters.correct)
     const present = useAppSelector(state => state.letters.present)
     const wrong = useAppSelector(state => state.letters.wrong)
-    const currentRow = useAppSelector(state => state.inputs.currentRow);
+    const currentRow = useAppSelector(state => state.inputs.currentRowIndex);
 
     const handleClick = (event: Partial<Event>) => {
         const letter = (event.target as HTMLButtonElement).id;
         
         if (letter === 'Del') {
-            dispatch(updateBackInput())
-            dispatch(removeInputLetter())
-            dispatch(removeGussedLetter())
+            console.log(refs.inputs[currentInputId])
+            console.log(refs.inputs[currentInputId].current?.disabled)
+            if (refs.inputs[currentInputId].current?.disabled) return
+            dispatch(moveBackInput());
+            dispatch(removeInputLetter());
+            dispatch(removeGussedLetter());
             return
         }
         if (letter === 'Enter') {
             if (currentGuess.length < 5) {
                 setTimeout(() => {
                     alert('not enough letters')
-                    return;
                 }, 100);
+                return;
             }
             addInputClasses(currentGuessClassNames);
-            addClasses({correct, present, wrong})
-            // addKeyboardButtonsClasses(currentGuess, currentGuessClassNames)
+            addKeyboardButtonsClasses({correct, present, wrong})
             manageCheckGuess()
             dispatch(updateNextRow())
             dispatch(resetGuess())
-            dispatch(updateBackInput());
-            dispatch(updateNextInput());
+
             return;            
         }
         if (currentGuess.length === 5) return
-        // TODO  handle enter and delete
+        
         
         dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
         addToGuessedLetterBank(letter);
         dispatch(addGussedLetter(letter));
-        dispatch(updateNextInput());
+        dispatch(moveToNextInput());
         
     }
+    
 
     const addToGuessedLetterBank = (letter: string) => {
         
@@ -71,41 +76,18 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
             return;
         } 
         dispatch(addWrongLetter(letter));
-
     }
 
-    interface ClassesColors {
-        correct: string[],
-        present: string[],
-        wrong: string[],
-    }
-
-    const addClasses = (classes: ClassesColors) => {
+    const addKeyboardButtonsClasses = (classes: ClassesColors) => {
         const {correct, present, wrong} = classes
         dispatch(setWrongClass(wrong));
         dispatch(setPresentClass(present));
         dispatch(setCorrectClass(correct));
     }
 
-    
-
     const manageCheckGuess = () => {
-        if (currentGuess.join('') === word.toLocaleUpperCase()) {
-            dispatch(setSuccess(true));
-            setTimeout(() => {
-                alert('win');
-            }, 200);
-            return
-            
-        } 
-        if (currentRow === 5) {
-            dispatch(setFailure(true));
-            setTimeout(() => {
-                alert('Lose');
-            }, 200);
-            return
-            
-        }
+        if (currentGuess.join('') === word.toLocaleUpperCase()) dispatch(setSuccess(true));
+        if (currentRow === 5) dispatch(setFailure(true));  
     }
 
 
@@ -115,18 +97,8 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
             dispatch(updateInputClassName({id: currentInputId - i, className: classNames[classIndex]}))
             classIndex++;
         }
-  
     }
-    const addKeyboardButtonsClasses = (ids: string[], classNames: string[]) => {
-
-        let classIndex = 0;
-        for (const button of ids) {
-            dispatch(setButtonClassname({id: button, className: classNames[classIndex]}))
-            classIndex++;
-        }
-  
-    }
-
+    
 
     return (
         <div className="kboard-row">
@@ -134,6 +106,7 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
                 <button 
                 id={button.id} 
                 key={button.id}
+                ref={refs.keyboard.allKeyboardRefs[button.id]}
                 className={`kbd-btn ${button.className}`}
                 onClick={(e) => handleClick(e)}
                 >{button.id}</button>

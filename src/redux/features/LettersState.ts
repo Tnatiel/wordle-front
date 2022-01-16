@@ -1,13 +1,7 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { GuessedLetters } from '../types';
 
-export interface GuessedLetters {
-    correct: string[],
-    present: string[],
-    wrong: string[],
-    currentGuess: string[],
-    currentGuessclasses: string[],
 
-}
 
  const initialState: GuessedLetters = {
     correct: [],

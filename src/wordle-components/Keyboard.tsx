@@ -1,9 +1,18 @@
 import { KeyboardRow } from "./KeyboardRow";
-import { useKeyboard } from "../custom-hooks/unusedHooks/useKeyboard";
+import { useKeyboardRefs } from "../custom-hooks/useKeyboardRefs";
 
 
 export interface RefsProps {
-    refs: {[key: string]: React.RefObject<HTMLInputElement>}
+    refs: {
+        inputs: {
+            [key: string]: React.RefObject<HTMLInputElement>;
+        };
+        keyboard: {
+            allKeyboardRefs: {
+                [x: string]: React.RefObject<HTMLButtonElement>;
+            };
+        };
+    }
 }
 
 export function Keyboard({refs}: RefsProps) {

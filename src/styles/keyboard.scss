@@ -38,12 +38,11 @@
         .kbd-btn {
             @include btn-def()
         }
-        
-        // ENTER & DEL
+
         #Enter, #Del {
             width: 4rem;
         }
-        //  ROWS
+
         .kboard-row {
             display: flex;
             justify-content: center;

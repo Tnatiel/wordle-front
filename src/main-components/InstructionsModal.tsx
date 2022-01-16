@@ -1,6 +1,4 @@
-
 import Modal from 'react-bootstrap/Modal';
-
 
 export function InstructionsModal({showInstructions: show, closeModal}: {showInstructions: boolean, closeModal: () => void}) {
 

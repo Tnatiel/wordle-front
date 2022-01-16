@@ -1,33 +1,24 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { InputsState } from '../types';
 
 
-export interface InputBox {
-    id: number, 
-    value: string,
-    className: string
-}
-
-export interface InputsState {
-    rows: InputBox[][],
-    currentInput: number,
-    currentRow: number;
-};
 
 
-const createInputs = (ids: number[]) => ids.map( id => ({id, value: '', className: ''}));
 
-const row1 = createInputs([0, 1, 2, 3, 4])
-const row2 = createInputs([5, 6, 7, 8, 9])
-const row3 = createInputs([10, 11, 12, 13, 14])
-const row4 = createInputs([15, 16, 17, 18, 19])
-const row5 = createInputs([20, 21, 22, 23, 24])
-const row6 = createInputs([25, 26, 27, 28, 29])
+const createInputs = (ids: number[], rowNumber: number) => ids.map( id => ({id, value: '', className: '', rowNumber}));
+
+const row1 = createInputs([0, 1, 2, 3, 4], 0)
+const row2 = createInputs([5, 6, 7, 8, 9], 1)
+const row3 = createInputs([10, 11, 12, 13, 14], 2)
+const row4 = createInputs([15, 16, 17, 18, 19], 3)
+const row5 = createInputs([20, 21, 22, 23, 24], 4)
+const row6 = createInputs([25, 26, 27, 28, 29], 5)
 const rows = [row1, row2, row3, row4, row5, row6]
 
 const initialState: InputsState = {
     rows,
-    currentInput: 0,
-    currentRow: 0
+    currentInputId: 0,
+    currentRowIndex: 0,
 }
 
 const inputSlice = createSlice({
@@ -36,28 +27,29 @@ const inputSlice = createSlice({
     reducers: {
         addInputLetter(state, action: PayloadAction<{inputIndex: number,  value: string}>) {
             
-            const inputRow = state.rows[state.currentRow]
-            const input = inputRow.filter(ipt => ipt.id === action.payload.inputIndex)[0]
+            const inputRow = state.rows[state.currentRowIndex];
+            const input = inputRow.filter(ipt => ipt.id === action.payload.inputIndex)[0];
             input.value = action.payload.value;
         },
         removeInputLetter(state) {
-            const inputRow = state.rows[state.currentRow];
-            const input = inputRow.filter(ipt => ipt.id === state.currentInput)[0]
+            const inputRow = state.rows[state.currentRowIndex];
+            const input = inputRow.filter(ipt => ipt.id === state.currentInputId)[0]
             input.value = '';
         },
-        updateNextInput(state) {
-            state.currentInput += 1
+        moveToNextInput(state) {
+            state.currentInputId += 1
         },
-        updateBackInput(state) {
-            if (state.currentInput === 0) {
-                state.currentInput = 0;
+        moveBackInput(state) {
+            if (state.currentInputId === 0) {
+                state.currentInputId = 0;
                 return
             }
-            state.currentInput -= 1;
+            state.currentInputId -= 1; 
         },
         updateNextRow(state) {
-            state.currentRow += 1
+            state.currentRowIndex += 1
         },
+
         updateInputClassName(state, action: PayloadAction<{id: number, className: string}>) {
             for (let i = 0; i < 6; i++) {
                 let input = state.rows[i].find(b => b.id === action.payload.id);
@@ -70,10 +62,7 @@ const inputSlice = createSlice({
     }
 });
 
-export const {updateNextInput, removeInputLetter, addInputLetter, updateNextRow, updateInputClassName, updateBackInput} = inputSlice.actions;
+export const {  moveToNextInput, removeInputLetter, addInputLetter, updateNextRow, updateInputClassName, moveBackInput } = inputSlice.actions;
 export default inputSlice.reducer;
 
 
-
-// TODO stop case for disabled row
-// TODO stop case for disabled row

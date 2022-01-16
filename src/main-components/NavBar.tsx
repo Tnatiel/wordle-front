@@ -12,6 +12,7 @@ function NavBar({ openInstructionsModal, openSignInModal }: { openInstructionsMo
   const showHome = () => {
     navigate('/')
   }
+  
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>

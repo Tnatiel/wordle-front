@@ -24,7 +24,10 @@ function App() {
   const handleSignInShow = (): void => setShowSignIn(true);
   return (
     <>
-      <NavBar openSignInModal={handleSignInShow} openInstructionsModal={handleInstructionsShow}/>
+      <NavBar 
+        openSignInModal={handleSignInShow} 
+        openInstructionsModal={handleInstructionsShow}
+      />
       <InstructionsModal 
         showInstructions={showInsructions} 
         closeModal={handleInstructionsClose}

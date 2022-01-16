@@ -4,7 +4,3 @@ export const useKeyboardRow = (rowNumber: number) => {
     const buttons = useAppSelector((state) => state.keyboard.rows[rowNumber]);
     return buttons
 }
-
-
-// TODO MODIFY CHECK GUESS
-// TODO MODIFY CHECK GUESS

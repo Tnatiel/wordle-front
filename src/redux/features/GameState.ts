@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { GameState } from '../types';
 
-
-export interface GameState {
-    word: string,
-    win: boolean,
-    lose: boolean,
-};
 
 const initialState: GameState = {
     word: "moral",

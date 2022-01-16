@@ -3,10 +3,7 @@ import { RefsProps } from "./Keyboard";
 
 
 export const InputBoard = ({refs}: RefsProps) => {
-
     
-
-
     return (
         <div className="user-input-sec">
             <InputRow refs={refs} rowIndex={0} />
