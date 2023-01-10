@@ -1,52 +1,26 @@
-import { InputRow } from "./InputRow"
-import {FC} from 'react'
+import { InputRow } from "./InputRow";
+import { useInputRow } from "../custom-hooks/useInputRow";
 
-
-interface inputBoxType {
-    
-    inputId: string;
-    focused: boolean;
-    
-}
-interface inputProps {
-    row1: inputBoxType[],
-    row2: inputBoxType[],
-    row3: inputBoxType[],
-    row4: inputBoxType[],
-    row5: inputBoxType[],
-    row6: inputBoxType[]
-    }
 
 export const InputBoard = () => {
 
-    
-    function createInputs(ids: string[]) {
-        return ids.map( id => id === '0-0' ? ({inputId: id, focused: true}): ({inputId: id, focused: false}))
-    }
-    
-    const rowOneInputs = createInputs(['0-0', '0-1', '0-2', '0-3', '0-4']) 
-    const rowTwoInputs = createInputs(['1-0', '1-1', '1-2', '1-3', '1-4']) 
-    const rowThreeInputs = createInputs(['2-0', '2-1', '2-2', '2-3', '2-4'])
-    const rowFourInputs = createInputs(['3-0', '3-1', '3-2', '3-3', '3-4']) 
-    const rowFiveInputs = createInputs(['4-0', '4-1', '4-2', '4-3', '4-4'])
-    const rowSixInputs = createInputs(['5-0', '5-1', '5-2', '5-3', '5-4']) 
-
+    const inputRowApi = useInputRow()
     
 
     return (
         <div className="user-input-sec">
             {/* <!-- ROW 1 --> */}
-            <InputRow inputsData={rowOneInputs} />
+            <InputRow inputsData={inputRowApi.rowOneInputs} inputsRefs={inputRowApi.rowOneInputRefs} />
             {/* <!-- ROW 2 --> */}
-            <InputRow inputsData={rowTwoInputs} />
+            <InputRow inputsData={inputRowApi.rowTwoInputs} inputsRefs={inputRowApi.rowTwoInputRefs} />
             {/* <!-- ROW 3 --> */}
-            <InputRow inputsData={rowThreeInputs} />
+            <InputRow inputsData={inputRowApi.rowThreeInputs} inputsRefs={inputRowApi.rowThreeInputRefs} />
             {/* <!-- ROW 4 --> */}
-            <InputRow inputsData={rowFourInputs} />
+            <InputRow inputsData={inputRowApi.rowFourInputs} inputsRefs={inputRowApi.rowFourInputRefs} />
             {/* <!-- ROW 5 --> */}
-            <InputRow inputsData={rowFiveInputs} />
+            <InputRow inputsData={inputRowApi.rowFiveInputs} inputsRefs={inputRowApi.rowFiveInputRefs} />
             {/* <!-- ROW 6 --> */}
-            <InputRow inputsData={rowSixInputs} />
+            <InputRow inputsData={inputRowApi.rowSixInputs} inputsRefs={inputRowApi.rowSixInputRefs} />
         </div>
     )
 }

@@ -11,11 +11,13 @@ export function InputBox(
     const getNextInputId = (id: string) => {
 
         if (+id[0] + 1 > 5) {
-            return 'Game Over'
+            return '6-0'
         }
         if (+id[2] + 1 > 4) {
+            // console.log('retuen next row')
             return `${+id[0] + 1}-0`
         } else {
+            // console.log('retuen same row')
             return `${id[0]}-${(+id[2] + 1)}`
         }
     }
@@ -28,19 +30,22 @@ export function InputBox(
 
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
         const nextId = getNextInputId((event.target as HTMLInputElement).id) as string;
-        if (nextId === '0-5') {
-            setTimeout(() => {
-                alert('Done!')
-            }, 250);
-            return
+        const checkerPoints = ['1-0', '2-0', '3-0', '4-0', '5-0']
+        if (checkerPoints.includes(nextId)) {
+            console.log('in')
         }
 
         // here the if that check guess
 
         if (nextId in inputsRefsData) {
+            console.log('>>in refs', nextId)
             const nextInput = inputsRefsData[nextId];
+            console.log('>>next input', nextInput)
             if (nextInput && nextInput.current) {
-            nextInput.current.focus();
+                console.log('in sec cond')
+                nextInput.current.focus();
+            } else {
+                console.log(inputsRefsData)
             }
           }
     } 
