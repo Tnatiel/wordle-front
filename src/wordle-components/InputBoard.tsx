@@ -1,26 +1,39 @@
 import { InputRow } from "./InputRow";
-import { useInputRow } from "../custom-hooks/useInputRow";
+import { useInputRow } from "../custom-hooks/useInputBoard";
+import { useEffect } from 'react';
+;
 
 
 export const InputBoard = () => {
 
-    const inputRowApi = useInputRow()
+    const inputRowApi = useInputRow();
+
+    useEffect(() => {
+        const firstRef = inputRowApi.rowOneInputRefs['0-0']
+        firstRef.current?.focus()
+      },)
     
 
     return (
         <div className="user-input-sec">
-            {/* <!-- ROW 1 --> */}
-            <InputRow inputsData={inputRowApi.rowOneInputs} inputsRefs={inputRowApi.rowOneInputRefs} />
-            {/* <!-- ROW 2 --> */}
-            <InputRow inputsData={inputRowApi.rowTwoInputs} inputsRefs={inputRowApi.rowTwoInputRefs} />
-            {/* <!-- ROW 3 --> */}
-            <InputRow inputsData={inputRowApi.rowThreeInputs} inputsRefs={inputRowApi.rowThreeInputRefs} />
-            {/* <!-- ROW 4 --> */}
-            <InputRow inputsData={inputRowApi.rowFourInputs} inputsRefs={inputRowApi.rowFourInputRefs} />
-            {/* <!-- ROW 5 --> */}
-            <InputRow inputsData={inputRowApi.rowFiveInputs} inputsRefs={inputRowApi.rowFiveInputRefs} />
-            {/* <!-- ROW 6 --> */}
-            <InputRow inputsData={inputRowApi.rowSixInputs} inputsRefs={inputRowApi.rowSixInputRefs} />
+            <InputRow 
+            inputsIds={inputRowApi.rowOneInputs} 
+            inputsRefs={inputRowApi.rowOneInputRefs} />
+            <InputRow 
+            inputsIds={inputRowApi.rowTwoInputs} 
+            inputsRefs={inputRowApi.rowTwoInputRefs} />
+            <InputRow 
+            inputsIds={inputRowApi.rowThreeInputs} 
+            inputsRefs={inputRowApi.rowThreeInputRefs} />
+            <InputRow 
+            inputsIds={inputRowApi.rowFourInputs}
+             inputsRefs={inputRowApi.rowFourInputRefs} />
+            <InputRow 
+            inputsIds={inputRowApi.rowFiveInputs}
+             inputsRefs={inputRowApi.rowFiveInputRefs} />
+            <InputRow 
+            inputsIds={inputRowApi.rowSixInputs} 
+            inputsRefs={inputRowApi.rowSixInputRefs} />
         </div>
     )
 }

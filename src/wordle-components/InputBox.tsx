@@ -1,8 +1,18 @@
 import React from "react";
 
-export function InputBox(
-    {boxId, focusOn, inputsRefsData}: 
-    {boxId: string, focusOn: boolean, inputsRefsData: {[key: string]: React.RefObject<HTMLInputElement>}}) {
+interface InputBoxProps {
+    inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>},
+    boxId: string,
+    boxRef: React.RefObject<HTMLInputElement>,
+    state?: string
+}
+
+
+const word = 'moral'
+
+
+
+export function InputBox({boxId, boxRef, inputsRefs}: InputBoxProps) {
 
     // todo figure how to make only relevant inputs to get checker func
     // todo although that not that importent wont change runtime
@@ -22,38 +32,54 @@ export function InputBox(
         }
     }
 
-    const handleClick = (event: React.FormEvent<HTMLInputElement>) => {
-        if ((event.target as HTMLInputElement) !== document.activeElement) {
-            return
-        }
+    const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
+        // document.activeElement
+        // console.log(document.activeElement)
+        // console.log(inputsRefs[(event.target as HTMLInputElement).id].current)
+        // if (inputsRefs[(event.target as HTMLInputElement).id].current?.id !== document.activeElement?.id) {
+        //     document.activeElement.
+        // }
     }
 
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
         const nextId = getNextInputId((event.target as HTMLInputElement).id) as string;
         const checkerPoints = ['1-0', '2-0', '3-0', '4-0', '5-0']
         if (checkerPoints.includes(nextId)) {
-            console.log('in')
+            console.log(getGuess(`${+nextId[0] - 1}-0`) === word)
         }
 
         // here the if that check guess
 
-        if (nextId in inputsRefsData) {
+        if (nextId in inputsRefs) {
             console.log('>>in refs', nextId)
-            const nextInput = inputsRefsData[nextId];
+            const nextInput = inputsRefs[nextId];
             console.log('>>next input', nextInput)
             if (nextInput && nextInput.current) {
                 console.log('in sec cond')
                 nextInput.current.focus();
             } else {
-                console.log(inputsRefsData)
+                console.log(inputsRefs)
             }
           }
-    } 
+    }
+    
+    const checkGuess = (guess: string, id: string) => {
+        const guessResults = []
+        for (let i = 0; i < 5; i++) {
+            const currentGuessLetter = guess[i]
+            const currentWordLetter = word[i]
+            if (currentGuessLetter === currentWordLetter) {
+                guessResults.push('correct')
+            } else if (word.includes(currentGuessLetter)) {
+                guessResults.push('present')
+            } else guessResults.push('wrong')
+        }
+    }
     
     const getGuess = (id: string) => {
         const guess: string[] = [];
         for (let column = 0; column < 5; column++) {
-            const currentRef = inputsRefsData[`${id[0]}-${column}`]
+            const currentRef = inputsRefs[`${id[0]}-${column}`]
             guess.push(currentRef.current!.value);            
         }
         return guess.join('')
@@ -73,10 +99,9 @@ export function InputBox(
 
     return (
         <input
-            ref={inputsRefsData[boxId]}
+            ref={boxRef}
             id={boxId} 
             className={'ur-input'}
-            autoFocus={focusOn}
             autoComplete={'off'}
             maxLength={1}
             onInput={(event) => handleInput(event)}

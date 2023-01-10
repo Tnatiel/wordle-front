@@ -1,21 +1,19 @@
 import { InputBox } from './InputBox';
-import { useRef } from "react"
-interface inputBox {
-    inputId: string, 
-    focused: boolean, 
-}
 
-export function InputRow({inputsData, inputsRefs}: {inputsData: inputBox[], inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>}}) {
+export function InputRow({inputsIds, inputsRefs}: {inputsIds: string[], inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>}}) {
+
+    // todo move box logic in custom hook to row 
 
     return (
         <div className="input-row">
             
-            {inputsData.map( inputData => (
+            {inputsIds.map( id => (
                 <InputBox
-                    boxId={inputData.inputId}
-                    key={inputData.inputId}
-                    focusOn={inputData.focused}
-                    inputsRefsData={inputsRefs}
+                    boxId={id}
+                    key={id}
+                    boxRef={inputsRefs[id]}
+                    inputsRefs={inputsRefs}
+
                 />
             )
         
