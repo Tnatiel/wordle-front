@@ -1,18 +1,23 @@
 import React from "react";
 
+
 interface InputBoxProps {
     inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>},
     boxId: string,
     boxRef: React.RefObject<HTMLInputElement>,
-    state?: string
+    state?: string,
+    value?: string
 }
 
 
 const word = 'moral'
 
-
+// todo use state to render inputbox with valur=e and state
+// todo interface type input box
 
 export function InputBox({boxId, boxRef, inputsRefs}: InputBoxProps) {
+
+    const [input, setInput] = React.useState<InputBoxProps | null>(null)
 
     // todo figure how to make only relevant inputs to get checker func
     // todo although that not that importent wont change runtime
@@ -45,6 +50,7 @@ export function InputBox({boxId, boxRef, inputsRefs}: InputBoxProps) {
         const nextId = getNextInputId((event.target as HTMLInputElement).id) as string;
         const checkerPoints = ['1-0', '2-0', '3-0', '4-0', '5-0']
         if (checkerPoints.includes(nextId)) {
+            const firstLetterCheckId = `${+nextId[0] - 1}-0`;
             console.log(getGuess(`${+nextId[0] - 1}-0`) === word)
         }
 
@@ -64,16 +70,20 @@ export function InputBox({boxId, boxRef, inputsRefs}: InputBoxProps) {
     }
     
     const checkGuess = (guess: string, id: string) => {
+        // FIXME should change
         const guessResults = []
         for (let i = 0; i < 5; i++) {
             const currentGuessLetter = guess[i]
             const currentWordLetter = word[i]
+            const currentInput = inputsRefs[id].current;
             if (currentGuessLetter === currentWordLetter) {
-                guessResults.push('correct')
+                guessResults.push('correct');
             } else if (word.includes(currentGuessLetter)) {
-                guessResults.push('present')
+                guessResults.push('present');
             } else guessResults.push('wrong')
+            
         }
+        return guessResults
     }
     
     const getGuess = (id: string) => {
@@ -101,11 +111,12 @@ export function InputBox({boxId, boxRef, inputsRefs}: InputBoxProps) {
         <input
             ref={boxRef}
             id={boxId} 
-            className={'ur-input'}
-            autoComplete={'off'}
+            className='ur-input'
+            autoComplete='off'
             maxLength={1}
             onInput={(event) => handleInput(event)}
             onClick={(event) => handleClick(event)}
+            
         />
     )
 } 
