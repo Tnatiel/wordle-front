@@ -1,4 +1,21 @@
 
+@mixin letter-check {
+    .correct {
+        background-color: #538d4e;
+        // border-color: #538d4e;
+    }
+    
+    .present {
+        background-color: #b59f3b;
+        // border-color: #b59f3b;
+    }
+    
+    .wrong {
+        background-color: #3a3a3c;
+        // border-color: #3a3a3c;
+    }
+}
+
 @mixin modal-def {
     background-color: $main-color;
     color: $font-color;
@@ -38,20 +55,7 @@
             font-weight: bold;
         }
         
-        .correct-letter {
-            background-color: #538d4e;
-            border-color: #538d4e;
-        }
-        
-        .correct-position {
-            background-color: #b59f3b;
-            border-color: #b59f3b;
-        }
-        
-        .wrong-letter {
-            background-color: #3a3a3c;
-            border-color: #3a3a3c;
-        }
+        @include letter-check
         
     }
 }

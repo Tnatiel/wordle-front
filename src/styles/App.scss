@@ -43,10 +43,11 @@ main {
 }
 
 .user-input-sec {
-    @include input-sec-def
+    @include input-sec-def;
+    @include letter-check;
 }
 .keyboard {
-    @include keyboard-def
+    @include keyboard-def;
 }
 
 

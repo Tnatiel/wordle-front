@@ -33,7 +33,7 @@ export function InstructionsModal({showInstructions: show, closeModal}: {showIns
             <div className="examples">
                 <li className='example-item'>
                     <div className="word-example">
-                        <div className="example-ur-input correct-letter">T</div>
+                        <div className="example-ur-input correct">T</div>
                         <div className="example-ur-input">I</div>
                         <div className="example-ur-input">M</div>
                         <div className="example-ur-input">E</div>
@@ -45,7 +45,7 @@ export function InstructionsModal({showInstructions: show, closeModal}: {showIns
                     <div className="word-example">
                         <div className="example-ur-input ">S</div>
                         <div className="example-ur-input">T</div>
-                        <div className="example-ur-input correct-position">A</div>
+                        <div className="example-ur-input present">A</div>
                         <div className="example-ur-input">M</div>
                         <div className="example-ur-input">P</div>
                     </div>
@@ -58,7 +58,7 @@ export function InstructionsModal({showInstructions: show, closeModal}: {showIns
                         <div className="example-ur-input">R</div>
                         <div className="example-ur-input">I</div>
                         <div className="example-ur-input">C</div>
-                        <div className="example-ur-input wrong-letter">K</div>
+                        <div className="example-ur-input wrong">K</div>
                     </div>
                     <p><span className="the-letter">T</span> is not a word in the wordle</p>
                 </li>
