@@ -4,7 +4,7 @@ import { RefObject, useState } from 'react';
 interface inputRowProps {
     inputsIds: string[], 
     inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>}, 
-    handleFocus(nextFocusId: string): void,
+    handleFocus(nextFocusId: string): boolean,
     getGuess(firstInputId: string): string[],
     checkGuess(guess: string[], firstInputId: string): boolean,
     state?: string
@@ -16,13 +16,7 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
             
     const getNextInputId = (id: string) => {
         const [row, column] = [id[0], id[2]];
-        if ( '5' === row) {
-            if (+column > 4) {
-                return 'GameOver'
-            } else {
-                return `5-${(+column + 1)}`
-            }
-        }
+
         if (+column + 1 > 4) {
             return `${+row + 1}-0`
         } else {
@@ -30,35 +24,32 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
         }
     }
 
-    
-
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-        // better condition
-        //  check current event . id exist if === 5-4 check render game over
+        
         const nextId =  getNextInputId((event.target as HTMLInputElement).id.toString());
-        if ('GameOver' === nextId) {
-            console.log('Fail');
-            return;
-        }
-        const [row, column] = [nextId[0], nextId[2]]
-        if (('12345'.includes(row) && '0' === column)) {
+        const [row, column] = [nextId[0], nextId[2]];
+        if (('123456'.includes(row) && '0' === column)) {
             const guess = getGuess(`${row}-${column}`);
             const guessCorrect = checkGuess(guess, `${row}-${column}`)
+            console.log(guessCorrect)
             renderRow(true)
+            if(guessCorrect){
+                setTimeout(() => {
+                    console.log('>>> succ: ', guessCorrect);
+                    alert('Success')
+                }, 0);
+            }
+            if ( '6' === row) {
+                setTimeout(() => {
+                    // console.log('>>> fail: ', guessCorrect);
+                    alert('Faliure')
+                }, 0);
+            }
             handleFocus(nextId);
             return;
         }
-        if (nextId === '5-5') {
-            setTimeout(() => {
-                if (checkGuess(getGuess(`${row}-${column}`), `${row}-${column}`)) {
-                    alert('succses')
-                } else {
-                    alert('fail')
-                }
-                
-            }, 0);
-        }
-        handleFocus(nextId);
+        handleFocus(nextId)
+        
     }
 
     return (

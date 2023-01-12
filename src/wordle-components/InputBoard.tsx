@@ -33,8 +33,12 @@ export const InputBoard = () => {
     }
 
     const focusNextInput = (nextFocusId: string) => {
+        if ( nextFocusId === '6-0') {
+            return false
+        }
+        console.log(nextFocusId)
         allInputRefs[nextFocusId].current?.focus()
-        
+        return true
     }
 
     const getGuess = (firstInputId: string) => {
@@ -51,14 +55,20 @@ export const InputBoard = () => {
         for (let i = 0; i < 5; i++) {
             const currentInput = allInputRefs[`${+firstInputId[0] - 1}-${i}`].current;
             if (guess[i] === word[i]) {
+                
                 currentInput?.classList.add('correct');
+                guessResults.push('correct');
             } else if (word.includes(guess[i])) {
                 currentInput?.classList.add('present');
+                guessResults.push('present');
             } else {
                 currentInput?.classList.add('wrong');
+                guessResults.push('wrong');
             }
+            
         }
-        return guessResults.filter(s => s === 'correct').length === 5
+        return guessResults.filter( s => s === 'correct').length === 5
+    
 
     }
 
