@@ -15,7 +15,6 @@ function SignInModal(
             onHide={closeSignInModal}
             backdrop="static"
             keyboard={true}
-
         >
       
         <Modal.Header closeButton>

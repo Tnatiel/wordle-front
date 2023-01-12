@@ -1,11 +1,9 @@
-import {RefObject, useRef} from 'react'
+import {useState, useRef} from 'react'
 
 
 export const  useInputBoard = () => {
-    
-    const createInput = (ids: string[], refs:{[key: string]: RefObject<HTMLInputElement>}) => {
-        
-    }
+    const [boardDisabled , setBoardDisabled] = useState(false)    
+
     const rowOneInputs = ['0-0', '0-1', '0-2', '0-3', '0-4']
     const rowTwoInputs = ['1-0', '1-1', '1-2', '1-3', '1-4']
     const rowThreeInputs = ['2-0', '2-1', '2-2', '2-3', '2-4']
@@ -56,6 +54,33 @@ export const  useInputBoard = () => {
         '5-4': useRef<HTMLInputElement>(null)
         }
 
+        const allInputRefs = {
+            ...rowOneInputRefs,
+            ...rowTwoInputRefs,
+            ...rowThreeInputRefs,
+            ...rowFourInputRefs,
+            ...rowFiveInputRefs,
+            ...rowSixInputRefs,
+        }
+
+    const focusNextInput = (nextFocusId: string) => {
+        if ( nextFocusId === '6-0') {
+            return false
+        }
+        allInputRefs[nextFocusId].current?.focus()
+        return true
+    }
+
+    const getGuess = (firstInputId: string) => {
+        const guess: string[] = [];
+        for (let column = 0; column < 5; column++) {
+            const currentRef = allInputRefs[`${+firstInputId[0] - 1}-${column}`]
+            guess.push(currentRef.current!.value);            
+        }
+        return guess
+    }
+    
+
         return {
             rowOneInputs,
             rowOneInputRefs,
@@ -69,5 +94,10 @@ export const  useInputBoard = () => {
             rowFiveInputRefs,
             rowSixInputs,
             rowSixInputRefs,
+            allInputRefs,
+            focusNextInput,
+            getGuess,
+            boardDisabled,
+            setBoardDisabled
         }
     }

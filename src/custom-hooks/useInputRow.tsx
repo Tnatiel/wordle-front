@@ -1,8 +1,53 @@
 import React from 'react' 
+import { ApiValue, BoardsContext } from '../providors/boardslogic-context';
+import { useInputBoard } from './useInputBoard';
 
 export const useInputRow = () => {
     
-    const word ='moral'
+    const [boardDisabled , setBoardDisabled] = React.useState(false)
+    const api = React.useContext(BoardsContext) as ApiValue;
+    const inputBoardApi = useInputBoard();
+
+    const allInputRefs = {
+        ...inputBoardApi.rowOneInputRefs,
+        ...inputBoardApi.rowTwoInputRefs,
+        ...inputBoardApi.rowThreeInputRefs,
+        ...inputBoardApi.rowFourInputRefs,
+        ...inputBoardApi.rowFiveInputRefs,
+        ...inputBoardApi.rowSixInputRefs,
+    }
+
+    const focusNextInput = (nextFocusId: string) => {
+        if ( nextFocusId === '6-0') {
+            return false
+        }
+        allInputRefs[nextFocusId].current?.focus()
+        return true
+    }
+
+    const getGuess = (firstInputId: string) => {
+        const guess: string[] = [];
+        for (let column = 0; column < 5; column++) {
+            const currentRef = allInputRefs[`${+firstInputId[0] - 1}-${column}`]
+            guess.push(currentRef.current!.value);            
+        }
+        return guess
+    }
+   
+    
+    
+    const [rowRender, setRowRender] = React.useState(false);
+
+    const getNextInputId = (id: string) => {
+        const [row, column] = [id[0], id[2]];
+
+        if (+column + 1 > 4) {
+            return `${+row + 1}-0`
+        } else {
+            return `${row}-${(+column + 1)}`
+        }
+    }
+
     interface InputBox {
         inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>},
         boxId: string,
@@ -10,81 +55,15 @@ export const useInputRow = () => {
         state?: string,
         value?: string
     }
+
     
-    const [inputValues, setInputValues] = React.useState<InputBox | null>(null)
-
-
-    const getNextInputId = (id: string) => {
-
-        if (+id[0] + 1 > 5) {
-            return '6-0'
-        }
-        if (+id[2] + 1 > 4) {
-            // console.log('retuen next row')
-            return `${+id[0] + 1}-0`
-        } else {
-            // console.log('retuen same row')
-            return `${id[0]}-${(+id[2] + 1)}`
-        }
-    }
 
     const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
-        // document.activeElement
-        // console.log(document.activeElement)
-        // console.log(inputsRefs[(event.target as HTMLInputElement).id].current)
-        // if (inputsRefs[(event.target as HTMLInputElement).id].current?.id !== document.activeElement?.id) {
-        //     document.activeElement.
-        // }
+        const id = (event.target as HTMLElement).id
+        const currentInput = allInputRefs[id].current
+        if (currentInput) currentInput.disabled = true
+       
     }
-
-    const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-        const nextId = getNextInputId((event.target as HTMLInputElement).id) as string;
-        const checkerPoints = ['1-0', '2-0', '3-0', '4-0', '5-0', '6-0']
-        if (checkerPoints.includes(nextId)) {
-            const firstLetterCheckId = `${+nextId[0] - 1}-0`;
-            // console.log(getGuess(`${+nextId[0] - 1}-0`) === word)
-        }
-    }
-        // here the if that check guess
-
-        // if (nextId in inputsRefs) {
-        //     console.log('>>in refs', nextId)
-        //     const nextInput = inputsRefs[nextId];
-        //     console.log('>>next input', nextInput)
-        //     if (nextInput && nextInput.current) {
-        //         console.log('in sec cond')
-        //         nextInput.current.focus();
-        //     } else {
-        //         console.log(inputsRefs)
-        //     }
-        //   }
-    // }
-    
-    // const checkGuess = (guess: string, id: string) => {
-    //     // FIXME should change
-    //     const guessResults = []
-    //     for (let i = 0; i < 5; i++) {
-    //         const currentGuessLetter = guess[i]
-    //         const currentWordLetter = word[i]
-    //         const currentInput = inputsRefs[id].current;
-    //         if (currentGuessLetter === currentWordLetter) {
-    //             guessResults.push('correct');
-    //         } else if (word.includes(currentGuessLetter)) {
-    //             guessResults.push('present');
-    //         } else guessResults.push('wrong')
-
-    //     }
-    //     return guessResults
-    // }
-    
-    // const getGuess = (id: string) => {
-    //     const guess: string[] = [];
-    //     for (let column = 0; column < 5; column++) {
-    //         const currentRef = inputsRefs[`${id[0]}-${column}`]
-    //         guess.push(currentRef.current!.value);            
-    //     }
-    //     return guess.join('')
-    // }
 
     const sendGuess = (guess: string) => {
         fetch('http://localhost:3003/word/check', {

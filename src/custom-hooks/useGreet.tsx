@@ -1,4 +1,4 @@
-import {useState, useRef } from 'react'
+import {useState, useRef } from 'react';
 
 
 export const useGreet = () => {
@@ -14,7 +14,6 @@ export const useGreet = () => {
           localStorage.setItem('email', valuesObj.email.toString())
           console.log('local storage: ', localStorage)
           setGreet(localStorage.getItem('name')!)
-        //   console.log(greet)
         }
       }
 

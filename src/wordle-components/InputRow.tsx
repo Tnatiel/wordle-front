@@ -12,7 +12,7 @@ interface inputRowProps {
 
 
 export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGuess, boardDisabled}: inputRowProps) {
-    const [rowRender, setRowRender] = useState(false)
+    const [rowRender, setRowRender] = useState(false);
     
     const getNextInputId = (id: string) => {
         const [row, column] = [id[0], id[2]];

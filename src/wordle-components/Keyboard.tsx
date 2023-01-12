@@ -1,21 +1,38 @@
-import { KeyboardRow } from "./KeyboardRow"
+import { KeyboardRow } from "./KeyboardRow";
+import {useState, useRef } from 'react';
+import { useKeyboard } from "../custom-hooks/useKeyboard";
 
 
 
 export function Keyboard() {
     
-    
-    const rowOneLetters = ["Q","W","E","R","T","Y","U","I","O","P",]
-    const rowTwoLetters = ["A","S","D","F","G","H","J","K","L"]
-    const rowThreeLetters = ["Enter", "Z","X","C","V","B","N","M", "Del"]
+    const {
+        rowOneKeyBoardRefs,
+        rowOneLetters,
+        rowTwoKeyBoardRefs,
+        rowTwoLetters,
+        rowThreeKeyBoardRefs,
+        rowThreeLetters
+    } = useKeyboard();
+
+   
     return (
         <div className="keyboard">
             {/* <!-- ROW1 --> */}
-            <KeyboardRow letters={rowOneLetters} />
+            <KeyboardRow 
+            letters={rowOneLetters} 
+            buttonsRefs={rowOneKeyBoardRefs}
+            />
             {/* <!-- ROW2 --> */}
-            <KeyboardRow letters={rowTwoLetters} />
+            <KeyboardRow 
+            letters={rowTwoLetters} 
+            buttonsRefs={rowTwoKeyBoardRefs}
+            />
             {/* <!-- ROW3 --> */}
-            <KeyboardRow letters={rowThreeLetters} />
+            <KeyboardRow 
+            letters={rowThreeLetters} 
+            buttonsRefs={rowThreeKeyBoardRefs}
+            />
         </div>
     )
 }
