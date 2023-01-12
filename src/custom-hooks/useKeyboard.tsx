@@ -1,4 +1,4 @@
-import {useState, useRef } from 'react';
+import { useRef } from 'react';
 
 
 
@@ -40,7 +40,7 @@ export const useKeyboard = () => {
     const allKeyboardRefs = {...rowOneKeyBoardRefs, ...rowTwoKeyBoardRefs, ...rowThreeKeyBoardRefs}
     
     const guessedLetters: string[] = []
-    
+
     const rowOneLetters = ["Q","W","E","R","T","Y","U","I","O","P",]
     const rowTwoLetters = ["A","S","D","F","G","H","J","K","L"]
     const rowThreeLetters = ["Enter", "Z","X","C","V","B","N","M", "Del"]

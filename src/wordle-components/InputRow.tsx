@@ -1,4 +1,3 @@
-import { RefObject, useState } from 'react';
 import { useInputRow } from '../custom-hooks/useInputRow';
 
 
@@ -11,10 +10,11 @@ interface inputRowProps {
     boardDisabled: boolean;    
 }
 
-
 export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGuess, boardDisabled}: inputRowProps) {
-    const {rowRender, setRowRender, getNextInputId, handleClick} = useInputRow()
 
+
+    const {rowRender, setRowRender, getNextInputId } = useContext
+    
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
         
         const nextId =  getNextInputId((event.target as HTMLInputElement).id.toString());
@@ -55,7 +55,7 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
                     onInput={handleInput}
                     autoComplete='off'
                     disabled={boardDisabled ? boardDisabled: rowRender}                
-                    onClick={(event: React.MouseEvent<HTMLInputElement>) => handleClick(event)}
+                    
                 />
             )
         

@@ -1,4 +1,6 @@
-import { KeyboardButton } from "./KeyboardButton"
+import { BoardsContext, WordleApi } from "../providors/boardslogic-context";
+import {useContext} from 'react';
+
 
 interface KeyboardRowProps {
     letters: string[];
@@ -6,10 +8,14 @@ interface KeyboardRowProps {
 }
 
 export function KeyboardRow({letters, buttonsRefs}: KeyboardRowProps) {
-    
+
+    const {allInputRefs}  = useContext(BoardsContext) as WordleApi;
+
     const handleClick = (event: Partial<Event>) => {
         const letter = (event.target as HTMLButtonElement).id;
-
+        // console.log(currentInput)
+        
+        // filter the inputrefs array find active element
     }
 
     return (

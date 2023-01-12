@@ -1,8 +1,6 @@
 import { InputRow } from "./InputRow";
-import { useInputBoard } from "../custom-hooks/useInputBoard";
-import { useEffect, useContext, useState } from 'react';
-import { useKeyboard } from "../custom-hooks/useKeyboard";
-import { ApiValue, BoardsContext } from "../providors/boardslogic-context";
+import { useEffect, useContext } from 'react';
+import { WordleApi, BoardsContext } from "../providors/boardslogic-context";
 
 
 const word ='moral';
@@ -28,34 +26,34 @@ export const InputBoard = () => {
         getGuess,
         boardDisabled,
         setBoardDisabled
-    } = useInputBoard();
+    } = useContext(BoardsContext) as WordleApi;
     
     useEffect(() => {
         const firstRef = rowOneInputRefs['0-0']
         firstRef.current?.focus()
     },)
 
-    const api = useContext(BoardsContext) as ApiValue;
-    console.log(api.allKeyboardRefs)
+    const api = useContext(BoardsContext) as WordleApi;
+    // console.log(api.allKeyboardRefs)
     
    
     const checkGuess = (guess: string[], firstInputId: string) => {
         const guessResults: string[] = []
         for (let i = 0; i < 5; i++) {
             const currentInput = allInputRefs[`${+firstInputId[0] - 1}-${i}`].current;
-            // const currentKeyboardButton = api.allKeyboardRefs[guess[i]].current;
+            const currentKeyboardButton = api.allKeyboardRefs[(guess[i].toUpperCase())].current;
             if (guess[i] === word[i]) {
                 
                 currentInput?.classList.add('correct');
-                // currentKeyboardButton?.classList.add('correct');
+                currentKeyboardButton?.classList.add('correct');
                 guessResults.push('correct');
             } else if (word.includes(guess[i])) {
                 currentInput?.classList.add('present');
-                // currentKeyboardButton?.classList.add('present');
+                currentKeyboardButton?.classList.add('present');
                 guessResults.push('present');
             } else {
                 currentInput?.classList.add('wrong');
-                // currentKeyboardButton?.classList.add('wrong');
+                currentKeyboardButton?.classList.add('wrong');
                 guessResults.push('wrong');
             }
 

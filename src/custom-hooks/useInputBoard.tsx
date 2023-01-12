@@ -11,6 +11,7 @@ export const  useInputBoard = () => {
     const rowFiveInputs = ['4-0', '4-1', '4-2', '4-3', '4-4']
     const rowSixInputs = ['5-0', '5-1', '5-2', '5-3', '5-4']
 
+
     const rowOneInputRefs: {[key: string]: React.RefObject<HTMLInputElement>} = {
         '0-0': useRef<HTMLInputElement>(null),
         '0-1': useRef<HTMLInputElement>(null),
@@ -70,6 +71,7 @@ export const  useInputBoard = () => {
         allInputRefs[nextFocusId].current?.focus()
         return true
     }
+
 
     const getGuess = (firstInputId: string) => {
         const guess: string[] = [];

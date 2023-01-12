@@ -3,22 +3,9 @@ import { useInputBoard } from './useInputBoard';
 
 export const useInputRow = () => {
 
-;
-    const inputBoardApi = useInputBoard();
 
-    const allInputRefs = {
-        ...inputBoardApi.rowOneInputRefs,
-        ...inputBoardApi.rowTwoInputRefs,
-        ...inputBoardApi.rowThreeInputRefs,
-        ...inputBoardApi.rowFourInputRefs,
-        ...inputBoardApi.rowFiveInputRefs,
-        ...inputBoardApi.rowSixInputRefs,
-    }
+    const {allInputRefs} = useInputBoard();
 
-
-   
-    
-    
     const [rowRender, setRowRender] = React.useState(false);
 
     const getNextInputId = (id: string) => {
@@ -30,24 +17,18 @@ export const useInputRow = () => {
             return `${row}-${(+column + 1)}`
         }
     }
+    // const getNextInputIdM = (id: number) => {
+    //     if (id > 30) return '6-0'
+    //     return id++
+    // }
 
-    interface InputBox {
-        inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>},
-        boxId: string,
-        boxRef: React.RefObject<HTMLInputElement>,
-        state?: string,
-        value?: string
-    }
-
-    
-
-    const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
-        const id = (event.target as HTMLElement).id
-        const currentInput = allInputRefs[id].current
-        console.log(currentInput)
-        if (currentInput) currentInput.blur(); console.log('unfocusing')
+    // const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    //     const id = (event.target as HTMLElement).id
+    //     const currentInput = allInputRefs[id].current
+    //     console.log(currentInput)
+    //     if (currentInput) currentInput.blur(); console.log('unfocusing')
        
-    }
+    // }
 
     const sendGuess = (guess: string) => {
         fetch('http://localhost:3003/word/check', {
@@ -65,6 +46,6 @@ export const useInputRow = () => {
         rowRender,
         setRowRender,
         getNextInputId,
-        handleClick
+        // handleClick
     }
 }
