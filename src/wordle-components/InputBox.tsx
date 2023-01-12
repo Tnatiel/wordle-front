@@ -1,7 +1,7 @@
 import React from "react";
 
 
-interface InputBoxProps {
+interface InputBox {
     inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>},
     boxId: string,
     boxRef: React.RefObject<HTMLInputElement>,
@@ -15,9 +15,9 @@ const word = 'moral'
 // todo use state to render inputbox with valur=e and state
 // todo interface type input box
 
-export function InputBox({boxId, boxRef, inputsRefs}: InputBoxProps) {
+export function InputBox({boxId, boxRef, inputsRefs}: InputBox) {
 
-    const [input, setInput] = React.useState<InputBoxProps | null>(null)
+    const [input, setInput] = React.useState<InputBox | null>(null)
 
     // todo figure how to make only relevant inputs to get checker func
     // todo although that not that importent wont change runtime
@@ -81,7 +81,7 @@ export function InputBox({boxId, boxRef, inputsRefs}: InputBoxProps) {
             } else if (word.includes(currentGuessLetter)) {
                 guessResults.push('present');
             } else guessResults.push('wrong')
-            
+
         }
         return guessResults
     }

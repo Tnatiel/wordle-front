@@ -5,9 +5,6 @@ import { Keyboard } from "../wordle-components/Keyboard";
 
 export function WordleApp() {
 
-    
-    
-
     return (
         <main>
             <Header />
