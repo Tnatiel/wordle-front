@@ -1,4 +1,5 @@
 import { RefObject, useState } from 'react';
+import { useInputRow } from '../custom-hooks/useInputRow';
 
 
 interface inputRowProps {
@@ -12,17 +13,7 @@ interface inputRowProps {
 
 
 export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGuess, boardDisabled}: inputRowProps) {
-    const [rowRender, setRowRender] = useState(false);
-    
-    const getNextInputId = (id: string) => {
-        const [row, column] = [id[0], id[2]];
-
-        if (+column + 1 > 4) {
-            return `${+row + 1}-0`
-        } else {
-            return `${row}-${(+column + 1)}`
-        }
-    }
+    const {rowRender, setRowRender, getNextInputId, handleClick} = useInputRow()
 
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
         
@@ -36,13 +27,13 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
                 setTimeout(() => {
                     
                     alert('Success')
-                }, 1000);
+                }, 200);
                 return
             }
             if ( '6' === row) {
                 setTimeout(() => {
                     alert('Faliure')
-                }, 0);
+                }, 200);
             }
             handleFocus(nextId);
             return;
@@ -64,6 +55,7 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
                     onInput={handleInput}
                     autoComplete='off'
                     disabled={boardDisabled ? boardDisabled: rowRender}                
+                    onClick={(event: React.MouseEvent<HTMLInputElement>) => handleClick(event)}
                 />
             )
         

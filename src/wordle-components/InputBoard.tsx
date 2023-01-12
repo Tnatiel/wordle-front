@@ -43,19 +43,19 @@ export const InputBoard = () => {
         const guessResults: string[] = []
         for (let i = 0; i < 5; i++) {
             const currentInput = allInputRefs[`${+firstInputId[0] - 1}-${i}`].current;
-            const currentKeyboardButton = api.allKeyboardRefs[guess[i]].current;
+            // const currentKeyboardButton = api.allKeyboardRefs[guess[i]].current;
             if (guess[i] === word[i]) {
                 
                 currentInput?.classList.add('correct');
-                currentKeyboardButton?.classList.add('correct');
+                // currentKeyboardButton?.classList.add('correct');
                 guessResults.push('correct');
             } else if (word.includes(guess[i])) {
                 currentInput?.classList.add('present');
-                currentKeyboardButton?.classList.add('present');
+                // currentKeyboardButton?.classList.add('present');
                 guessResults.push('present');
             } else {
                 currentInput?.classList.add('wrong');
-                currentKeyboardButton?.classList.add('wrong');
+                // currentKeyboardButton?.classList.add('wrong');
                 guessResults.push('wrong');
             }
 
