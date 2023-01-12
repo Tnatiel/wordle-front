@@ -7,13 +7,13 @@ interface inputRowProps {
     handleFocus(nextFocusId: string): boolean,
     getGuess(firstInputId: string): string[],
     checkGuess(guess: string[], firstInputId: string): boolean,
-    state?: string
+    boardDisabled: boolean;    
 }
 
 
-export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGuess}: inputRowProps) {
-    const [rowState, renderRow] = useState(false)
-            
+export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGuess, boardDisabled}: inputRowProps) {
+    const [rowRender, setRowRender] = useState(false)
+    
     const getNextInputId = (id: string) => {
         const [row, column] = [id[0], id[2]];
 
@@ -31,17 +31,16 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
         if (('123456'.includes(row) && '0' === column)) {
             const guess = getGuess(`${row}-${column}`);
             const guessCorrect = checkGuess(guess, `${row}-${column}`)
-            console.log(guessCorrect)
-            renderRow(true)
+            setRowRender(true)
             if(guessCorrect){
                 setTimeout(() => {
-                    console.log('>>> succ: ', guessCorrect);
+                    
                     alert('Success')
-                }, 0);
+                }, 1000);
+                return
             }
             if ( '6' === row) {
                 setTimeout(() => {
-                    // console.log('>>> fail: ', guessCorrect);
                     alert('Faliure')
                 }, 0);
             }
@@ -55,7 +54,7 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
     return (
         <div className="input-row">
             
-            {inputsIds.map( (id: string,  index: number) => (
+            {inputsIds.map( (id: string) => (
                 <input
                     id={id}
                     key={id}
@@ -63,8 +62,8 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
                     className={`ur-input`}
                     maxLength={1}
                     onInput={handleInput}
-                    autoComplete='false'
-                
+                    autoComplete='off'
+                    disabled={boardDisabled ? boardDisabled: rowRender}                
                 />
             )
         

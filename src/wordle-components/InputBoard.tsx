@@ -1,6 +1,6 @@
 import { InputRow } from "./InputRow";
 import { useInputBoard } from "../custom-hooks/useInputBoard";
-import { useEffect, RefObject } from 'react';
+import { useEffect, RefObject, useState } from 'react';
 
 interface InputBox {
     id: string,
@@ -15,7 +15,7 @@ const word ='moral';
 
 export const InputBoard = () => {
 
-    
+    const [boardDisabled , setBoardDisabled] = useState(false)    
     const inputBoardApi = useInputBoard();
     
     useEffect(() => {
@@ -67,7 +67,9 @@ export const InputBoard = () => {
             }
             
         }
-        return guessResults.filter( s => s === 'correct').length === 5
+        const guessCorrect = guessResults.filter( s => s === 'correct').length === 5
+        if (guessCorrect) setBoardDisabled(true)
+        return guessCorrect
     
 
     }
@@ -83,41 +85,48 @@ export const InputBoard = () => {
             handleFocus={focusNextInput} 
             getGuess={getGuess}
             checkGuess={checkGuess}
+            boardDisabled={boardDisabled}  
+            
             />
             <InputRow 
             inputsIds={inputBoardApi.rowTwoInputs} 
             inputsRefs={inputBoardApi.rowTwoInputRefs}
             handleFocus={focusNextInput}
             getGuess={getGuess}
-            checkGuess={checkGuess}                     
+            checkGuess={checkGuess}
+            boardDisabled={boardDisabled}                     
             />
             <InputRow 
             inputsIds={inputBoardApi.rowThreeInputs} 
             inputsRefs={inputBoardApi.rowThreeInputRefs}
             handleFocus={focusNextInput}
             getGuess={getGuess}
-            checkGuess={checkGuess} 
+            checkGuess={checkGuess}
+            boardDisabled={boardDisabled}   
             />
             <InputRow 
             inputsIds={inputBoardApi.rowFourInputs}
              inputsRefs={inputBoardApi.rowFourInputRefs}
              handleFocus={focusNextInput}
              getGuess={getGuess}
-            checkGuess={checkGuess} 
+            checkGuess={checkGuess}
+            boardDisabled={boardDisabled}   
              />
             <InputRow 
             inputsIds={inputBoardApi.rowFiveInputs}
              inputsRefs={inputBoardApi.rowFiveInputRefs}
              handleFocus={focusNextInput}
              getGuess={getGuess}
-            checkGuess={checkGuess} 
+            checkGuess={checkGuess}
+            boardDisabled={boardDisabled}   
              />
             <InputRow 
             inputsIds={inputBoardApi.rowSixInputs} 
             inputsRefs={inputBoardApi.rowSixInputRefs}
             handleFocus={focusNextInput}
             getGuess={getGuess}
-            checkGuess={checkGuess} 
+            checkGuess={checkGuess}
+            boardDisabled={boardDisabled}   
             />
         </div>
     )
