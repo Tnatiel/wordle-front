@@ -29,37 +29,38 @@ export const InputBoard = () => {
     } = useContext(BoardsContext) as WordleApi;
     
     useEffect(() => {
-        const firstRef = rowOneInputRefs['0-0']
+        const firstRef = rowOneInputRefs[0]
         firstRef.current?.focus()
     },)
 
-    const api = useContext(BoardsContext) as WordleApi;
-    // console.log(api.allKeyboardRefs)
     
    
-    const checkGuess = (guess: string[], firstInputId: string) => {
-        const guessResults: string[] = []
+    const checkGuess = (guess: string[], firstInputId: number) => {
+        const guessResults: string[] = [];
+        let currentInputId = firstInputId
         for (let i = 0; i < 5; i++) {
-            const currentInput = allInputRefs[`${+firstInputId[0] - 1}-${i}`].current;
-            const currentKeyboardButton = api.allKeyboardRefs[(guess[i].toUpperCase())].current;
+            const currentInput = allInputRefs[currentInputId].current;
+            // const currentKeyboardButton = api.allKeyboardRefs[(guess[i].toUpperCase())].current;
             if (guess[i] === word[i]) {
                 
                 currentInput?.classList.add('correct');
-                currentKeyboardButton?.classList.add('correct');
+                // currentKeyboardButton?.classList.add('correct');
                 guessResults.push('correct');
             } else if (word.includes(guess[i])) {
                 currentInput?.classList.add('present');
-                currentKeyboardButton?.classList.add('present');
+                // currentKeyboardButton?.classList.add('present');
                 guessResults.push('present');
             } else {
                 currentInput?.classList.add('wrong');
-                currentKeyboardButton?.classList.add('wrong');
+                // currentKeyboardButton?.classList.add('wrong');
                 guessResults.push('wrong');
             }
+            currentInputId++
 
         }
         
-        const guessCorrect = guessResults.filter( s => s === 'correct').length === 5
+        const guessCorrect = guessResults.filter( s => s === 'correct').length === 5;
+        console.log(guessCorrect)
         if (guessCorrect) setBoardDisabled(true)
         return guessCorrect
     }

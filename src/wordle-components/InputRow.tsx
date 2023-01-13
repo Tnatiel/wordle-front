@@ -1,27 +1,29 @@
-import { useInputRow } from '../custom-hooks/useInputRow';
+import { BoardsContext, WordleApi } from "../providors/boardslogic-context";
+import { useContext } from "react";
+import { useInputRow } from "../custom-hooks/useInputRow";
 
 
 interface inputRowProps {
     inputsIds: string[], 
     inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>}, 
-    handleFocus(nextFocusId: string): boolean,
-    getGuess(firstInputId: string): string[],
-    checkGuess(guess: string[], firstInputId: string): boolean,
+    handleFocus(nextFocusId: number): boolean,
+    getGuess(firstInputId: number): string[],
+    checkGuess(guess: string[], firstInputId: number): boolean,
     boardDisabled: boolean;    
 }
 
 export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGuess, boardDisabled}: inputRowProps) {
 
 
-    const {rowRender, setRowRender, getNextInputId } = useContext
-    
+    const { getNextInputId } = useContext(BoardsContext) as WordleApi;
+    const {rowRender, setRowRender} = useInputRow()
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
         
-        const nextId =  getNextInputId((event.target as HTMLInputElement).id.toString());
-        const [row, column] = [nextId[0], nextId[2]];
-        if (('123456'.includes(row) && '0' === column)) {
-            const guess = getGuess(`${row}-${column}`);
-            const guessCorrect = checkGuess(guess, `${row}-${column}`)
+        const nextId =  getNextInputId(+(event.target as HTMLInputElement).id);
+        
+        if (nextId % 5 === 0 && nextId !== 0) {
+            const guess = getGuess(nextId - 5);
+            const guessCorrect = checkGuess(guess, nextId - 5)
             setRowRender(true)
             if(guessCorrect){
                 setTimeout(() => {
@@ -30,7 +32,7 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
                 }, 200);
                 return
             }
-            if ( '6' === row) {
+            if (nextId > 29) {
                 setTimeout(() => {
                     alert('Faliure')
                 }, 200);
@@ -38,6 +40,7 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
             handleFocus(nextId);
             return;
         }
+
         handleFocus(nextId)
         
     }

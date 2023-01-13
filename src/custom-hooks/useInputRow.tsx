@@ -1,34 +1,12 @@
-import React from 'react' 
-import { useInputBoard } from './useInputBoard';
+import React from 'react' ;
 
 export const useInputRow = () => {
 
 
-    const {allInputRefs} = useInputBoard();
-
     const [rowRender, setRowRender] = React.useState(false);
 
-    const getNextInputId = (id: string) => {
-        const [row, column] = [id[0], id[2]];
+    const getNextInputId = (id: number) => id + 1
 
-        if (+column + 1 > 4) {
-            return `${+row + 1}-0`
-        } else {
-            return `${row}-${(+column + 1)}`
-        }
-    }
-    // const getNextInputIdM = (id: number) => {
-    //     if (id > 30) return '6-0'
-    //     return id++
-    // }
-
-    // const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
-    //     const id = (event.target as HTMLElement).id
-    //     const currentInput = allInputRefs[id].current
-    //     console.log(currentInput)
-    //     if (currentInput) currentInput.blur(); console.log('unfocusing')
-       
-    // }
 
     const sendGuess = (guess: string) => {
         fetch('http://localhost:3003/word/check', {
