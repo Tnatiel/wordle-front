@@ -13,16 +13,17 @@ export function WordleApp() {
     const keyboardApi = useKeyboard();
     const inputRowApi = useInputRow();
     const inputBoardApi = useInputBoard();
+    const wordleApi = {...keyboardApi, ...inputRowApi, ...inputBoardApi, };
+
+    const a = 0
+    // console.log(a)
     
-
-    const wordleApi = {...keyboardApi, ...inputRowApi, ...inputBoardApi};
-
     return (
         <main>
             <Header />
             <BoardsContext.Provider value={wordleApi}> 
-                <InputBoard />
-                <Keyboard />
+                <InputBoard a={a}/>
+                <Keyboard a={a} />
             </BoardsContext.Provider>
         </main>
     )

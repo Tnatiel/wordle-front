@@ -6,7 +6,7 @@ import { WordleApi, BoardsContext } from "../providors/boardslogic-context";
 const word ='moral';
 
 
-export const InputBoard = () => {
+export const InputBoard = ({a}: {a: number}) => {
 
     const  {
         rowOneInputs,
@@ -25,14 +25,19 @@ export const InputBoard = () => {
         focusNextInput,
         getGuess,
         boardDisabled,
-        setBoardDisabled
+        setBoardDisabled,
     } = useContext(BoardsContext) as WordleApi;
     
     useEffect(() => {
         const firstRef = rowOneInputRefs[0]
         firstRef.current?.focus()
     },)
-
+    const getNextInputId = () => {
+        // console.log(a)
+        a += 1;
+        // console.log(a)
+        return a;
+    };
     
    
     const checkGuess = (guess: string[], firstInputId: number) => {
@@ -60,7 +65,6 @@ export const InputBoard = () => {
         }
         
         const guessCorrect = guessResults.filter( s => s === 'correct').length === 5;
-        console.log(guessCorrect)
         if (guessCorrect) setBoardDisabled(true)
         return guessCorrect
     }
@@ -73,7 +77,10 @@ export const InputBoard = () => {
             handleFocus={focusNextInput} 
             getGuess={getGuess}
             checkGuess={checkGuess}
-            boardDisabled={boardDisabled}  
+            boardDisabled={boardDisabled}
+            a={a}
+            b={getNextInputId}
+           
             
             />
             <InputRow 
@@ -82,7 +89,10 @@ export const InputBoard = () => {
             handleFocus={focusNextInput}
             getGuess={getGuess}
             checkGuess={checkGuess}
-            boardDisabled={boardDisabled}                     
+            boardDisabled={boardDisabled}
+            a={a}
+            b={getNextInputId}
+                              
             />
             <InputRow 
             inputsIds={rowThreeInputs} 
@@ -90,7 +100,10 @@ export const InputBoard = () => {
             handleFocus={focusNextInput}
             getGuess={getGuess}
             checkGuess={checkGuess}
-            boardDisabled={boardDisabled}   
+            boardDisabled={boardDisabled}
+            a={a}
+            b={getNextInputId}
+            
             />
             <InputRow 
             inputsIds={rowFourInputs}
@@ -98,7 +111,10 @@ export const InputBoard = () => {
              handleFocus={focusNextInput}
              getGuess={getGuess}
             checkGuess={checkGuess}
-            boardDisabled={boardDisabled}   
+            boardDisabled={boardDisabled}
+            a={a}
+            b={getNextInputId}
+            
              />
             <InputRow 
             inputsIds={rowFiveInputs}
@@ -106,7 +122,10 @@ export const InputBoard = () => {
              handleFocus={focusNextInput}
              getGuess={getGuess}
             checkGuess={checkGuess}
-            boardDisabled={boardDisabled}   
+            boardDisabled={boardDisabled}
+            a={a}
+            b={getNextInputId}
+            
              />
             <InputRow 
             inputsIds={rowSixInputs} 
@@ -114,7 +133,10 @@ export const InputBoard = () => {
             handleFocus={focusNextInput}
             getGuess={getGuess}
             checkGuess={checkGuess}
-            boardDisabled={boardDisabled}   
+            boardDisabled={boardDisabled}
+            a={a}
+            b={getNextInputId}
+            
             />
         </div>
     )

@@ -2,14 +2,16 @@ import {useState, useRef} from 'react'
 
 
 export const  useInputBoard = () => {
-    const [boardDisabled , setBoardDisabled] = useState(false)    
-
+    const [boardDisabled , setBoardDisabled] = useState(false);
+    
     const rowOneInputs = [0, 1, 2, 3, 4]
     const rowTwoInputs = [5, 6, 7, 8, 9]
     const rowThreeInputs = [10, 11, 12, 13, 14]
     const rowFourInputs = [15, 16, 17, 18, 19]
     const rowFiveInputs = [20, 21, 22, 23, 24]
     const rowSixInputs = [25, 26, 27, 28, 29]
+
+    
 
 
     const rowOneInputRefs: {[key: string]: React.RefObject<HTMLInputElement>} = {
@@ -75,7 +77,7 @@ export const  useInputBoard = () => {
     const getGuess = (firstInputId: number) => {
         const guess: string[] = [];
         let currentInputId = firstInputId;
-        for (let column = 0; column < 5; column++) {
+        for (let i = 0; i < 5; i++) {
             const currentRef = allInputRefs[currentInputId]
             guess.push(currentRef.current!.value);
             currentInputId++;            
@@ -83,7 +85,6 @@ export const  useInputBoard = () => {
         return guess
     }
 
-    let activeInput = 0
     
 
         return {
@@ -104,6 +105,5 @@ export const  useInputBoard = () => {
             getGuess,
             boardDisabled,
             setBoardDisabled,
-            activeInput
         }
     }

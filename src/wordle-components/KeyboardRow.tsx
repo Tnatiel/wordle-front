@@ -4,20 +4,20 @@ import {useContext} from 'react';
 
 interface KeyboardRowProps {
     letters: string[];
-    buttonsRefs: {[key: string]: React.RefObject<HTMLButtonElement>}
+    buttonsRefs: {[key: string]: React.RefObject<HTMLButtonElement>};
+    a: number;
 }
 
-export function KeyboardRow({letters, buttonsRefs}: KeyboardRowProps) {
+export function KeyboardRow({a,letters, buttonsRefs, }: KeyboardRowProps) {
 
-    const {allInputRefs}  = useContext(BoardsContext) as WordleApi;
+    const {allInputRefs, activeInput}  = useContext(BoardsContext) as WordleApi;
 
     const handleClick = (event: Partial<Event>) => {
         const letter = (event.target as HTMLButtonElement).id;
-        // console.log(currentInput)
-        
-        // filter the inputrefs array find active element
+        console.log(a)
     }
-
+    // a++;
+    // console.log(a)
     return (
         <div className="kboard-row">
             {letters.map( letter => (
@@ -32,14 +32,3 @@ export function KeyboardRow({letters, buttonsRefs}: KeyboardRowProps) {
         </div>
     )
 }
-
-// export function KeyboardRow({letters}:{letters: string[]}) {
-    
-//     return (
-//         <div className="kboard-row">
-//             {letters.map( letter => (
-//                 <KeyboardButton  key={letter} letter={letter}/>
-//             ))}
-//         </div>
-//     )
-// }

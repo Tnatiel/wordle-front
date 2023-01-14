@@ -2,10 +2,9 @@ import React from 'react' ;
 
 export const useInputRow = () => {
 
-
     const [rowRender, setRowRender] = React.useState(false);
-
-    const getNextInputId = (id: number) => id + 1
+    
+    // const getNextInputId = (id: number) => id + 1
 
 
     const sendGuess = (guess: string) => {
@@ -23,7 +22,6 @@ export const useInputRow = () => {
     return {
         rowRender,
         setRowRender,
-        getNextInputId,
-        // handleClick
+
     }
 }

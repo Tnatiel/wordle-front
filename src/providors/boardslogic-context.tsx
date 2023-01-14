@@ -17,27 +17,27 @@ export interface WordleApi {
     allKeyboardRefs: {
         [x: string]: React.RefObject<HTMLButtonElement>;
     };
-    rowOneInputs: string[];
+    rowOneInputs: number[];
     rowOneInputRefs: {
         [key: number]: React.RefObject<HTMLInputElement>;
     };
-    rowTwoInputs: string[];
+    rowTwoInputs: number[];
     rowTwoInputRefs: {
         [key: number]: React.RefObject<HTMLInputElement>;
     };
-    rowThreeInputs: string[];
+    rowThreeInputs: number[];
     rowThreeInputRefs: {
         [key: number]: React.RefObject<HTMLInputElement>;
     };
-    rowFourInputs: string[];
+    rowFourInputs: number[];
     rowFourInputRefs: {
         [key: number]: React.RefObject<HTMLInputElement>;
     };
-    rowFiveInputs: string[];
+    rowFiveInputs: number[];
     rowFiveInputRefs: {
         [key: number]: React.RefObject<HTMLInputElement>;
     };
-    rowSixInputs: string[];
+    rowSixInputs: number[];
     rowSixInputRefs: {
         [key: number]: React.RefObject<HTMLInputElement>;
     };
@@ -49,9 +49,9 @@ export interface WordleApi {
     handleClick: (event: React.MouseEvent<HTMLInputElement>) => void;
     boardDisabled: boolean;
     setBoardDisabled: React.Dispatch<React.SetStateAction<boolean>>;
-    rowRender: boolean;
-    setRowRender: React.Dispatch<React.SetStateAction<boolean>>;
-    getNextInputId: (id: number) => number;
+    rowRender: number;
+    setRowRender: React.Dispatch<React.SetStateAction<number>>;
+    getNextInputId: () => number;
     activeInput: number;
 }
 
