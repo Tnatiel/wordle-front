@@ -6,7 +6,7 @@ import { WordleApi, BoardsContext } from "../providors/boardslogic-context";
 const word ='moral';
 
 
-export const InputBoard = ({a}: {a: number}) => {
+export const InputBoard = ({initialInput}: {initialInput: number}) => {
 
     const  {
         rowOneInputs,
@@ -33,10 +33,8 @@ export const InputBoard = ({a}: {a: number}) => {
         firstRef.current?.focus()
     },)
     const getNextInputId = () => {
-        // console.log(a)
-        a += 1;
-        // console.log(a)
-        return a;
+        initialInput += 1;
+        return initialInput;
     };
     
    
@@ -78,7 +76,7 @@ export const InputBoard = ({a}: {a: number}) => {
             getGuess={getGuess}
             checkGuess={checkGuess}
             boardDisabled={boardDisabled}
-            a={a}
+            a={initialInput}
             b={getNextInputId}
            
             
@@ -90,7 +88,7 @@ export const InputBoard = ({a}: {a: number}) => {
             getGuess={getGuess}
             checkGuess={checkGuess}
             boardDisabled={boardDisabled}
-            a={a}
+            a={initialInput}
             b={getNextInputId}
                               
             />
@@ -101,7 +99,7 @@ export const InputBoard = ({a}: {a: number}) => {
             getGuess={getGuess}
             checkGuess={checkGuess}
             boardDisabled={boardDisabled}
-            a={a}
+            a={initialInput}
             b={getNextInputId}
             
             />
@@ -112,7 +110,7 @@ export const InputBoard = ({a}: {a: number}) => {
              getGuess={getGuess}
             checkGuess={checkGuess}
             boardDisabled={boardDisabled}
-            a={a}
+            a={initialInput}
             b={getNextInputId}
             
              />
@@ -123,7 +121,7 @@ export const InputBoard = ({a}: {a: number}) => {
              getGuess={getGuess}
             checkGuess={checkGuess}
             boardDisabled={boardDisabled}
-            a={a}
+            a={initialInput}
             b={getNextInputId}
             
              />
@@ -134,7 +132,7 @@ export const InputBoard = ({a}: {a: number}) => {
             getGuess={getGuess}
             checkGuess={checkGuess}
             boardDisabled={boardDisabled}
-            a={a}
+            a={initialInput}
             b={getNextInputId}
             
             />

@@ -4,14 +4,10 @@ import { WordleApi, BoardsContext } from "../providors/boardslogic-context";
 
 
 
-export function Keyboard({a}:{a:number}) {
+export function Keyboard({initialInput: a}:{initialInput:number}) {
     
     const wordleApi = useContext(BoardsContext) as WordleApi
 
-    // a++;
-    console.log(a)
-
-    // console.log('>>> kbd aI: ', wordleApi.activeInput)
     return (
         <div className="keyboard">
             <KeyboardRow 

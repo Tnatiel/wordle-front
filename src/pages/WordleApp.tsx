@@ -15,15 +15,15 @@ export function WordleApp() {
     const inputBoardApi = useInputBoard();
     const wordleApi = {...keyboardApi, ...inputRowApi, ...inputBoardApi, };
 
-    const a = 0
+    const firstInput = 0
     // console.log(a)
     
     return (
         <main>
             <Header />
             <BoardsContext.Provider value={wordleApi}> 
-                <InputBoard a={a}/>
-                <Keyboard a={a} />
+                <InputBoard initialInput={firstInput}/>
+                <Keyboard initialInput={firstInput} />
             </BoardsContext.Provider>
         </main>
     )

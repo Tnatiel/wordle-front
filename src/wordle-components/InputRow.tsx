@@ -17,17 +17,10 @@ interface inputRowProps {
 
 export function InputRow({b, inputsIds, inputsRefs, handleFocus, getGuess, checkGuess, boardDisabled}: inputRowProps) {
 
-    let { activeInput, getNextInputId } = useContext(BoardsContext) as WordleApi;
-    
-
-
-    
     let {rowRender, setRowRender } = useInputRow()
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
         
-        // const nextId =  getNextInputId(+(event.target as HTMLInputElement).id);
-        // console.log('>>> before: ', renderLetterIndex)
-        // console.log('>>> after: ', renderLetterIndex)
+
         const nextId = b()
         if (nextId % 5 === 0 && nextId !== 0) {
             const guess = getGuess(nextId - 5);

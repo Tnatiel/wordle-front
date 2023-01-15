@@ -16,8 +16,7 @@ export function KeyboardRow({a,letters, buttonsRefs, }: KeyboardRowProps) {
         const letter = (event.target as HTMLButtonElement).id;
         console.log(a)
     }
-    // a++;
-    // console.log(a)
+
     return (
         <div className="kboard-row">
             {letters.map( letter => (
