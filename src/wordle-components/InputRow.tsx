@@ -1,53 +1,47 @@
-import { RefObject, useState } from 'react';
+import { BoardsContext, WordleApi } from "../providors/boardslogic-context";
+import { useContext } from "react";
+import { useInputRow } from "../custom-hooks/useInputRow";
+import { useInputBoard } from "../custom-hooks/useInputBoard";
 
 
 interface inputRowProps {
-    inputsIds: string[], 
+    inputsIds: number[], 
     inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>}, 
-    handleFocus(nextFocusId: string): boolean,
-    getGuess(firstInputId: string): string[],
-    checkGuess(guess: string[], firstInputId: string): boolean,
-    state?: string
+    handleFocus(nextFocusId: number): boolean,
+    getGuess(firstInputId: number): string[],
+    checkGuess(guess: string[], firstInputId: number): boolean,
+    boardDisabled: boolean;  
+    a: number;
+    b() : number;  
 }
 
+export function InputRow({b, inputsIds, inputsRefs, handleFocus, getGuess, checkGuess, boardDisabled}: inputRowProps) {
 
-export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGuess}: inputRowProps) {
-    const [rowState, renderRow] = useState(false)
-            
-    const getNextInputId = (id: string) => {
-        const [row, column] = [id[0], id[2]];
-
-        if (+column + 1 > 4) {
-            return `${+row + 1}-0`
-        } else {
-            return `${row}-${(+column + 1)}`
-        }
-    }
-
+    let {rowRender, setRowRender } = useInputRow()
     const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
         
-        const nextId =  getNextInputId((event.target as HTMLInputElement).id.toString());
-        const [row, column] = [nextId[0], nextId[2]];
-        if (('123456'.includes(row) && '0' === column)) {
-            const guess = getGuess(`${row}-${column}`);
-            const guessCorrect = checkGuess(guess, `${row}-${column}`)
-            console.log(guessCorrect)
-            renderRow(true)
+
+        const nextId = b()
+        if (nextId % 5 === 0 && nextId !== 0) {
+            const guess = getGuess(nextId - 5);
+            const guessCorrect = checkGuess(guess, nextId - 5)
+            setRowRender(true)
             if(guessCorrect){
                 setTimeout(() => {
-                    console.log('>>> succ: ', guessCorrect);
+                    
                     alert('Success')
-                }, 0);
+                }, 200);
+                return
             }
-            if ( '6' === row) {
+            if (nextId > 29) {
                 setTimeout(() => {
-                    // console.log('>>> fail: ', guessCorrect);
                     alert('Faliure')
-                }, 0);
+                }, 200);
             }
             handleFocus(nextId);
             return;
         }
+
         handleFocus(nextId)
         
     }
@@ -55,20 +49,19 @@ export function InputRow({inputsIds, inputsRefs, handleFocus, getGuess, checkGue
     return (
         <div className="input-row">
             
-            {inputsIds.map( (id: string,  index: number) => (
+            {inputsIds.map( (id: number) => (
                 <input
-                    id={id}
+                    id={`${id}`}
                     key={id}
                     ref={inputsRefs[id]}
                     className={`ur-input`}
                     maxLength={1}
                     onInput={handleInput}
-                    autoComplete='false'
-                
+                    autoComplete='off'
+                    disabled={boardDisabled ? boardDisabled: rowRender}                
                 />
             )
-        
-            )}
+        )}
         </div>
     )
 }
