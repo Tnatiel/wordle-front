@@ -12,8 +12,6 @@ export const  useInputBoard = () => {
     const rowSixInputs = [25, 26, 27, 28, 29]
 
     
-
-
     const rowOneInputRefs: {[key: string]: React.RefObject<HTMLInputElement>} = {
         0: useRef<HTMLInputElement>(null),
         1: useRef<HTMLInputElement>(null),
