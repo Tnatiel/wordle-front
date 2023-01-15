@@ -1,18 +1,17 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export interface GameState {
-    word: string;
-    boardDisabled: boolean;
-    win: boolean;
-    lose: boolean
-
+    word: string,
+    win: boolean,
+    lose: boolean,
+    currentGuess: string[],
 };
 
 const initialState: GameState = {
     word: "moral",
-    boardDisabled: false,
     win: false,
-    lose: false
+    lose: false,
+    currentGuess: [],
 };
 
 const gameSlice = createSlice({
@@ -22,17 +21,20 @@ const gameSlice = createSlice({
         setWord: (state, action: PayloadAction<string>) => {
             state.word = action.payload;
         },
-        setDisabled: (state, action: PayloadAction<boolean>) => {
-            state.boardDisabled = action.payload;
-        },
         setSuccess: (state, action: PayloadAction<boolean>) => {
             state.win = action.payload;
         },
         setFailure: (state, action: PayloadAction<boolean>) => {
             state.lose = action.payload;
         },
+        resetGuess: (state) => {
+            state.currentGuess = [];
+        },
+        addGussedLetter: (state, action: PayloadAction<string>) => {
+            state.currentGuess.push(action.payload)
+        },
     }
 });
 
-export const { setWord, setDisabled, setFailure, setSuccess} = gameSlice.actions;
+export const { setWord,  setFailure, setSuccess, addGussedLetter} = gameSlice.actions;
 export default gameSlice.reducer;
