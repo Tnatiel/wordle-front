@@ -38,6 +38,15 @@ const inputSlice = createSlice({
         updateNextInput(state) {
             state.currentInput += 1
         },
+        updateInputClassName(state, action: PayloadAction<{id: number, className: string}>) {
+            for (let i = 0; i < 6; i++) {
+                let input = state.rows[i].find(b => b.id === action.payload.id);
+                if (input) {
+                    input.className = action.payload.className;
+                    break;
+                }
+            }
+        },
     }
 });
 
