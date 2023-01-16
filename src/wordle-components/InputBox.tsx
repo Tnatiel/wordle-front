@@ -19,6 +19,7 @@ export const InputBox = ({id, value, inputClassName}: InputBoxProps) => {
     
 
     useEffect(() => {
+        if (currentInput % 5 === 0 && currentInput !== 0) return
         if (currentInput !== undefined && currentInput === id) {
             inputsRefs[id].current?.focus();
         }
@@ -50,6 +51,8 @@ export const InputBox = ({id, value, inputClassName}: InputBoxProps) => {
             maxLength={1}
             onInput={(e) => handleInputChange(e)}
             ref={inputsRefs[id]}
+            defaultValue={value}
+            disabled={id === currentInput ? false : true}
 
         />
     )

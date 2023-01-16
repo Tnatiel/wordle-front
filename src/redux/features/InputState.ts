@@ -10,6 +10,7 @@ export interface InputBox {
 export interface InputsState {
     rows: InputBox[][],
     currentInput: number,
+    currentRow: number;
 };
 
 
@@ -26,17 +27,21 @@ const rows = [row1, row2, row3, row4, row5, row6]
 const initialState: InputsState = {
     rows,
     currentInput: 0,
+    currentRow: 0
 }
 
 const inputSlice = createSlice({
     name: 'inputs',
     initialState,
     reducers: {
-        updateInputValue(state, action: PayloadAction<{inputIndex: number, value: string}>) {
-            state.rows[action.payload.inputIndex][state.currentInput].value = action.payload.value;
+        updateInputValue(state, action: PayloadAction<{inputIndex: number, rowNumber:number, value: string}>) {
+            state.rows[state.currentRow][state.currentInput].value = action.payload.value;
         },
         updateNextInput(state) {
             state.currentInput += 1
+        },
+        updateNextRow(state) {
+            state.currentRow += 1
         },
         updateInputClassName(state, action: PayloadAction<{id: number, className: string}>) {
             for (let i = 0; i < 6; i++) {
