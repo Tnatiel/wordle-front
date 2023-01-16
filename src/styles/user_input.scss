@@ -35,11 +35,11 @@
     gap: 0.1vh;
     
     .ur-input {
-        @include ur-input-def()
+        @include ur-input-def;
         
     }
 
     .input-row {
-        @include rows-def()
+        @include rows-def;
     }
 }

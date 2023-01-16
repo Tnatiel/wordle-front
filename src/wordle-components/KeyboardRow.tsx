@@ -6,6 +6,7 @@ import { addInputLetter, updateNextInput, updateBackInput, updateNextRow, remove
 import { addCorrectLetter, addWrongLetter, addPresentLetter, removeGussedLetter, resetGuess } from "../redux/features/LettersState"; 
 import { addGussedLetter } from "../redux/features/LettersState";
 import { setFailure, setSuccess } from "../redux/features/GameState";
+import { setButtonClassname } from "../redux/features/KeyboardState";
 
 
 
@@ -40,6 +41,7 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
                 }, 100);
             }
             addInputClasses(currentGuessClassNames);
+            addKeyboardButtonsClasses(currentGuess, currentGuessClassNames)
             manageCheckGuess()
             dispatch(updateNextRow())
             dispatch(resetGuess())
@@ -70,7 +72,7 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
 
     }
 
-    const checkGuess = (guess: string, word: string) => guess.toLocaleUpperCase() === word.toLocaleLowerCase()
+    
 
     const manageCheckGuess = () => {
         console.log(currentRow)
@@ -94,10 +96,17 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
 
 
     const addInputClasses = (classNames: string[]) => {
-
         let classIndex = 0;
         for (let i = 5; i > 0; i--) {
             dispatch(updateInputClassName({id: currentInputId - i, className: classNames[classIndex]}))
+            classIndex++;
+        }
+  
+    }
+    const addKeyboardButtonsClasses = (ids: string[], classNames: string[]) => {
+        let classIndex = 0;
+        for (const button of ids) {
+            dispatch(setButtonClassname({id: button, className: classNames[classIndex]}))
             classIndex++;
         }
   

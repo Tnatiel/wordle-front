@@ -28,6 +28,7 @@ const keyboardSlice = createSlice({
     initialState,
     reducers: {
         setButtonClassname(state, action: PayloadAction<{id: string, className: string}>) {
+            console.log(action.payload)
             for (let i = 0; i < 3; i++) {
                 let button = state.rows[i].find(b => b.id === action.payload.id);
                 if (button) {

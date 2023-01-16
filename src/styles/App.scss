@@ -46,6 +46,7 @@ main {
 }
 .keyboard {
     @include keyboard-def;
+    @include letter-check;
 }
 
 
