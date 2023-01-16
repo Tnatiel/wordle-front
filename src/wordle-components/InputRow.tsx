@@ -6,11 +6,16 @@ import { updateNextInput, updateInputValue } from "../redux/features/InputState"
 import { addCorrectLetter, addWrongLetter, addPresentLetter } from "../redux/features/LettersState"; 
 import { useInputRef } from "../custom-hooks/useInputRefs";
 import { useEffect } from 'react';
+import { addGussedLetter } from "../redux/features/GameState";
 
 
 export function InputRow({rowIndex: rowNumber}: {rowIndex: number}) {
     const { inputs } = useInputRow(rowNumber);
-    const currentInput = useAppSelector(state => state.inputs.currentInput)
+    const currentInput = useAppSelector(state => state.inputs.currentInput);
+    const correct = useAppSelector(state => state.letters.correct)
+    const present = useAppSelector(state => state.letters.present)
+    const wrong = useAppSelector(state => state.letters.wrong)
+    const currentGuess = useAppSelector(state => state.game.)
     const inputsRefs = useInputRef();
     const dispatch = useAppDispatch();
     const word = useAppSelector(state => state.game.word)
@@ -23,11 +28,22 @@ export function InputRow({rowIndex: rowNumber}: {rowIndex: number}) {
     }, [currentInput, inputsRefs]);
 
     const handleInputChange = (e: Partial<Event>) => {
-        const value = (e.target as HTMLInputElement).value;
-        checkAndUpdateLetters(value);
+        const letter = (e.target as HTMLInputElement).value;
+        addToGuessedLetterBank(letter);
+        dispatch(addGussedLetter(letter))
         dispatch(updateNextInput())
 
     };
+
+    const addToGuessedLetterBank = (letter: string) => {
+        if (letter === word[currentInput]) dispatch(addCorrectLetter(letter));
+        else if (word.includes(letter))  dispatch(addPresentLetter(letter));
+        else dispatch(addWrongLetter(letter));
+        console.log('>>> correct: ', correct)
+        console.log('>>> present: ', present)
+        console.log('>>> wrong; ', wrong)
+        
+    }
 
     const checkAndUpdateLetters = (value: string) => {
         if (value === word[currentInput]) {

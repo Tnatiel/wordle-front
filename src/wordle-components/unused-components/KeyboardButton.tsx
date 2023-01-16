@@ -1,6 +1,6 @@
-import { useInputRef } from "../custom-hooks/useInputRefs";
-import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
-import { updateInputValue } from "../redux/features/InputState";
+import { useInputRef } from "../../custom-hooks/useInputRefs";
+import { useAppDispatch, useAppSelector } from "../../redux/app/hooks";
+import { updateInputValue } from "../../redux/features/InputState";
 export function KeyboardButton({letter}: {letter: string}) {
 
     const currentInputId = useAppSelector(state => state.inputs.currentInput);

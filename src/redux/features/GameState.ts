@@ -4,14 +4,12 @@ export interface GameState {
     word: string,
     win: boolean,
     lose: boolean,
-    currentGuess: string[],
 };
 
 const initialState: GameState = {
     word: "moral",
     win: false,
     lose: false,
-    currentGuess: [],
 };
 
 const gameSlice = createSlice({
@@ -30,11 +28,9 @@ const gameSlice = createSlice({
         resetGuess: (state) => {
             state.currentGuess = [];
         },
-        addGussedLetter: (state, action: PayloadAction<string>) => {
-            state.currentGuess.push(action.payload)
-        },
+        
     }
 });
 
-export const { setWord,  setFailure, setSuccess, addGussedLetter} = gameSlice.actions;
+export const { setWord,  setFailure, setSuccess} = gameSlice.actions;
 export default gameSlice.reducer;

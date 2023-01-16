@@ -1,7 +1,7 @@
-import { useInputRef } from "../custom-hooks/useInputRefs";
-import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
-import { updateNextInput, updateInputValue } from "../redux/features/InputState";
-import { addCorrectLetter, addWrongLetter, addPresentLetter } from "../redux/features/LettersState"; 
+import { useInputRef } from "../../custom-hooks/useInputRefs";
+import { useAppDispatch, useAppSelector } from "../../redux/app/hooks";
+import { updateNextInput, updateInputValue } from "../../redux/features/InputState";
+import { addCorrectLetter, addWrongLetter, addPresentLetter } from "../../redux/features/LettersState"; 
 import { useEffect } from 'react';
 
 interface InputBoxProps {
