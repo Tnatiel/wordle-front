@@ -46,7 +46,6 @@ const lettersSlice = createSlice({
             state.currentGuess = [];
             state.currentGuessclasses = []
         },
-
     }
 })
 

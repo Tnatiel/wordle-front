@@ -113,22 +113,22 @@ Top Bar
 * [x] After the last letter check the input against the select word and mark the inputs
     * Bull => green background
     * Cow => yellow background
-* [ ] Mark all guessed letters in the virtual keyboard
-* [ ] If all letters are Bull display dialog "success"
+* [x] Mark all guessed letters in the virtual keyboard
+* [] If all letters are Bull display dialog "success"
 
 ### Full Front End Game Logic
 
-* [ ] For all lines
+* [x] For all lines
     * [ ] After finish line logic, put the focus on the first character of the next line
-    * [ ] Do single line logic
+    * [x] Do single line logic
 * [ ] If no success, display dialog "fail"
 
 ### Users
 
-* [ ] login link/button at the topbar
-    * [ ] Show modal with login form (name) and login button that close the modal
-    * [ ] Keep the username locally (browser)
-* [ ] Change the welcome screen to greet the user by his name if any, else use "guest"
+* [x] login link/button at the topbar
+    * [x] Show modal with login form (name) and login button that close the modal
+    * [x] Keep the username locally (browser)
+* [x] Change the welcome screen to greet the user by his name if any, else use "guest"
 * [ ] After login, the topbar should contain the username and a logout link/button
 * [ ] The logout link/button should delete username locally
 

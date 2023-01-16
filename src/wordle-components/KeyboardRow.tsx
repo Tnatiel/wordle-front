@@ -6,7 +6,7 @@ import { addInputLetter, updateNextInput, updateBackInput, updateNextRow, remove
 import { addCorrectLetter, addWrongLetter, addPresentLetter, removeGussedLetter, resetGuess } from "../redux/features/LettersState"; 
 import { addGussedLetter } from "../redux/features/LettersState";
 import { setFailure, setSuccess } from "../redux/features/GameState";
-import { setButtonClassname } from "../redux/features/KeyboardState";
+import { setButtonClassname, setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
 
 
 
@@ -41,15 +41,17 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
                 }, 100);
             }
             addInputClasses(currentGuessClassNames);
-            addKeyboardButtonsClasses(currentGuess, currentGuessClassNames)
+            addClasses({correct, present, wrong})
+            // addKeyboardButtonsClasses(currentGuess, currentGuessClassNames)
             manageCheckGuess()
             dispatch(updateNextRow())
             dispatch(resetGuess())
+            dispatch(updateBackInput());
+            dispatch(updateNextInput());
             return;            
         }
         if (currentGuess.length === 5) return
         // TODO  handle enter and delete
-        console.log(currentGuessClassNames)
         
         dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
         addToGuessedLetterBank(letter);
@@ -64,7 +66,7 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
             dispatch(addCorrectLetter(letter));
             return;
         }
-        if (word.includes(letter)) { 
+        if (word.toLocaleUpperCase().includes(letter)) { 
             dispatch(addPresentLetter(letter));
             return;
         } 
@@ -72,10 +74,22 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
 
     }
 
+    interface ClassesColors {
+        correct: string[],
+        present: string[],
+        wrong: string[],
+    }
+
+    const addClasses = (classes: ClassesColors) => {
+        const {correct, present, wrong} = classes
+        dispatch(setWrongClass(wrong));
+        dispatch(setPresentClass(present));
+        dispatch(setCorrectClass(correct));
+    }
+
     
 
     const manageCheckGuess = () => {
-        console.log(currentRow)
         if (currentGuess.join('') === word.toLocaleUpperCase()) {
             dispatch(setSuccess(true));
             setTimeout(() => {
@@ -104,6 +118,7 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
   
     }
     const addKeyboardButtonsClasses = (ids: string[], classNames: string[]) => {
+
         let classIndex = 0;
         for (const button of ids) {
             dispatch(setButtonClassname({id: button, className: classNames[classIndex]}))
