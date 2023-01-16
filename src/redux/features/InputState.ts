@@ -35,10 +35,19 @@ const inputSlice = createSlice({
     initialState,
     reducers: {
         updateInputValue(state, action: PayloadAction<{inputIndex: number, rowNumber:number, value: string}>) {
-            state.rows[state.currentRow][state.currentInput].value = action.payload.value;
+           
+            const inputRow = state.rows[state.currentRow]
+            const input = inputRow.filter(ipt => ipt.id === action.payload.inputIndex)[0]
+            input.value = action.payload.value;
+            console.log(input.id)
+            
+
         },
         updateNextInput(state) {
             state.currentInput += 1
+        },
+        updateBackInput(state) {
+            state.currentInput -= 1
         },
         updateNextRow(state) {
             state.currentRow += 1
@@ -55,5 +64,5 @@ const inputSlice = createSlice({
     }
 });
 
-export const {updateNextInput, updateInputValue} = inputSlice.actions;
+export const {updateNextInput, updateInputValue, updateNextRow, updateInputClassName, updateBackInput} = inputSlice.actions;
 export default inputSlice.reducer;

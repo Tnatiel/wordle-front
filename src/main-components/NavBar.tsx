@@ -19,7 +19,7 @@ function NavBar({ openInstructionsModal, openSignInModal }: { openInstructionsMo
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-          <Button onClick={showHome} variant='dark'>
+            <Button onClick={showHome} variant='dark'>
               Home
              </Button>
             <Button variant='dark' onClick={openSignInModal}>

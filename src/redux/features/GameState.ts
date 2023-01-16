@@ -25,9 +25,7 @@ const gameSlice = createSlice({
         setFailure: (state, action: PayloadAction<boolean>) => {
             state.lose = action.payload;
         },
-        resetGuess: (state) => {
-            state.currentGuess = [];
-        },
+
         
     }
 });

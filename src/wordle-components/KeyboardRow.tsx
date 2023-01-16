@@ -2,7 +2,7 @@ import { BoardsContext, RefsApi } from "../providors/boardslogic-context";
 import {useContext} from 'react';
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
 import { useKeyboardRow } from "../custom-hooks/useKeyboardRow";
-import { updateInputValue, updateNextInput } from "../redux/features/InputState";
+import { updateInputValue, updateNextInput, updateBackInput, updateNextRow } from "../redux/features/InputState";
 
 
 
@@ -14,11 +14,21 @@ export function KeyboardRow({rowNumber}: {rowNumber: number}) {
     const buttons = useKeyboardRow(rowNumber);
     const handleClick = (event: Partial<Event>) => {
         const letter = (event.target as HTMLButtonElement).id;
-        
+        if (currentInputId % 5 === 0 && currentInputId !==0) {
+            dispatch(updateNextRow())
+        }
+        if (letter === 'Del') {
+            dispatch(updateBackInput())
+            dispatch(updateInputValue({inputIndex: currentInputId, rowNumber, value: ''}))
+            return
+        }
+        if (letter === 'Enter') {
+            
+        }
         // TODO  handle enter and delete
-        console.log(currentInputId)
         dispatch(updateInputValue({inputIndex: currentInputId, rowNumber, value: letter}))
         dispatch(updateNextInput())
+        
     }
 
 

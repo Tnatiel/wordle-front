@@ -5,6 +5,7 @@ export interface GuessedLetters {
     present: string[],
     wrong: string[],
     currentGuess: string[],
+    currentGuessclasses: string[],
 
 }
 
@@ -13,6 +14,7 @@ export interface GuessedLetters {
     present: [],
     wrong: [],
     currentGuess: [],
+    currentGuessclasses: [],
 
 }
 
@@ -23,18 +25,25 @@ const lettersSlice = createSlice({
     reducers: {
         addCorrectLetter: (state, action: PayloadAction<string>) => {
             state.correct.push(action.payload);
+            state.currentGuessclasses.push('correct');
         },
         addPresentLetter: (state, action: PayloadAction<string>) => {
             state.present.push(action.payload);
+            state.currentGuessclasses.push('present');
         },
         addWrongLetter: (state, action: PayloadAction<string>) => {
             state.wrong.push(action.payload);
+            state.currentGuessclasses.push('correct');
         },
         addGussedLetter: (state, action: PayloadAction<string>) => {
             state.currentGuess.push(action.payload)
         },
+        resetGuess: (state) => {
+            state.currentGuess = [];
+            state.currentGuessclasses = []
+        },
     }
 })
 
-export const { addCorrectLetter, addWrongLetter, addPresentLetter, addGussedLetter} = lettersSlice.actions;
+export const { addCorrectLetter, addWrongLetter, addPresentLetter, addGussedLetter, resetGuess} = lettersSlice.actions;
 export default lettersSlice.reducer;
