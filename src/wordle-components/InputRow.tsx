@@ -13,9 +13,6 @@ export function InputRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: str
     const { inputs } = useInputRow(rowIndex);
     const currentInput = useAppSelector(state => state.inputs.currentInput);
     const currentRow = useAppSelector(state => state.inputs.currentRow);
-    const correct = useAppSelector(state => state.letters.correct)
-    const present = useAppSelector(state => state.letters.present)
-    const wrong = useAppSelector(state => state.letters.wrong)
     const gameWon = useAppSelector(state => state.game.win)
     const currentGuess = useAppSelector(state => state.letters.currentGuess)
     const currentGuessClassNames = useAppSelector(state => state.letters.currentGuessclasses)

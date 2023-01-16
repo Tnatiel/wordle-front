@@ -75,17 +75,19 @@ export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: 
     const manageCheckGuess = () => {
         console.log(currentRow)
         if (currentGuess.join('') === word.toLocaleUpperCase()) {
-            setSuccess(true);
+            dispatch(setSuccess(true));
             setTimeout(() => {
-                alert('win')
+                alert('win');
             }, 200);
+            return
             
         } 
         if (currentRow === 5) {
-            setFailure(true)
+            dispatch(setFailure(true));
             setTimeout(() => {
-                alert('Lose')
+                alert('Lose');
             }, 200);
+            return
             
         }
     }
