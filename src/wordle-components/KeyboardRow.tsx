@@ -14,6 +14,7 @@ export function KeyboardRow({rowNumber}: {rowNumber: number}) {
     const buttons = useKeyboardRow(rowNumber);
     const handleClick = (event: Partial<Event>) => {
         const letter = (event.target as HTMLButtonElement).id;
+        // TODO  handle enter and delete
         console.log(currentInputId)
         dispatch(updateInputValue({inputIndex: currentInputId, rowNumber, value: letter}))
         dispatch(updateNextInput())
