@@ -76,7 +76,7 @@ const keyboardSlice = createSlice({
             for (let j = 0; j < letters.length; j++) {
                 const button = getButton(letters[j], state.rows)
                 if (button) {
-                    button.className = 'correct'
+                    button.className = 'present'
                 } else console.log(`button: ${letters[j]} don\'t exist`)
                 
             }
@@ -84,14 +84,10 @@ const keyboardSlice = createSlice({
         setWrongClass(state, action: PayloadAction<string[]>) {
             const letters = action.payload;
             for (let j = 0; j < letters.length; j++) {
-                for (let i = 0; i < 3; i++) {
-                    let button = state.rows[i].find(b => b.id === letters[j]);
-                    
-                    if (!button) console.log('dont exist')
-                    button!.className = 'wrong';
-                    break
-                }
-                
+                const button = getButton(letters[j], state.rows)
+                if (button) {
+                    button.className = 'wrong'
+                } else console.log(`button: ${letters[j]} don\'t exist`)
                 
             }
         },
