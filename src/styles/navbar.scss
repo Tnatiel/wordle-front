@@ -1,0 +1,11 @@
+
+
+@mixin navbar-def {
+    padding-left:  1rem;
+    padding-right:  1rem;
+    width:  75vw;
+    
+    .info {
+        justify-self: flex-end;
+    }
+}
