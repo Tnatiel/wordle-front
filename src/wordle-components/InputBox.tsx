@@ -5,11 +5,12 @@ import { addCorrectLetter, addWrongLetter, addPresentLetter } from "../redux/fea
 import { useEffect } from 'react';
 
 interface InputBoxProps {
-    id: number;
-    value: string;
+    id: number,
+    value: string,
+    inputClassName: string,
 }
 
-export const InputBox = ({id, value}: InputBoxProps) => {
+export const InputBox = ({id, value, inputClassName}: InputBoxProps) => {
     
     const currentInput = useAppSelector(state => state.inputs.currentInput)
     const inputsRefs = useInputRef();
@@ -44,7 +45,7 @@ export const InputBox = ({id, value}: InputBoxProps) => {
     return (
         <input
             id={id.toString()}
-            className='ur-input'
+            className={`ur-input ${inputClassName}`}
             autoComplete={'off'}
             maxLength={1}
             onInput={(e) => handleInputChange(e)}

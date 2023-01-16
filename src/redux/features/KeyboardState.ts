@@ -38,3 +38,7 @@ const keyboardSlice = createSlice({
         }
     }
 });
+
+
+export const {setButtonClassname} = keyboardSlice.actions;
+export default keyboardSlice.reducer;

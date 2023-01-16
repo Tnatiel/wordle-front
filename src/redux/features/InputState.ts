@@ -29,7 +29,7 @@ const initialState: InputsState = {
 }
 
 const inputSlice = createSlice({
-    name: 'input',
+    name: 'inputs',
     initialState,
     reducers: {
         updateInputValue(state, action: PayloadAction<{inputIndex: number, value: string}>) {
