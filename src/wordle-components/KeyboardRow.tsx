@@ -2,35 +2,104 @@ import { BoardsContext, RefsApi } from "../providors/boardslogic-context";
 import {useContext} from 'react';
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
 import { useKeyboardRow } from "../custom-hooks/useKeyboardRow";
-import { updateInputValue, updateNextInput, updateBackInput, updateNextRow } from "../redux/features/InputState";
+import { addInputLetter, updateNextInput, updateBackInput, updateNextRow, removeInputLetter, updateInputClassName } from "../redux/features/InputState";
+import { addCorrectLetter, addWrongLetter, addPresentLetter, removeGussedLetter, resetGuess } from "../redux/features/LettersState"; 
+import { addGussedLetter } from "../redux/features/LettersState";
+import { setFailure, setSuccess } from "../redux/features/GameState";
 
 
 
-export function KeyboardRow({rowNumber}: {rowNumber: number}) {
+export function KeyboardRow({ rowIndex, refs}: {rowIndex: number, refs: { [key: string]: React.RefObject<HTMLInputElement>;}}) {
+
+
     const currentInputId = useAppSelector(state => state.inputs.currentInput);
-
-    const refs  = useContext(BoardsContext) as RefsApi;
+    const word = useAppSelector(state => state.game.word)
     const dispatch = useAppDispatch();
-    const buttons = useKeyboardRow(rowNumber);
+    const buttons = useKeyboardRow(rowIndex);
+    const currentGuess = useAppSelector(state => state.letters.currentGuess)
+    const currentGuessClassNames = useAppSelector(state => state.letters.currentGuessclasses)
+    const correct = useAppSelector(state => state.letters.correct)
+    const present = useAppSelector(state => state.letters.present)
+    const wrong = useAppSelector(state => state.letters.wrong)
+    const currentRow = useAppSelector(state => state.inputs.currentRow);
+
     const handleClick = (event: Partial<Event>) => {
         const letter = (event.target as HTMLButtonElement).id;
-        if (currentInputId % 5 === 0 && currentInputId !==0) {
-            dispatch(updateNextRow())
-        }
+        
         if (letter === 'Del') {
             dispatch(updateBackInput())
-            dispatch(updateInputValue({inputIndex: currentInputId, rowNumber, value: ''}))
+            dispatch(removeInputLetter())
+            dispatch(removeGussedLetter())
             return
         }
         if (letter === 'Enter') {
-            
+            if (currentGuess.length < 5) {
+                setTimeout(() => {
+                    alert('not enough letters')
+                    return;
+                }, 100);
+            }
+            addInputClasses(currentGuessClassNames);
+            manageCheckGuess()
+            dispatch(updateNextRow())
+            dispatch(resetGuess())
+            return;            
         }
+        if (currentGuess.length === 5) return
         // TODO  handle enter and delete
-        dispatch(updateInputValue({inputIndex: currentInputId, rowNumber, value: letter}))
-        dispatch(updateNextInput())
+        console.log(currentGuessClassNames)
+        
+        dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
+        addToGuessedLetterBank(letter);
+        dispatch(addGussedLetter(letter));
+        dispatch(updateNextInput());
         
     }
 
+    const addToGuessedLetterBank = (letter: string) => {
+        
+        if (letter === word[currentInputId % 5].toLocaleUpperCase())  {
+            dispatch(addCorrectLetter(letter));
+            return;
+        }
+        if (word.includes(letter)) { 
+            dispatch(addPresentLetter(letter));
+            return;
+        } 
+        dispatch(addWrongLetter(letter));
+
+    }
+
+    const checkGuess = (guess: string, word: string) => guess.toLocaleUpperCase() === word.toLocaleLowerCase()
+
+    const manageCheckGuess = () => {
+        console.log(currentRow)
+        if (currentGuess.join('') === word.toLocaleUpperCase()) {
+            setSuccess(true);
+            setTimeout(() => {
+                alert('win')
+            }, 200);
+            
+        } 
+        if (currentRow === 5) {
+            setFailure(true)
+            setTimeout(() => {
+                alert('Lose')
+            }, 200);
+            
+        }
+    }
+
+
+    const addInputClasses = (classNames: string[]) => {
+
+        let classIndex = 0;
+        for (let i = 5; i > 0; i--) {
+            dispatch(updateInputClassName({id: currentInputId - i, className: classNames[classIndex]}))
+            classIndex++;
+        }
+  
+    }
 
 
     return (

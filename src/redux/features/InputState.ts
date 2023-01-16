@@ -34,20 +34,26 @@ const inputSlice = createSlice({
     name: 'inputs',
     initialState,
     reducers: {
-        updateInputValue(state, action: PayloadAction<{inputIndex: number, rowNumber:number, value: string}>) {
-           
+        addInputLetter(state, action: PayloadAction<{inputIndex: number,  value: string}>) {
+            
             const inputRow = state.rows[state.currentRow]
             const input = inputRow.filter(ipt => ipt.id === action.payload.inputIndex)[0]
             input.value = action.payload.value;
-            console.log(input.id)
-            
-
+        },
+        removeInputLetter(state) {
+            const inputRow = state.rows[state.currentRow];
+            const input = inputRow.filter(ipt => ipt.id === state.currentInput)[0]
+            input.value = '';
         },
         updateNextInput(state) {
             state.currentInput += 1
         },
         updateBackInput(state) {
-            state.currentInput -= 1
+            if (state.currentInput === 0) {
+                state.currentInput = 0;
+                return
+            }
+            state.currentInput -= 1;
         },
         updateNextRow(state) {
             state.currentRow += 1
@@ -64,5 +70,10 @@ const inputSlice = createSlice({
     }
 });
 
-export const {updateNextInput, updateInputValue, updateNextRow, updateInputClassName, updateBackInput} = inputSlice.actions;
+export const {updateNextInput, removeInputLetter, addInputLetter, updateNextRow, updateInputClassName, updateBackInput} = inputSlice.actions;
 export default inputSlice.reducer;
+
+
+
+// TODO stop case for disabled row
+// TODO stop case for disabled row

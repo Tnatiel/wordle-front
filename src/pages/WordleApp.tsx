@@ -10,10 +10,10 @@ export function WordleApp() {
     return (
         <main>
             <Header />
-            <BoardsContext.Provider value={inputsRefs}> 
-                <InputBoard />
-                <Keyboard  />
-            </BoardsContext.Provider>
+            {/* <BoardsContext.Provider value={inputsRefs}>  */}
+                <InputBoard refs={inputsRefs}/>
+                <Keyboard  refs={inputsRefs}/>
+            {/* </BoardsContext.Provider> */}
         </main>
     )
 }

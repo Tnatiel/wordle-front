@@ -33,17 +33,22 @@ const lettersSlice = createSlice({
         },
         addWrongLetter: (state, action: PayloadAction<string>) => {
             state.wrong.push(action.payload);
-            state.currentGuessclasses.push('correct');
+            state.currentGuessclasses.push('wrong');
         },
         addGussedLetter: (state, action: PayloadAction<string>) => {
             state.currentGuess.push(action.payload)
+        },
+        removeGussedLetter: (state) => {
+            state.currentGuess.pop();
+            state.currentGuessclasses.pop()
         },
         resetGuess: (state) => {
             state.currentGuess = [];
             state.currentGuessclasses = []
         },
+
     }
 })
 
-export const { addCorrectLetter, addWrongLetter, addPresentLetter, addGussedLetter, resetGuess} = lettersSlice.actions;
+export const { removeGussedLetter, addCorrectLetter, addWrongLetter, addPresentLetter, addGussedLetter, resetGuess} = lettersSlice.actions;
 export default lettersSlice.reducer;
