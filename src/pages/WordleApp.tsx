@@ -8,6 +8,7 @@ import { GameDialog } from "../wordle-components/dialog/GameDialog";
 
 
 export function WordleApp() {
+    
     const inputsRefs = useInputRef();
     const keyboardRefs = useKeyboardRefs()
     const allRefs = {inputs: inputsRefs, keyboard: keyboardRefs}
