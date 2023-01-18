@@ -2,13 +2,13 @@
 # Componets sepreration
 
 ## Dumb:
-- InstructionsModal
-- NavBar
-- SignInModal
-- Keyboard
-- KeyboardRow
-- InputBoard
-- InputRow
+- [x] InstructionsModal
+- [x] NavBar
+- [x] SignInModal
+- [] Keyboard
+- [] KeyboardRow
+- [] InputBoard
+- [] InputRow
 
 ### Dumb components are only responsible for rendering the UI based on the props that they receive.
 * [ ] Move the state and logic out of these components, and pass the data and functions they need as props.

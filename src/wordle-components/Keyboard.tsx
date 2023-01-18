@@ -1,5 +1,4 @@
 import { KeyboardRow } from "./KeyboardRow";
-import { useKeyboardRefs } from "../custom-hooks/useKeyboardRefs";
 
 
 export interface RefsProps {
@@ -13,16 +12,18 @@ export interface RefsProps {
             };
         };
     }
+    handleInput: (letter: string) => void;
+
 }
 
-export function Keyboard({refs}: RefsProps) {
+export function Keyboard({refs, handleInput}: RefsProps) {
 
 
     return (
         <div className="keyboard">
-            <KeyboardRow  refs={refs} rowIndex={0} />
-            <KeyboardRow  refs={refs} rowIndex={1} />
-            <KeyboardRow  refs={refs} rowIndex={2} />
+            <KeyboardRow handleInput={handleInput}  refs={refs} rowIndex={0} />
+            <KeyboardRow handleInput={handleInput}   refs={refs} rowIndex={1} />
+            <KeyboardRow handleInput={handleInput}   refs={refs} rowIndex={2} />
         </div>
     )
 }

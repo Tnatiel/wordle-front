@@ -40,10 +40,10 @@ export function InputRow({ rowIndex, refs}: RowsProps) {
     
     useEffect(() => {
         if (currentInputId > 29) return;
-        
+        // if (currentInputId % 5 === 0) return; 
+        // TODO improve if to check if row been checked
         if (currentInputId !== undefined) {
-            const currentRef = refs.inputs[currentInputId].current
-
+            const currentRef = refs.inputs[currentInputId].current;
             currentRef?.focus();
         }
     }, [currentInputId, inputs, refs]);

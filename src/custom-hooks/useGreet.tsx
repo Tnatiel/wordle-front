@@ -16,6 +16,8 @@ export const useGreet = () => {
           setGreet(localStorage.getItem('name')!)
         }
       }
+    
+      const deleteUser = () => localStorage.clear()
 
-      return { greet, formRef, getUserData}
+      return { greet, formRef, getUserData, deleteUser }
 }
