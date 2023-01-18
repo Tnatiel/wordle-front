@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import {BsInfoCircle} from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router-dom';
 
-function NavBar({ openInstructionsModal, openSignInModal }: { openInstructionsModal: () => void, openSignInModal: () => void}) {
+function NavBar({ openInstructionsModal, openSignInModal,  }: { openInstructionsModal: () => void, openSignInModal: () => void}) {
 
   let navigate = useNavigate();
 
@@ -23,9 +23,17 @@ function NavBar({ openInstructionsModal, openSignInModal }: { openInstructionsMo
             <Button onClick={showHome} variant='dark'>
               Home
              </Button>
+            { 
+            localStorage.getItem('name') === null ? 
+            
             <Button variant='dark' onClick={openSignInModal}>
               Sign in
             </Button>
+            :
+              <Button variant='dark' onClick={() => localStorage.clear()}>
+                logout
+              </Button>
+            }
           </Nav>
           <Nav>
             <Button onClick={openInstructionsModal} variant='dark'>

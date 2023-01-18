@@ -14,7 +14,7 @@ function App() {
     localStorage.clear()
   })
   
-  const { greet, formRef, getUserData } = useGreet()
+  const {  formRef, addUserData } = useGreet()
   const [showInsructions, setShowInstructions] = useState(false);
   const handleInstructionsClose = (): void => setShowInstructions(false);
   const handleInstructionsShow = (): void => setShowInstructions(true);
@@ -22,9 +22,10 @@ function App() {
   const [showSignIn, setShowSignIn] = useState(false);
   const handleSignInClose = (): void => setShowSignIn(false);
   const handleSignInShow = (): void => setShowSignIn(true);
-
+  const userName = localStorage.getItem('name') !== null ?
+  localStorage.getItem('name') : 'Guest'
   const handleSubmit = () => {
-    getUserData();
+    addUserData();
     handleSignInClose()
   }
   
@@ -45,7 +46,7 @@ function App() {
         formRef={formRef}
       />
       <Routes>
-        <Route path='*'  element={<HomePage user={greet} />  } />
+        <Route path='*'  element={<HomePage user={userName as string} />  } />
         <Route path='wordle'  element={<WordleApp />}  />
       </Routes>
     </>
