@@ -1,26 +1,6 @@
 import { useKeyboardRow } from "../custom-hooks/useKeyboardRow";
+import { KeyRowsProps } from "./wordle-types";
 
-
-export interface ClassesColors {
-    correct: string[],
-    present: string[],
-    wrong: string[],
-}
-
-export interface KeyRowsProps {
-    rowIndex: number;
-    refs: {
-        inputs: {
-            [key: string]: React.RefObject<HTMLInputElement>;
-        };
-        keyboard: {
-            allKeyboardRefs: {
-                [x: string]: React.RefObject<HTMLButtonElement>;
-            };
-        };
-    }
-    handleInput: (letter: string) => void;
-}
 
 export function KeyboardRow({ rowIndex, refs, handleInput }: KeyRowsProps) {
 

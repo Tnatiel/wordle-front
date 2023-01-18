@@ -1,8 +1,8 @@
 import { InputRow } from "./InputRow";
-import { RefsProps } from "./Keyboard";
+import { BoardsProps } from "./wordle-types";
 
 
-export const InputBoard = ({refs}: RefsProps) => {
+export const InputBoard = ({refs}: BoardsProps) => {
     
     return (
         <div className="user-input-sec">

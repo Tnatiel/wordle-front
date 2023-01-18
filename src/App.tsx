@@ -22,6 +22,11 @@ function App() {
   const [showSignIn, setShowSignIn] = useState(false);
   const handleSignInClose = (): void => setShowSignIn(false);
   const handleSignInShow = (): void => setShowSignIn(true);
+
+  const handleSubmit = () => {
+    getUserData();
+    handleSignInClose()
+  }
   
   return (
     <>
@@ -36,7 +41,7 @@ function App() {
       <SignInModal 
         showSignIn={showSignIn} 
         closeSignInModal={handleSignInClose}
-        handleSubmit={getUserData}
+        handleSubmit={handleSubmit}
         formRef={formRef}
       />
       <Routes>

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { KeyboardButton, KeyboardState } from '../types';
+import { KeyboardButton, KeyboardState } from '../redux-types';
 
 
 

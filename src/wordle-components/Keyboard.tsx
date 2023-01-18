@@ -1,22 +1,10 @@
 import { KeyboardRow } from "./KeyboardRow";
+import { BoardsProps } from "./wordle-types";
 
 
-export interface RefsProps {
-    refs: {
-        inputs: {
-            [key: string]: React.RefObject<HTMLInputElement>;
-        };
-        keyboard: {
-            allKeyboardRefs: {
-                [x: string]: React.RefObject<HTMLButtonElement>;
-            };
-        };
-    }
-    handleInput: (letter: string) => void;
 
-}
 
-export function Keyboard({refs, handleInput}: RefsProps) {
+export function Keyboard({refs, handleInput}: BoardsProps) {
 
 
     return (

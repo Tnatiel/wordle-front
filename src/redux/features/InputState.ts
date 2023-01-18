@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { InputsState } from '../types';
+import { InputsState } from '../redux-types';
 
 
 

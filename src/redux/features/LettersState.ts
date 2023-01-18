@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { GuessedLetters } from '../types';
+import { GuessedLetters } from '../redux-types';
 
 
 

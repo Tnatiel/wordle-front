@@ -6,23 +6,8 @@ import { moveToNextInput,  updateNextRow, updateInputClassName, moveBackInput, r
 import { addCorrectLetter, addWrongLetter, addPresentLetter, resetGuess, removeGussedLetter } from "../redux/features/LettersState"; 
 import { useEffect } from 'react';
 import { addGussedLetter } from "../redux/features/LettersState";
-import { setSuccess, setFailure } from "../redux/features/GameState";
 import {  setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
-import { ClassesColors } from "./KeyboardRow";
-
-export interface RowsProps {
-    rowIndex: number;
-    refs: {
-        inputs: {
-            [key: string]: React.RefObject<HTMLInputElement>;
-        };
-        keyboard: {
-            allKeyboardRefs: {
-                [x: string]: React.RefObject<HTMLButtonElement>;
-            };
-        };
-    }
-}
+import { ClassesColors, RowsProps } from "./wordle-types";
 
 
 export function InputRow({ rowIndex, refs}: RowsProps) {

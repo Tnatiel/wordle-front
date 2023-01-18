@@ -9,12 +9,9 @@ import { addInputLetter, moveToNextInput, moveBackInput, updateNextRow, removeIn
 import { addCorrectLetter, addWrongLetter, addPresentLetter, removeGussedLetter, resetGuess, addGussedLetter } from "../redux/features/LettersState"; 
 import {  setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
 import { setFailure, setSuccess } from "../redux/features/GameState";
+import { ClassesColors } from "../wordle-components/wordle-types";
 
-export interface ClassesColors {
-    correct: string[],
-    present: string[],
-    wrong: string[],
-}
+
 
 export function WordleApp() {
     
