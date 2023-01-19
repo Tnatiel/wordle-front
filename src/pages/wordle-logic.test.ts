@@ -1,9 +1,13 @@
 import { expect } from "chai";
-import { beforeEach, describe } from "mocha"
+import { describe } from "mocha"
+import { store } from "redux/app/store";
+import { addInputClasses } from "wordle-components/wordle-logic";
 
 
 
 describe('addInputClasses', () => {
+
+    
     it('should add the input row classes', () => {
 
         it('should add class name to each input', () => {
@@ -16,9 +20,9 @@ describe('addInputClasses', () => {
             ]
             
             const classes = ['correct', 'present', 'wrong', 'correct', 'correct'];
-            const mockDispatch = (action: any) => {
-                inputs[action.id].classname = action.className;
-            };
+            const mockDispatch = store.dispatch;
+
+            addInputClasses(mockDispatch, 0, classes)
 
             expect(inputs[0].classname).equals('correct');
             expect(inputs[1].classname).equals('present');

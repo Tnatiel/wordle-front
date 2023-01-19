@@ -5,7 +5,7 @@ export interface ClassesColors {
     wrong: string[],
 }
 
-export interface KeyRowsProps { // FIXME TO BE RowProps
+export interface RowsProps { 
     rowIndex: number;
     refs: {
         inputs: {

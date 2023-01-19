@@ -1,13 +1,11 @@
-import { stat } from "fs";
 import { useEffect } from "react";
 import { useAppSelector } from "../redux/app/hooks";
-import { InputBox } from "../redux/redux-types";
 import { InputRow } from "./InputRow";
 import { findInputObjById } from "./wordle-logic";
 import { BoardsProps } from "./wordle-types";
 
 
-export const InputBoard = ({refs}: BoardsProps) => {
+export const InputBoard = ({refs, handleInput}: BoardsProps) => {
 
     const currentInputId = useAppSelector(state => state.inputs.currentInputId);
     const currentRow = useAppSelector(state => state.inputs.currentRowIndex);
@@ -25,7 +23,7 @@ export const InputBoard = ({refs}: BoardsProps) => {
         }
 
         if (currentInputId !== undefined) {
-            console.log('input exist: ', currentInputId)
+            // console.log('input exist: ', currentInputId)
             const currentRef = refs.inputs[currentInputId].current;
             currentRef?.focus();
         }
@@ -33,12 +31,12 @@ export const InputBoard = ({refs}: BoardsProps) => {
     
     return (
         <div className="user-input-sec">
-            <InputRow refs={refs} rowIndex={0} />
-            <InputRow refs={refs} rowIndex={1} />
-            <InputRow refs={refs} rowIndex={2} />
-            <InputRow refs={refs} rowIndex={3} />
-            <InputRow refs={refs} rowIndex={4} />
-            <InputRow refs={refs} rowIndex={5} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={0} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={1} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={2} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={3} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={4} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={5} />
         </div>
     )
 }

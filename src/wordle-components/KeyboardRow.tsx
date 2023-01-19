@@ -1,8 +1,8 @@
 import { useKeyboardRow } from "../custom-hooks/useKeyboardRow";
-import { KeyRowsProps } from "./wordle-types";
+import { RowsProps } from "./wordle-types";
 
 
-export function KeyboardRow({ rowIndex, refs, handleInput }: KeyRowsProps) {
+export function KeyboardRow({ rowIndex, refs, handleInput }: RowsProps) {
 
 
     

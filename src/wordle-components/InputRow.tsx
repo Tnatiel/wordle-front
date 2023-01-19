@@ -1,12 +1,24 @@
 
 
+import { useEffect } from "react";
 import { useInputRow } from "../custom-hooks/useInputRow";
 import {  useAppSelector } from "../redux/app/hooks";
 import { InputBox } from "../redux/redux-types";
 import { RowsProps } from "./wordle-types";
 
 
-export function InputRow({ rowIndex, refs}: RowsProps) {
+export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
+    
+    const handleKeypress = (e: Partial<Event>) => {
+        const input = e.target as HTMLInputElement;
+        let letter = input.value.toUpperCase()
+        console.log(letter)
+        if (letter) handleInput(letter); console.log(letter)
+        console.log(currentInputId)
+    }
+
+
+
     const { inputs } = useInputRow(rowIndex);
     const currentInputId = useAppSelector(state => state.inputs.currentInputId);
     const gameWon = useAppSelector(state => state.game.win)
@@ -34,11 +46,12 @@ export function InputRow({ rowIndex, refs}: RowsProps) {
                 id={input.id.toString()}
                 key={input.id}
                 className={`ur-input ${input.className}`}
-                autoComplete={'off'}
+                autoComplete="off"
                 maxLength={1}
                 ref={refs.inputs[input.id]}
                 defaultValue={input.value}
                 disabled={shouldKeepFocus(input)}
+                // onInput={(e: Partial<Event>) => handleKeypress(e)}
                 />
             ))}
         </div>

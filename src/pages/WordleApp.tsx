@@ -5,11 +5,8 @@ import { InputBoard } from "../wordle-components/InputBoard";
 import { Keyboard } from "../wordle-components/Keyboard";
 import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
-import { addInputLetter, moveToNextInput, moveBackInput, updateNextRow, removeInputLetter, updateInputClassName } from "../redux/features/InputState";
-import { addCorrectLetter, addWrongLetter, addPresentLetter, removeGussedLetter, resetGuess, addGussedLetter } from "../redux/features/LettersState"; 
-import {  setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
-import { setFailure, setSuccess } from "../redux/features/GameState";
-import { ClassesColors } from "../wordle-components/wordle-types";
+import { addInputLetter, moveToNextInput, moveBackInput, updateNextRow, removeInputLetter } from "../redux/features/InputState";
+import {  removeGussedLetter, resetGuess, addGussedLetter } from "../redux/features/LettersState"; 
 import { addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
 
 
@@ -29,14 +26,13 @@ export function WordleApp() {
     const wrong = useAppSelector(state => state.letters.wrong);
     const currentRow = useAppSelector(state => state.inputs.currentRowIndex);
     const currentInputId = useAppSelector(state => state.inputs.currentInputId);
-    const word = useAppSelector(state => state.game.word)
+    const word = useAppSelector(state => state.game.word);
 
 
 
     const addGuessLetter = (letter: string) => {
 
         if (letter === 'Del') {
-            console.log(inputsRefs[currentInputId])
             console.log(inputsRefs[currentInputId].current?.disabled)
             if (inputsRefs[currentInputId].current?.disabled) return
             dispatch(moveBackInput());
@@ -60,6 +56,7 @@ export function WordleApp() {
             return;
         }
         if (currentGuess.length === 5) return;
+        console.log('going to next input')
         dispatch(addGussedLetter(letter));
         dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
         // console.log(currentGuess)

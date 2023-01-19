@@ -25,7 +25,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:m": "mocha -r ts-node/register src/**/*.test.ts",
-    "test:a": "mocha -r ts-node/register -r tsconfig-paths/register  src/**/*.test.ts"
+    "test:a": "mocha -r ts-node/register -r tsconfig-paths/register  src/**/*.test.ts",
+    "test:b": "mocha -r ts-node/register -r ts-mocha src/**/*.test.ts"
+
   },
   "eslintConfig": {
     "extends": [
