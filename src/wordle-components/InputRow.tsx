@@ -51,7 +51,7 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
                 ref={refs.inputs[input.id]}
                 defaultValue={input.value}
                 disabled={shouldKeepFocus(input)}
-                // onInput={(e: Partial<Event>) => handleKeypress(e)}
+                onInput={(e: Partial<Event>) => handleKeypress(e)}
                 />
             ))}
         </div>
