@@ -12,30 +12,27 @@ function App() {
 
   useEffect(() => {
     localStorage.clear()
-  })
+  }, [])
   
-  const {  formRef, addUserData } = useGreet()
+  const { userName, formRef, handleSubmit,  logoutUser, handleSignInClose, handleSignInShow, showSignIn } = useGreet();
+  
   const [showInsructions, setShowInstructions] = useState(false);
   const handleInstructionsClose = (): void => setShowInstructions(false);
   const handleInstructionsShow = (): void => setShowInstructions(true);
-
-  const [showSignIn, setShowSignIn] = useState(false);
-  const handleSignInClose = (): void => setShowSignIn(false);
-  const handleSignInShow = (): void => setShowSignIn(true);
-  const userName = localStorage.getItem('name') !== null ?
-  localStorage.getItem('name') : 'Guest';
+  
 
   
-  const handleSubmit = () => {
-    addUserData();
-    handleSignInClose()
-  }
+  
+
+  
+  
   
   return (
     <>
       <NavBar 
         openSignInModal={handleSignInShow} 
         openInstructionsModal={handleInstructionsShow}
+        handleLogout={logoutUser}
       />
       <InstructionsModal 
         showInstructions={showInsructions} 

@@ -4,20 +4,26 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import {BsInfoCircle} from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-
-function NavBar({ openInstructionsModal, openSignInModal,  }: { openInstructionsModal: () => void, openSignInModal: () => void}) {
-
-  useEffect(() => {
-
-  },[openSignInModal])
 
 
+interface NavBarProps {
+  openInstructionsModal: () => void,
+  openSignInModal: () => void,
+  handleLogout: () => void,
+}
+
+
+
+function NavBar({ openInstructionsModal, openSignInModal, handleLogout }:NavBarProps) {
+
+  
   let navigate = useNavigate();
 
   const showHome = () => {
     navigate('/')
   }
+
+  
   
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -36,7 +42,7 @@ function NavBar({ openInstructionsModal, openSignInModal,  }: { openInstructions
               Sign in
             </Button>
             :
-              <Button variant='dark' onClick={() => {localStorage.clear(); console.log(localStorage)}}>
+              <Button variant='dark' onClick={handleLogout}>
                 Logout 
               </Button> //FIXME logout button won't render the and user stays loged till page switched
             }

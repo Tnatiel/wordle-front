@@ -7,7 +7,7 @@ import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
 import { addInputLetter, moveToNextInput, moveBackInput, updateNextRow, removeInputLetter } from "../redux/features/InputState";
 import {  removeGussedLetter, resetGuess, addGussedLetter } from "../redux/features/LettersState"; 
-import { findKeyButtonObjById, addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
+import {  addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
 
 
 
