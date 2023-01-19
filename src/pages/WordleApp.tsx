@@ -10,6 +10,7 @@ import { addCorrectLetter, addWrongLetter, addPresentLetter, removeGussedLetter,
 import {  setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
 import { setFailure, setSuccess } from "../redux/features/GameState";
 import { ClassesColors } from "../wordle-components/wordle-types";
+import { addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
 
 
 
@@ -33,6 +34,7 @@ export function WordleApp() {
 
 
     const addGuessLetter = (letter: string) => {
+
         if (letter === 'Del') {
             console.log(inputsRefs[currentInputId])
             console.log(inputsRefs[currentInputId].current?.disabled)
@@ -49,54 +51,26 @@ export function WordleApp() {
                 }, 100);
                 return;
             }
-            addInputClasses(currentGuessClassNames);
-            addKeyboardButtonsClasses({correct, present, wrong})
-            manageCheckGuess()
+            addInputClasses(dispatch, currentInputId, currentGuessClassNames);
+            addKeyboardButtonsClasses({correct, present, wrong}, dispatch)
+            checkGuess(currentGuess, word, currentRow, dispatch)
             dispatch(updateNextRow())
+            // dispatch(moveToNextInput())
             dispatch(resetGuess())
-
             return;
         }
         if (currentGuess.length === 5) return;
-        dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
-        addToGuessedLetterBank(letter);
         dispatch(addGussedLetter(letter));
+        dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
+        // console.log(currentGuess)
+        addToGuessedLetterBank(letter, word, currentInputId, dispatch);
+        // console.log(currentInputId)
         dispatch(moveToNextInput());
 
     }
 
-    const addToGuessedLetterBank = (letter: string) => {
-        if (letter === word[currentInputId % 5].toLocaleUpperCase())  {
-            dispatch(addCorrectLetter(letter));
-            return;
-        }
-        if (word.toLocaleUpperCase().includes(letter)) { 
-            dispatch(addPresentLetter(letter));
-            return;
-        } 
-        dispatch(addWrongLetter(letter));
-    }
-
-    const addKeyboardButtonsClasses = (classes: ClassesColors) => {
-        const {correct, present, wrong} = classes
-        dispatch(setWrongClass(wrong));
-        dispatch(setPresentClass(present));
-        dispatch(setCorrectClass(correct));
-    }
-
-    const manageCheckGuess = () => {
-        if (currentGuess.join('') === word.toLocaleUpperCase()) dispatch(setSuccess(true));
-        if (currentRow === 5) dispatch(setFailure(true));  
-    }
 
 
-    const addInputClasses = (classNames: string[]) => {
-        let classIndex = 0;
-        for (let i = 5; i > 0; i--) {
-            dispatch(updateInputClassName({id: currentInputId - i, className: classNames[classIndex]}))
-            classIndex++;
-        }
-    }
 
     return (
         <main>

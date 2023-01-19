@@ -23,7 +23,9 @@ function App() {
   const handleSignInClose = (): void => setShowSignIn(false);
   const handleSignInShow = (): void => setShowSignIn(true);
   const userName = localStorage.getItem('name') !== null ?
-  localStorage.getItem('name') : 'Guest'
+  localStorage.getItem('name') : 'Guest';
+
+  
   const handleSubmit = () => {
     addUserData();
     handleSignInClose()
