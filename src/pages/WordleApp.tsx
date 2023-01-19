@@ -5,9 +5,9 @@ import { InputBoard } from "../wordle-components/InputBoard";
 import { Keyboard } from "../wordle-components/Keyboard";
 import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
-import { addInputLetter, moveToNextInput, moveBackInput, updateNextRow, removeInputLetter } from "../redux/features/InputState";
-import {  removeGussedLetter, resetGuess, addGussedLetter } from "../redux/features/LettersState"; 
-import {  addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
+import { moveBackInput, updateNextRow, removeInputLetter } from "../redux/features/InputState";
+import {  removeGussedLetter, resetGuess, } from "../redux/features/LettersState"; 
+import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, checkGuess } from "../wordle-components/wordle-logic";
 
 
 
@@ -41,27 +41,19 @@ export function WordleApp() {
         }
         if (letter === 'Enter') {
             if (currentGuess.length < 5) {
-                setTimeout(() => {
-                    alert('not enough letters')
-                }, 100);
-                return;
+            setTimeout(() => {
+                alert('not enough letters')
+            }, 100);
+            return;
             }
             addInputClasses(dispatch, currentInputId, currentGuessClassNames);
             addKeyboardButtonsClasses({correct, present, wrong}, dispatch)
             checkGuess(currentGuess, word, currentRow, dispatch)
-            // dispatch(moveToNextInput())
             dispatch(resetGuess());
             dispatch(updateNextRow());
-            return;
         }
         if (currentGuess.length === 5) return;
-        dispatch(addGussedLetter(letter));
-        dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
-        // console.log(currentGuess)
-        addToGuessedLetterBank(letter, word, currentInputId, dispatch);
-        // console.log(currentInputId)
-        dispatch(moveToNextInput());
-
+        addLetterAndMoveForword(dispatch, letter, word, currentInputId);
     }
 
 

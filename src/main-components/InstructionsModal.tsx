@@ -58,7 +58,7 @@ export function InstructionsModal({showInstructions: show, closeModal}: {showIns
                         <div className="example-ur-input">C</div>
                         <div className="example-ur-input wrong">K</div>
                     </div>
-                    <p><span className="the-letter">T</span> is not a word in the wordle</p>
+                    <p><span className="the-letter">K</span> is not a word in the wordle</p>
                 </li>
             
             </div>

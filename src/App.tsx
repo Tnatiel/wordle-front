@@ -20,13 +20,6 @@ function App() {
   const handleInstructionsClose = (): void => setShowInstructions(false);
   const handleInstructionsShow = (): void => setShowInstructions(true);
   
-
-  
-  
-
-  
-  
-  
   return (
     <>
       <NavBar 

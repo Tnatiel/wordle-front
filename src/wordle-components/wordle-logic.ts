@@ -1,9 +1,9 @@
 import { setLoseDialog, setWinDialog } from "redux/features/DialogState";
 import { setWin } from "redux/features/GameState";
 import { AppDispatch } from "../redux/app/store";
-import { updateInputClassName } from "../redux/features/InputState";
+import { addInputLetter, moveToNextInput, updateInputClassName } from "../redux/features/InputState";
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
-import { addCorrectLetter, addPresentLetter, addWrongLetter } from "../redux/features/LettersState";
+import { addCorrectLetter, addGussedLetter, addPresentLetter, addWrongLetter } from "../redux/features/LettersState";
 import { InputBox, KeyboardButton } from "../redux/redux-types";
 import { ClassesColors } from "./wordle-types";
 
@@ -81,7 +81,9 @@ export const shouldKeepFocus = (input: InputBox, gameStatus: boolean, currentGue
 
   export const handleKeypress = (e: Partial<KeyboardEvent>, inputEvent: (letter: string) => void) => {
     // const input = e.target as HTMLInputElement;
-    const valid = ['Enter', 'Del', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S','T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    const valid = ['Enter', 'Del', 'A', 'B', 'C', 'D', 'E', 'F', 
+    'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 
+    'S','T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     let letter = e.key?.toUpperCase()
     
     if (letter) {
@@ -91,4 +93,11 @@ export const shouldKeepFocus = (input: InputBox, gameStatus: boolean, currentGue
     if (!valid.includes(letter as string)) return;
     console.log(letter)
     if (letter) inputEvent(letter);
+}
+
+export const addLetterAndMoveForword = (dispatch: AppDispatch, letter: string,  word: string, currentInputId: number) => {
+    dispatch(addGussedLetter(letter));
+    dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
+    addToGuessedLetterBank(letter, word, currentInputId, dispatch);
+    dispatch(moveToNextInput());
 }

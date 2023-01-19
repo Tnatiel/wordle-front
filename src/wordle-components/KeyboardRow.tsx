@@ -3,12 +3,8 @@ import { RowsProps } from "./wordle-types";
 
 
 export function KeyboardRow({ rowIndex, refs, handleInput }: RowsProps) {
-
-
     
     const buttons = useKeyboardRow(rowIndex);
-    
-
     const handleClick = (event: Partial<Event>) => handleInput((event.target as HTMLButtonElement).id); 
 
     return (

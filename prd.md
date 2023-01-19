@@ -114,7 +114,7 @@ Top Bar
     * Bull => green background
     * Cow => yellow background
 * [x] Mark all guessed letters in the virtual keyboard
-* [] If all letters are Bull display dialog "success"
+* [x] If all letters are Bull display dialog "success"
 
 ### Full Front End Game Logic
 
@@ -129,8 +129,8 @@ Top Bar
     * [x] Show modal with login form (name) and login button that close the modal
     * [x] Keep the username locally (browser)
 * [x] Change the welcome screen to greet the user by his name if any, else use "guest"
-* [ ] After login, the topbar should contain the username and a logout link/button
-* [ ] The logout link/button should delete username locally
+* [x] After login, the topbar should contain the username and a logout link/button
+* [x] The logout link/button should delete username locally
 
 ### Simple Backend
 

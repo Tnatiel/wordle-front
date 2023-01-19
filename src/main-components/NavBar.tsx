@@ -44,7 +44,7 @@ function NavBar({ openInstructionsModal, openSignInModal, handleLogout }:NavBarP
             :
               <Button variant='dark' onClick={handleLogout}>
                 Logout 
-              </Button> //FIXME logout button won't render the and user stays loged till page switched
+              </Button> 
             }
           </Nav>
           <Nav>

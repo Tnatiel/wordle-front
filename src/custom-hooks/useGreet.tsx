@@ -31,7 +31,7 @@ export const useGreet = () => {
     const handleSignInShow = (): void => setShowSignIn(true);
 
     const userName = localStorage.getItem('name') !== null ?
-  localStorage.getItem('name') : 'Guest';
+    localStorage.getItem('name') : 'Guest';
 
 
       return { userName, handleSubmit, formRef,  logoutUser, handleSignInShow, handleSignInClose, showSignIn }

@@ -19,13 +19,11 @@ export const InputBoard = ({refs, handleInput}: BoardsProps) => {
                 refs.inputs[currentInputId].current?.focus(); 
             }
 
-            // TODO  the condition is ok but input is diabled
             refs.inputs[currentInputId - 1].current?.focus(); 
             return;
         }
 
         if (currentInputId !== undefined) {
-            // console.log('input exist: ', currentInputId)
             const currentRef = refs.inputs[currentInputId].current;
             currentRef?.focus();
         }
