@@ -1,3 +1,4 @@
+import { useAppSelector } from "redux/app/hooks";
 import { AppDispatch } from "../redux/app/store";
 import { setFailure, setSuccess } from "../redux/features/GameState";
 import { updateInputClassName } from "../redux/features/InputState";
@@ -19,8 +20,12 @@ export const addInputClasses = (dispatch: AppDispatch , currentInputId: number ,
 
 
 export const checkGuess = (currentGuess: string[], word: string, currentRow: number,  dispatch: AppDispatch) => {
-    if (currentGuess.join('') === word.toLocaleUpperCase()) dispatch(setSuccess(true));
+    if (currentGuess.join('') === word.toLocaleUpperCase()) {
+          dispatch(setSuccess(true))
+          return
+        };
     if (currentRow === 5) dispatch(setFailure(true));  
+
 }
 
 export const addKeyboardButtonsClasses = (classes: ClassesColors, dispatch: AppDispatch) => {

@@ -13,12 +13,12 @@ import {  addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, ch
 
 export function WordleApp() {
     
+    const dispatch = useAppDispatch();
     const inputsRefs = useInputRef();
     const keyboardRefs = useKeyboardRefs();
     const allRefs = {inputs: inputsRefs, keyboard: keyboardRefs};
     const isGameWon = useAppSelector(state => state.game.win);
     const isGameLost = useAppSelector(state => state.game.lose);
-    const dispatch = useAppDispatch();
     const currentGuess = useAppSelector(state => state.letters.currentGuess);
     const currentGuessClassNames = useAppSelector(state => state.letters.currentGuessclasses);
     const correct = useAppSelector(state => state.letters.correct);
@@ -50,8 +50,8 @@ export function WordleApp() {
             addKeyboardButtonsClasses({correct, present, wrong}, dispatch)
             checkGuess(currentGuess, word, currentRow, dispatch)
             // dispatch(moveToNextInput())
-            dispatch(resetGuess())
-            dispatch(updateNextRow())
+            dispatch(resetGuess());
+            dispatch(updateNextRow());
             return;
         }
         if (currentGuess.length === 5) return;

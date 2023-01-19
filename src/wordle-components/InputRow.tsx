@@ -35,6 +35,7 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
     
     function shouldKeepFocus(input: InputBox) {
         // check if game is won and row is completed
+        console.log(gameWon)
         if (gameWon) return true;
         if (currentGuess.length === 5 
             && currentInputId  % 5 === 0 
