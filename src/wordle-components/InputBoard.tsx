@@ -18,6 +18,8 @@ export const InputBoard = ({refs, handleInput}: BoardsProps) => {
             if (inputObj && inputObj.rowNumber === currentRow) {
                 refs.inputs[currentInputId].current?.focus(); 
             }
+
+            // TODO  the condition is ok but input is diabled
             refs.inputs[currentInputId - 1].current?.focus(); 
             return;
         }

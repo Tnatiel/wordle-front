@@ -1,24 +1,29 @@
 
 
 import { useEffect } from "react";
+import { removeGussedLetter } from "redux/features/LettersState";
 import { useInputRow } from "../custom-hooks/useInputRow";
-import {  useAppSelector } from "../redux/app/hooks";
+import {  useAppDispatch, useAppSelector } from "../redux/app/hooks";
 import { InputBox } from "../redux/redux-types";
 import { RowsProps } from "./wordle-types";
 
 
 export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
-    
-    const handleKeypress = (e: Partial<Event>) => {
-        const input = e.target as HTMLInputElement;
-        let letter = input.value.toUpperCase()
+    const dispatch = useAppDispatch();
+
+    const handleKeypress = (e: Partial<KeyboardEvent>) => {
+        // const input = e.target as HTMLInputElement;
+        let letter = e.key?.toUpperCase()
+        if (letter) {
+            if (letter === 'ENTER') letter = 'Enter';
+            if (letter === 'BACKSPACE') letter = 'Del';
+        }
         console.log(letter)
-        if (letter) handleInput(letter); console.log(letter)
-        console.log(currentInputId)
+        if (letter) handleInput(letter);
     }
 
 
-
+    
     const { inputs } = useInputRow(rowIndex);
     const currentInputId = useAppSelector(state => state.inputs.currentInputId);
     const gameWon = useAppSelector(state => state.game.win)
@@ -28,9 +33,11 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
     
     function shouldKeepFocus(input: InputBox) {
         // check if game is won and row is completed
-        if (gameWon) return true
+        if (gameWon) return true;
         if (currentGuess.length === 5) {
-          // check if last input is focused
+          const lastInputRow = currentInputId - 1 % 5
+          console.log('lastInputRow, ', lastInputRow)
+          console.log('currentInputId, ', currentInputId)
           if (currentInputId - 1 % 5 === 4 && input.rowNumber === currentRow) return false;
           
         }
@@ -51,7 +58,7 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
                 ref={refs.inputs[input.id]}
                 defaultValue={input.value}
                 disabled={shouldKeepFocus(input)}
-                onInput={(e: Partial<Event>) => handleKeypress(e)}
+                onKeyUp={(e: Partial<Event>) => handleKeypress(e)}
                 />
             ))}
         </div>

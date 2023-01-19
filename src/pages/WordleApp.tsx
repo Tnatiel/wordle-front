@@ -50,13 +50,12 @@ export function WordleApp() {
             addInputClasses(dispatch, currentInputId, currentGuessClassNames);
             addKeyboardButtonsClasses({correct, present, wrong}, dispatch)
             checkGuess(currentGuess, word, currentRow, dispatch)
-            dispatch(updateNextRow())
             // dispatch(moveToNextInput())
             dispatch(resetGuess())
+            dispatch(updateNextRow())
             return;
         }
         if (currentGuess.length === 5) return;
-        console.log('going to next input')
         dispatch(addGussedLetter(letter));
         dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
         // console.log(currentGuess)

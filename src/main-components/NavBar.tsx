@@ -4,8 +4,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import {BsInfoCircle} from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function NavBar({ openInstructionsModal, openSignInModal,  }: { openInstructionsModal: () => void, openSignInModal: () => void}) {
+
+  useEffect(() => {
+
+  },[openSignInModal])
+
 
   let navigate = useNavigate();
 
@@ -30,8 +36,8 @@ function NavBar({ openInstructionsModal, openSignInModal,  }: { openInstructions
               Sign in
             </Button>
             :
-              <Button variant='dark' onClick={() => localStorage.clear()}>
-                logout
+              <Button variant='dark' onClick={() => {localStorage.clear(); console.log(localStorage)}}>
+                Logout
               </Button>
             }
           </Nav>
