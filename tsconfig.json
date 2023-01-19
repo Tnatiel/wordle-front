@@ -1,6 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "ES2019",
+    "isolatedModules": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -8,19 +14,13 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "ES2020",
-    "moduleResolution": "node",
+    "module": "CommonJS",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true, 
     "jsx": "react-jsx",
-    "outDir": ".dist",
-    "baseUrl": "./src"
   },
   "include": [
     "src",
@@ -28,3 +28,4 @@
     "./**/*.ts"
   ]
 }
+
