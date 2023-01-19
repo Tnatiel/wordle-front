@@ -7,7 +7,7 @@ import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
 import { addInputLetter, moveToNextInput, moveBackInput, updateNextRow, removeInputLetter } from "../redux/features/InputState";
 import {  removeGussedLetter, resetGuess, addGussedLetter } from "../redux/features/LettersState"; 
-import { addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
+import { findKeyButtonObjById, addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
 
 
 
@@ -27,13 +27,12 @@ export function WordleApp() {
     const currentRow = useAppSelector(state => state.inputs.currentRowIndex);
     const currentInputId = useAppSelector(state => state.inputs.currentInputId);
     const word = useAppSelector(state => state.game.word);
-
-
-
+    
+    
     const addGuessLetter = (letter: string) => {
-
+        
+        
         if (letter === 'Del') {
-            console.log(inputsRefs[currentInputId].current?.disabled)
             if (inputsRefs[currentInputId].current?.disabled) return
             dispatch(moveBackInput());
             dispatch(removeInputLetter());

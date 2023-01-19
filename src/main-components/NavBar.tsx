@@ -37,8 +37,8 @@ function NavBar({ openInstructionsModal, openSignInModal,  }: { openInstructions
             </Button>
             :
               <Button variant='dark' onClick={() => {localStorage.clear(); console.log(localStorage)}}>
-                Logout
-              </Button>
+                Logout 
+              </Button> //FIXME logout button won't render the and user stays loged till page switched
             }
           </Nav>
           <Nav>
