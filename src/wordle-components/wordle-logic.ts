@@ -1,6 +1,6 @@
-import { useAppSelector } from "redux/app/hooks";
+import { setLoseDialog, setWinDialog } from "redux/features/DialogState";
+import { setWin } from "redux/features/GameState";
 import { AppDispatch } from "../redux/app/store";
-import { setFailure, setSuccess } from "../redux/features/GameState";
 import { updateInputClassName } from "../redux/features/InputState";
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
 import { addCorrectLetter, addPresentLetter, addWrongLetter } from "../redux/features/LettersState";
@@ -21,10 +21,11 @@ export const addInputClasses = (dispatch: AppDispatch , currentInputId: number ,
 
 export const checkGuess = (currentGuess: string[], word: string, currentRow: number,  dispatch: AppDispatch) => {
     if (currentGuess.join('') === word.toLocaleUpperCase()) {
-          dispatch(setSuccess(true))
+          dispatch(setWinDialog(true));
+          dispatch(setWin(true));
           return
         };
-    if (currentRow === 5) dispatch(setFailure(true));  
+    if (currentRow === 5) dispatch(setLoseDialog(true));  
 
 }
 
@@ -62,4 +63,32 @@ export const findKeyButtonObjById = (rows: KeyboardButton[][], buttonId: string 
         if (currentButton) return currentButton;
     }
     return undefined
+}
+
+export const shouldKeepFocus = (input: InputBox, gameStatus: boolean, currentGuess: string[], currentInputId: number, currentRow: number) => {
+    // check if game is won and row is completed
+    console.log(gameStatus)
+    if (gameStatus) return true;
+    if (currentGuess.length === 5 
+        && currentInputId  % 5 === 0 
+        && input.rowNumber === currentRow) return false
+      
+      
+    if (currentInputId === input.id) return false
+    return true
+    
+  }
+
+  export const handleKeypress = (e: Partial<KeyboardEvent>, inputEvent: (letter: string) => void) => {
+    // const input = e.target as HTMLInputElement;
+    const valid = ['Enter', 'Del', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S','T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    let letter = e.key?.toUpperCase()
+    
+    if (letter) {
+        if (letter === 'ENTER') letter = 'Enter';
+        if (letter === 'BACKSPACE') letter = 'Del';
+    }
+    if (!valid.includes(letter as string)) return;
+    console.log(letter)
+    if (letter) inputEvent(letter);
 }

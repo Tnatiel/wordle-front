@@ -5,7 +5,7 @@ import { GameState } from '../redux-types';
 const initialState: GameState = {
     word: "moral",
     win: false,
-    lose: false,
+    
 };
 
 const gameSlice = createSlice({
@@ -15,16 +15,13 @@ const gameSlice = createSlice({
         setWord: (state, action: PayloadAction<string>) => {
             state.word = action.payload;
         },
-        setSuccess: (state, action: PayloadAction<boolean>) => {
+        setWin: (state, action: PayloadAction<boolean>) => {
             state.win = action.payload;
         },
-        setFailure: (state, action: PayloadAction<boolean>) => {
-            state.lose = action.payload;
-        },
-
+        
         
     }
 });
 
-export const { setWord,  setFailure, setSuccess} = gameSlice.actions;
+export const { setWord, setWin } = gameSlice.actions;
 export default gameSlice.reducer;

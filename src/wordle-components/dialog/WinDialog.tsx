@@ -1,24 +1,24 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { setWinDialog } from 'redux/features/DialogState';
 import { useAppDispatch, useAppSelector } from '../../redux/app/hooks';
-import { setSuccess } from '../../redux/features/GameState';
 
 
 export const WinDialog = () => {
     
 const dispatch = useAppDispatch()
-const show = useAppSelector(state => state.game.win)
+const show = useAppSelector(state => state.dialog.winDialog)
 
   return (
     <>
-      <Modal show={show} onHide={() => dispatch(setSuccess(false))}>
+      <Modal show={show} onHide={() => dispatch(setWinDialog(false))}>
         <Modal.Body >
             <h3>You Guessed The Wordle!</h3>
             <h1>🎉 Congrats!! 🎉</h1>
         </Modal.Body>
         <Modal.Footer>
 
-          <Button variant="primary" onClick={() => dispatch(setSuccess(false))}>
+          <Button variant="primary" onClick={() => dispatch(setWinDialog(false))}>
             Yay!
           </Button>
         </Modal.Footer>

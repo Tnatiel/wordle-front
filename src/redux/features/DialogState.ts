@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { hasOnlyExpressionInitializer } from 'typescript';
+import { DialogState } from 'redux/redux-types';
 
-interface DialogState {
-    winDialog: boolean;
-    loseDialog: boolean;
-}
+
 
 const initialState: DialogState = {
     winDialog: false,
@@ -23,3 +20,7 @@ const dialogSlice = createSlice({
         },
     }
 })
+
+
+export const { setLoseDialog, setWinDialog } = dialogSlice.actions;
+export default dialogSlice.reducer;

@@ -1,8 +1,9 @@
 import { configureStore, } from '@reduxjs/toolkit';
 import letterReducer from '../features/LettersState';
 import InputReducer from '../features/InputState';
-import gameReducer from '../features/GameState'
-import keyboardReducer from '../features/KeyboardState'
+import gameReducer from '../features/GameState';
+import keyboardReducer from '../features/KeyboardState';
+import dialogReducer from '../features/DialogState'
 
 
 
@@ -12,6 +13,7 @@ export const store = configureStore( {
         inputs: InputReducer,
         game: gameReducer,
         keyboard: keyboardReducer,
+        dialog: dialogReducer,
     }
 });
 

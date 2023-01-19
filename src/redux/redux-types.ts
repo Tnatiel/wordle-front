@@ -2,7 +2,7 @@
 export interface GameState {
     word: string,
     win: boolean,
-    lose: boolean,
+    
 };
 
 export interface InputBox {
@@ -35,3 +35,7 @@ export interface GuessedLetters {
 
 }
 
+export interface DialogState {
+    winDialog: boolean;
+    loseDialog: boolean;
+}

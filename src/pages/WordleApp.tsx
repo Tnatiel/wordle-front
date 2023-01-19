@@ -17,8 +17,8 @@ export function WordleApp() {
     const inputsRefs = useInputRef();
     const keyboardRefs = useKeyboardRefs();
     const allRefs = {inputs: inputsRefs, keyboard: keyboardRefs};
-    const isGameWon = useAppSelector(state => state.game.win);
-    const isGameLost = useAppSelector(state => state.game.lose);
+    const isGameWon = useAppSelector(state => state.dialog.winDialog);
+    const isGameLost = useAppSelector(state => state.dialog.loseDialog);
     const currentGuess = useAppSelector(state => state.letters.currentGuess);
     const currentGuessClassNames = useAppSelector(state => state.letters.currentGuessclasses);
     const correct = useAppSelector(state => state.letters.correct);
