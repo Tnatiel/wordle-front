@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { setLoseDialog } from 'redux/features/DialogState';
+import { setLoseDialog } from '../../redux/features/DialogState';
 import { useAppDispatch, useAppSelector } from '../../redux/app/hooks';
 
 

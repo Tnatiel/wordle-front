@@ -1,5 +1,5 @@
-import { setLoseDialog, setWinDialog } from "redux/features/DialogState";
-import { setWin } from "redux/features/GameState";
+import { setLoseDialog, setWinDialog } from "../redux/features/DialogState";
+import { setWin } from "../redux/features/GameState";
 import { AppDispatch } from "../redux/app/store";
 import { addInputLetter, moveToNextInput, updateInputClassName } from "../redux/features/InputState";
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";

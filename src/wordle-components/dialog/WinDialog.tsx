@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { setWinDialog } from 'redux/features/DialogState';
+import { setWinDialog } from '../../redux/features/DialogState';
 import { useAppDispatch, useAppSelector } from '../../redux/app/hooks';
 
 

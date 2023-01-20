@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { DialogState } from 'redux/redux-types';
+import { DialogState } from '../redux-types';
 
 
 
