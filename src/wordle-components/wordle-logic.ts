@@ -31,9 +31,9 @@ export const checkGuess = (currentGuess: string[], word: string, currentRow: num
 
 export const addKeyboardButtonsClasses = (classes: ClassesColors, dispatch: AppDispatch) => {
     const {correct, present, wrong} = classes
-    dispatch(setWrongClass(wrong));
-    dispatch(setPresentClass(present));
-    dispatch(setCorrectClass(correct));
+    if(wrong.length)dispatch(setWrongClass(wrong));
+    if(present.length)dispatch(setPresentClass(present));
+    if(correct.length)dispatch(setCorrectClass(correct));
 }
 
 export const addToGuessedLetterBank = (letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => {

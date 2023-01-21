@@ -1,5 +1,5 @@
 
-import { addInputClasses, checkGuess } from "./wordle-logic";
+import { addInputClasses, addKeyboardButtonsClasses, checkGuess } from "./wordle-logic";
 
 describe('wordle-logic', () => {
     let mockDispatch: jest.Mock;
@@ -39,6 +39,36 @@ describe('wordle-logic', () => {
         
           expect(mockDispatch).toHaveBeenCalledTimes(1);
           expect(mockDispatch).toBeCalledWith({type: 'dialog/setLoseDialog', payload: true});
+        });
+    });
+
+    describe('addKeyboardButtonClasses', () => {
+
+        it('should dispath all class status adders', () => {
+            const classesObj = {correct:['a','b'], present:['c', 'd'], wrong: ['e']}
+            addKeyboardButtonsClasses(classesObj, mockDispatch);
+            expect(mockDispatch).toHaveBeenCalledTimes(3);
+            expect(mockDispatch).toBeCalledWith({type: 'keyboard/setWrongClass', payload: ['e']});
+            expect(mockDispatch).toBeCalledWith({type: 'keyboard/setPresentClass', payload: ['c', 'd']});
+            expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
+        });
+        it('should dispath 2 class status adders', () => {
+            const classesObj = {correct:['a','b'], present:['c', 'd'], wrong: []}
+            addKeyboardButtonsClasses(classesObj, mockDispatch);
+            expect(mockDispatch).toHaveBeenCalledTimes(2);
+            expect(mockDispatch).toBeCalledWith({type: 'keyboard/setPresentClass', payload: ['c', 'd']});
+            expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
+        });
+        it('should dispath 1 class status adders', () => {
+            const classesObj = {correct:['a','b'], present:[], wrong: []}
+            addKeyboardButtonsClasses(classesObj, mockDispatch);
+            expect(mockDispatch).toHaveBeenCalledTimes(1);
+            expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
+        });
+        it('shouldn\' dispatch. no classes provided', () => {
+            const classesObj = {correct:[], present:[], wrong: []}
+            addKeyboardButtonsClasses(classesObj, mockDispatch);
+            expect(mockDispatch).toHaveBeenCalledTimes(0);
         });
     });
 
