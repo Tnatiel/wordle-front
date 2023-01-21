@@ -58,14 +58,14 @@ export const findInputObjById = (rows: InputBox[][], inputId: number ) => {
 }
 
 export const findKeyButtonObjById = (rows: KeyboardButton[][], buttonId: string ) => {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < rows.length; i++) {
         let currentButton = rows[i].find(btn => btn.id === buttonId);
         if (currentButton) return currentButton;
     }
     return undefined
 }
 
-export const shouldKeepFocus = (input: InputBox, gameStatus: boolean, currentGuess: string[], currentInputId: number, currentRow: number) => {
+export const shouldNotKeepFocus = (input: InputBox, gameStatus: boolean, currentGuess: string[], currentInputId: number, currentRow: number) => {
     // check if game is won and row is completed
     if (gameStatus) return true;
     if (currentGuess.length === 5 

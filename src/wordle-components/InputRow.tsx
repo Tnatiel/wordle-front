@@ -1,8 +1,7 @@
 import { useInputRow } from "../custom-hooks/useInputRow";
 import {  useAppSelector } from "../redux/app/hooks";
-import { handleKeypress, shouldKeepFocus } from "./wordle-logic";
+import { handleKeypress, shouldNotKeepFocus } from "./wordle-logic";
 import { RowsProps } from "./wordle-types";
-import { useEffect, useState } from "react";
 
 
 
@@ -14,13 +13,6 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
     const currentGuess = useAppSelector(state => state.lettersBank.currentGuess)
     const currentRow = useAppSelector(state => state.inputs.currentRowIndex)
 
-    const [shake, setShake] = useState(false);
-
-    useEffect(() => {
-        if(shake) {
-            setTimeout(() => setShake(false), 600);
-        }
-    }, [shake]);
   
     return (
         <div className="input-row">
@@ -28,14 +20,14 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
                 <input
                 id={input.id.toString()}
                 key={input.id}
-                className={`ur-input ${input.className} ${shake ? "shake" : ""}`}
+                className={`ur-input ${input.className}`}
                 autoComplete="off"
                 maxLength={1}
                 ref={refs.inputs[input.id]}
                 readOnly={true}
                 value={input.value}
-                onKeyUp={(e: Partial<Event>) => {handleKeypress(e, handleInput); setShake(true); console.log(shake)}}
-                disabled={shouldKeepFocus(input, gameWon, currentGuess, currentInputId, currentRow)}
+                onKeyUp={(e: Partial<Event>) => handleKeypress(e, handleInput)}
+                disabled={shouldNotKeepFocus(input, gameWon, currentGuess, currentInputId, currentRow)}
                 />
             ))}
         </div>
