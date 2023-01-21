@@ -1,58 +1,30 @@
-import { expect } from "chai";
-import { store } from "../redux/app/store";
+
+
+
 import { addInputClasses } from "./wordle-logic";
-import   'esm';
 
-describe('addInputClasses', () => {
+describe("addInputClasses", () => {
+  let mockDispatch: jest.Mock;
 
-    
-    it('should add the input row classes', () => {
+  beforeEach(() => {
+    mockDispatch = jest.fn();
+  });
 
-        it('should add class name to each input', () => {
-            const inputs = [
-                {id: 0, value: 'a', classname: '', rowNumber:0},
-                {id: 1, value: 'a', classname: '', rowNumber:0},
-                {id: 2, value: 'a', classname: '', rowNumber:0},
-                {id: 3, value: 'a', classname: '', rowNumber:0},
-                {id: 4, value: 'a', classname: '', rowNumber:0}
-            ]
-            
-            const classes = ['correct', 'present', 'wrong', 'correct', 'correct'];
-            const mockDispatch = store.dispatch;
+  it("should call dispatch with the correct arguments", () => {
+    const classes = ["correct", "present", "wrong", "correct", "correct"];
+    addInputClasses(mockDispatch, 5, classes);
 
-            addInputClasses(mockDispatch, 0, classes)
-
-            expect(inputs[0].classname).equals('correct');
-            expect(inputs[1].classname).equals('present');
-            expect(inputs[2].classname).equals('wrong');
-            expect(inputs[3].classname).equals('correct');
-            expect(inputs[4].classname).equals('correct');
-
-        });
-
-    });
-    it('should overwrite exising classe', () => {
-        it('all classnames suppose to be correct', () => {
-            const inputs = [
-                {id: 0, value: 'a', classname: 'wrong', rowNumber:0},
-                {id: 1, value: 'a', classname: 'wrong', rowNumber:0},
-                {id: 2, value: 'a', classname: 'present', rowNumber:0},
-                {id: 3, value: 'a', classname: 'present', rowNumber:0},
-                {id: 4, value: 'a', classname: 'present', rowNumber:0}
-            ]
-            
-            const classes = ['correct', 'correct', 'correct', 'correct', 'correct'];
-            const mockDispatch = store.dispatch;
-    
-            addInputClasses(mockDispatch, 0, classes)
-    
-            expect(inputs[0].classname).equals('correct');
-            expect(inputs[1].classname).equals('correct');
-            expect(inputs[2].classname).equals('correct');
-            expect(inputs[3].classname).equals('correct');
-            expect(inputs[4].classname).equals('correct');
-        });
-
-    });
+    expect(mockDispatch).toHaveBeenCalledTimes(5);
+    expect(mockDispatch).toHaveBeenCalledWith({ type: "inputs/updateInputClassName", payload: { id: 0, className: "correct" } });
+    expect(mockDispatch).toHaveBeenCalledWith({ type: "inputs/updateInputClassName", payload: { id: 1, className: "present" } });
+    expect(mockDispatch).toHaveBeenCalledWith({ type: "inputs/updateInputClassName", payload: { id: 2, className: "wrong" } });
+    expect(mockDispatch).toHaveBeenCalledWith({ type: "inputs/updateInputClassName", payload: { id: 3, className: "correct" } });
+    expect(mockDispatch).toHaveBeenCalledWith({ type: "inputs/updateInputClassName", payload: { id: 4, className: "correct" } });
+  });
 });
+
+
+
+
+
 

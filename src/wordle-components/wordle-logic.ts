@@ -67,7 +67,6 @@ export const findKeyButtonObjById = (rows: KeyboardButton[][], buttonId: string 
 
 export const shouldKeepFocus = (input: InputBox, gameStatus: boolean, currentGuess: string[], currentInputId: number, currentRow: number) => {
     // check if game is won and row is completed
-    console.log(gameStatus)
     if (gameStatus) return true;
     if (currentGuess.length === 5 
         && currentInputId  % 5 === 0 
