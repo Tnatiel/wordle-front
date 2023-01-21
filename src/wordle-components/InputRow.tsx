@@ -1,3 +1,4 @@
+import { InputBox } from "redux/redux-types";
 import { useInputRow } from "../custom-hooks/useInputRow";
 import {  useAppSelector } from "../redux/app/hooks";
 import { handleKeypress, shouldNotKeepFocus } from "./wordle-logic";
@@ -13,6 +14,7 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
     const currentGuess = useAppSelector(state => state.lettersBank.currentGuess)
     const currentRow = useAppSelector(state => state.inputs.currentRowIndex)
 
+    
   
     return (
         <div className="input-row">
@@ -26,7 +28,7 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
                 ref={refs.inputs[input.id]}
                 readOnly={true}
                 value={input.value}
-                onKeyUp={(e: Partial<Event>) => handleKeypress(e, handleInput)}
+                onKeyUp={(e: Partial<Event>) => handleKeypress(e,refs, handleInput)}
                 disabled={shouldNotKeepFocus(input, gameWon, currentGuess, currentInputId, currentRow)}
                 />
             ))}

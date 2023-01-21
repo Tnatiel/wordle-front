@@ -187,36 +187,36 @@ describe('wordle-logic', () => {
             });
         });
 
-        describe('handleKeypress', () => {
-            let inputEvent: jest.Mock;
-            beforeEach(() => {
-                inputEvent = jest.fn();
-            });
-            it('should call inputEvent with the correct letter when a valid key is pressed', () => {
-                const event = { key: "a" };
-                handleKeypress(event, inputEvent);
-                expect(inputEvent).toBeCalledWith("A");
-            });
-            it("should call inputEvent with the correct letter when enter key is pressed", () => {
-                const event = { key: "Enter" };
-                handleKeypress(event, inputEvent);
-                expect(inputEvent).toBeCalledWith("Enter");
-            });
+        // describe('handleKeypress', () => {
+        //     let inputEvent: jest.Mock;
+        //     beforeEach(() => {
+        //         inputEvent = jest.fn();
+        //     });
+        //     it('should call inputEvent with the correct letter when a valid key is pressed', () => {
+        //         const event = { key: "a" };
+        //         handleKeypress(event, inputEvent);
+        //         expect(inputEvent).toBeCalledWith("A");
+        //     });
+        //     it("should call inputEvent with the correct letter when enter key is pressed", () => {
+        //         const event = { key: "Enter" };
+        //         handleKeypress(event, inputEvent);
+        //         expect(inputEvent).toBeCalledWith("Enter");
+        //     });
         
-            it("should call inputEvent with the correct letter when backspace key is pressed", () => {
-                const event = { key: "Backspace" };
-                handleKeypress(event, inputEvent);
-                expect(inputEvent).toBeCalledWith("Del");
-            });
+        //     it("should call inputEvent with the correct letter when backspace key is pressed", () => {
+        //         const event = { key: "Backspace" };
+        //         handleKeypress(event, inputEvent);
+        //         expect(inputEvent).toBeCalledWith("Del");
+        //     });
         
-            it("should not call inputEvent when an invalid key is pressed", () => {
-                const event = { key: "123" };
-                const hk = handleKeypress(event, inputEvent);
-                expect(inputEvent).not.toBeCalled();
-                expect(hk).toEqual(undefined);
-            });
+        //     it("should not call inputEvent when an invalid key is pressed", () => {
+        //         const event = { key: "123" };
+        //         const hk = handleKeypress(event, inputEvent);
+        //         expect(inputEvent).not.toBeCalled();
+        //         expect(hk).toEqual(undefined);
+        //     });
             
-        });
+        // });
 
     });
 

@@ -5,7 +5,7 @@ import { addInputLetter, moveToNextInput, updateInputClassName } from "../redux/
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
 import { addCorrectLetter, addGussedLetter, addPresentLetter, addWrongLetter } from "../redux/features/LettersState";
 import { InputBox, KeyboardButton } from "../redux/redux-types";
-import { ClassesColors } from "./wordle-types";
+import { allRefsObject, ClassesColors } from "./wordle-types";
 
 
 
@@ -48,6 +48,12 @@ export const addToGuessedLetterBank = (letter: string, word: string, currentInpu
     dispatch(addWrongLetter(letter));
 }
 
+export const addLetterAndMoveForword = (dispatch: AppDispatch, letter: string,  word: string, currentInputId: number, letterBankAdder:(letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => void) => {
+    dispatch(addGussedLetter(letter));
+    dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
+    letterBankAdder(letter, word, currentInputId, dispatch);
+    dispatch(moveToNextInput());
+}
 
 export const findInputObjById = (rows: InputBox[][], inputId: number ) => {
     for (let i = 0; i < rows.length; i++) {
@@ -78,7 +84,7 @@ export const shouldNotKeepFocus = (input: InputBox, gameStatus: boolean, current
     
   }
 
-  export const handleKeypress = (e: Partial<KeyboardEvent>, inputEvent: (letter: string) => void) => {
+  export const handleKeypress = (e: Partial<KeyboardEvent>, refs:allRefsObject, inputEvent: (letter: string) => void) => {
     // const input = e.target as HTMLInputElement;
     const validInputs = ['Enter', 'Del', 'A', 'B', 'C', 'D', 'E', 'F', 
     'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 
@@ -90,12 +96,19 @@ export const shouldNotKeepFocus = (input: InputBox, gameStatus: boolean, current
         if (letter === 'BACKSPACE') letter = 'Del';
     }
     if (!validInputs.includes(letter as string)) return;
-    if (letter) inputEvent(letter);
+    if (letter) {
+        inputEvent(letter);
+        handleAnimation(e ,refs);
+    }
 }
 
-export const addLetterAndMoveForword = (dispatch: AppDispatch, letter: string,  word: string, currentInputId: number, letterBankAdder:(letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => void) => {
-    dispatch(addGussedLetter(letter));
-    dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
-    letterBankAdder(letter, word, currentInputId, dispatch);
-    dispatch(moveToNextInput());
+const handleAnimation = (event: Partial<KeyboardEvent>, refs: allRefsObject ) => {
+    const eventInputId = +(event.target as HTMLInputElement).id
+    const currentInputRef = refs.inputs[eventInputId];
+    if (currentInputRef) {
+        currentInputRef.current?.classList.add("letter-animation");
+    }
+    if (eventInputId <= 0) return;
+    const lastInputRef = refs.inputs[eventInputId - 1];
+    if (lastInputRef) lastInputRef.current?.classList.remove('letter-animation');
 }

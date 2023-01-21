@@ -48,3 +48,15 @@ export interface BoardsProps {
     handleInput: (letter: string) => void;
 
 }
+
+export interface allRefsObject {
+    
+    inputs: {
+        [key: string]: React.RefObject<HTMLInputElement>;
+    };
+    keyboard: {
+        allKeyboardRefs: {
+            [x: string]: React.RefObject<HTMLButtonElement>;
+        };
+    };
+}

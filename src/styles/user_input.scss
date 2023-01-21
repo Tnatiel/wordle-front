@@ -33,6 +33,15 @@
 @mixin input-sec-def {
     display: grid;
     gap: 0.1vh;
+
+    .letter-animation {
+        animation: fadeIn 0.5s ease-in;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
     
     .ur-input {
         @include ur-input-def;

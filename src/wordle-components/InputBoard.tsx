@@ -28,7 +28,8 @@ export const InputBoard = ({refs, handleInput}: BoardsProps) => {
             currentRef?.focus();
         }
     }, [currentInputId, currentRow]);
-    
+
+
     return (
         <div className="user-input-sec">
             <InputRow handleInput={handleInput} refs={refs} rowIndex={0} />
