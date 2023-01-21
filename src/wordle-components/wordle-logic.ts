@@ -50,7 +50,7 @@ export const addToGuessedLetterBank = (letter: string, word: string, currentInpu
 
 
 export const findInputObjById = (rows: InputBox[][], inputId: number ) => {
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < rows.length; i++) {
         let currentInput= rows[i].find(ipt => ipt.id === inputId);
         if (currentInput) return currentInput;
     }
@@ -80,7 +80,7 @@ export const shouldKeepFocus = (input: InputBox, gameStatus: boolean, currentGue
 
   export const handleKeypress = (e: Partial<KeyboardEvent>, inputEvent: (letter: string) => void) => {
     // const input = e.target as HTMLInputElement;
-    const valid = ['Enter', 'Del', 'A', 'B', 'C', 'D', 'E', 'F', 
+    const validInputs = ['Enter', 'Del', 'A', 'B', 'C', 'D', 'E', 'F', 
     'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 
     'S','T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     let letter = e.key?.toUpperCase()
@@ -89,13 +89,13 @@ export const shouldKeepFocus = (input: InputBox, gameStatus: boolean, currentGue
         if (letter === 'ENTER') letter = 'Enter';
         if (letter === 'BACKSPACE') letter = 'Del';
     }
-    if (!valid.includes(letter as string)) return;
+    if (!validInputs.includes(letter as string)) return;
     if (letter) inputEvent(letter);
 }
 
-export const addLetterAndMoveForword = (dispatch: AppDispatch, letter: string,  word: string, currentInputId: number) => {
+export const addLetterAndMoveForword = (dispatch: AppDispatch, letter: string,  word: string, currentInputId: number, letterBankAdder:(letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => void) => {
     dispatch(addGussedLetter(letter));
     dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
-    addToGuessedLetterBank(letter, word, currentInputId, dispatch);
+    letterBankAdder(letter, word, currentInputId, dispatch);
     dispatch(moveToNextInput());
 }

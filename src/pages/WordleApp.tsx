@@ -7,7 +7,7 @@ import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
 import { moveBackInput, updateNextRow, removeInputLetter } from "../redux/features/InputState";
 import {  removeGussedLetter, resetGuess, } from "../redux/features/LettersState"; 
-import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, checkGuess } from "../wordle-components/wordle-logic";
+import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
 
 
 
@@ -53,7 +53,7 @@ export function WordleApp() {
             dispatch(updateNextRow());
         }
         if (currentGuess.length === 5) return;
-        addLetterAndMoveForword(dispatch, letter, word, currentInputId);
+        addLetterAndMoveForword(dispatch, letter, word, currentInputId, addToGuessedLetterBank);
     }
 
 
