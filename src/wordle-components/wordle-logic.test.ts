@@ -1,16 +1,23 @@
 
-import { addInputClasses, addKeyboardButtonsClasses, checkGuess } from "./wordle-logic";
+import { addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess } from "./wordle-logic";
+import configureMockStore from 'redux-mock-store';
+
+
 
 describe('wordle-logic', () => {
     let mockDispatch: jest.Mock;
-    
+    let mockStore: any;
     beforeEach(() => {
       mockDispatch = jest.fn();
+      mockStore = configureMockStore();
+      
     });
 
     describe("addInputClasses", () => {
     
-      it("should call dispatch with the correct arguments", () => {
+      it("should call dispatch with the correct arguments and update the state correctly", () => {
+
+        
         const classes = ["correct", "present", "wrong", "correct", "correct"];
         addInputClasses(mockDispatch, 5, classes);
     
@@ -20,6 +27,8 @@ describe('wordle-logic', () => {
         expect(mockDispatch).toHaveBeenCalledWith({ type: "inputs/updateInputClassName", payload: { id: 2, className: "wrong" } });
         expect(mockDispatch).toHaveBeenCalledWith({ type: "inputs/updateInputClassName", payload: { id: 3, className: "correct" } });
         expect(mockDispatch).toHaveBeenCalledWith({ type: "inputs/updateInputClassName", payload: { id: 4, className: "correct" } });
+        
+
       });
     });
     
@@ -65,10 +74,31 @@ describe('wordle-logic', () => {
             expect(mockDispatch).toHaveBeenCalledTimes(1);
             expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
         });
-        it('shouldn\' dispatch. no classes provided', () => {
+        it('shouldn\'t dispatch. no classes provided', () => {
             const classesObj = {correct:[], present:[], wrong: []}
             addKeyboardButtonsClasses(classesObj, mockDispatch);
             expect(mockDispatch).toHaveBeenCalledTimes(0);
+        });
+    });
+
+    describe('addToGuessedLetterBank', () => {
+
+        it('should add letter to the correct bank', () => {
+            addToGuessedLetterBank('A', 'aaaaa', 0 ,mockDispatch);
+            expect(mockDispatch).toHaveBeenCalledTimes(1);
+            expect(mockDispatch).toBeCalledWith({type: 'lettersBank/addCorrectLetter', payload: 'A'});
+        });
+        it('should add letter to the present bank', () => {
+            addToGuessedLetterBank('A', 'bbbaa', 0 ,mockDispatch);
+            expect(mockDispatch).toHaveBeenCalledTimes(1);
+            expect(mockDispatch).toBeCalledWith({type: 'lettersBank/addPresentLetter', payload: 'A'});
+
+        });
+        it('should add letter to the wrong bank', () => {
+            addToGuessedLetterBank('Z', 'bbbaa', 0 ,mockDispatch);
+            expect(mockDispatch).toHaveBeenCalledTimes(1);
+            expect(mockDispatch).toBeCalledWith({type: 'lettersBank/addWrongLetter', payload: 'Z'});
+
         });
     });
 

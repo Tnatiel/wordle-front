@@ -14,7 +14,7 @@ import { GuessedLetters } from '../redux-types';
 
 
 const lettersSlice = createSlice({
-    name: 'guessed letters',
+    name: 'lettersBank',
     initialState,
     reducers: {
         addCorrectLetter: (state, action: PayloadAction<string>) => {

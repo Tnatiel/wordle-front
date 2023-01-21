@@ -1,11 +1,7 @@
 import { KeyboardRow } from "./KeyboardRow";
 import { BoardsProps } from "./wordle-types";
 
-
-
-
 export function Keyboard({refs, handleInput}: BoardsProps) {
-
 
     return (
         <div className="keyboard">

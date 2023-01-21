@@ -9,7 +9,7 @@ import dialogReducer from '../features/DialogState'
 
 export const store = configureStore( {
     reducer: { 
-        letters: letterReducer,
+        lettersBank: letterReducer,
         inputs: InputReducer,
         game: gameReducer,
         keyboard: keyboardReducer,
