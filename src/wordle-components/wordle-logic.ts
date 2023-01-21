@@ -90,7 +90,6 @@ export const shouldKeepFocus = (input: InputBox, gameStatus: boolean, currentGue
         if (letter === 'BACKSPACE') letter = 'Del';
     }
     if (!valid.includes(letter as string)) return;
-    console.log(letter)
     if (letter) inputEvent(letter);
 }
 
