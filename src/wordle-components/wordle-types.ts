@@ -49,7 +49,7 @@ export interface BoardsProps {
 
 }
 
-export interface allRefsObject {
+export interface AllRefsObject {
     
     inputs: {
         [key: string]: React.RefObject<HTMLInputElement>;

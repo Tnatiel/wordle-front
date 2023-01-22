@@ -7,7 +7,7 @@ import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
 import { moveBackInput, updateNextRow, removeInputLetter } from "../redux/features/InputState";
 import {  removeGussedLetter, resetGuess, } from "../redux/features/LettersState"; 
-import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addToGuessedLetterBank, checkGuess } from "../wordle-components/wordle-logic";
+import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addToGuessedLetterBank, checkGuess, handleRemoveAnimation } from "../wordle-components/wordle-logic";
 
 
 
@@ -37,15 +37,11 @@ export function WordleApp() {
             dispatch(moveBackInput());
             dispatch(removeInputLetter());
             dispatch(removeGussedLetter());
+            handleRemoveAnimation(currentInputId, allRefs)
             return
         }
         if (letter === 'Enter') {
-            if (currentGuess.length < 5) {
-            setTimeout(() => {
-                alert('not enough letters')
-            }, 100);
-            return;
-            }
+            if (currentGuess.length < 5) return
             addInputClasses(dispatch, currentInputId, currentGuessClassNames);
             addKeyboardButtonsClasses({correct, present, wrong}, dispatch)
             checkGuess(currentGuess, word, currentRow, dispatch)
@@ -53,7 +49,7 @@ export function WordleApp() {
             dispatch(updateNextRow());
         }
         if (currentGuess.length === 5) return;
-        addLetterAndMoveForword(dispatch, letter, word, currentInputId, addToGuessedLetterBank);
+        addLetterAndMoveForword(dispatch, letter, word, currentInputId, allRefs,  addToGuessedLetterBank);
     }
 
 

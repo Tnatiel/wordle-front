@@ -27,7 +27,7 @@ export const InputBoard = ({refs, handleInput}: BoardsProps) => {
             const currentRef = refs.inputs[currentInputId].current;
             currentRef?.focus();
         }
-    }, [currentInputId, currentRow]);
+    }, [currentInputId, currentRow, refs.inputs, rows]);
 
 
     return (

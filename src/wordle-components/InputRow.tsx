@@ -28,7 +28,7 @@ export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
                 ref={refs.inputs[input.id]}
                 readOnly={true}
                 value={input.value}
-                onKeyUp={(e: Partial<Event>) => handleKeypress(e,refs, handleInput)}
+                onKeyUp={(e: Partial<Event>) => handleKeypress(e,handleInput)}
                 disabled={shouldNotKeepFocus(input, gameWon, currentGuess, currentInputId, currentRow)}
                 />
             ))}

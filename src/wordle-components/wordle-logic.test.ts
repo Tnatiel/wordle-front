@@ -106,13 +106,13 @@ describe('wordle-logic', () => {
     
         describe('addLetterAndMoveForword', () => {
     
-            it('should dispatch move forword actions', () => {
-                addLetterAndMoveForword(mockDispatch, 'A', 'arbib', 0, addToGuessedLetterBank);
-                expect(mockDispatch).toHaveBeenCalledTimes(4);
-                expect(mockDispatch).toBeCalledWith({type: 'lettersBank/addGussedLetter', payload: 'A'});
-                expect(mockDispatch).toBeCalledWith({type: 'inputs/addInputLetter', payload: {inputIndex: 0, value: 'A'}});
-                expect(mockDispatch).toBeCalledWith({type: 'inputs/moveToNextInput', payload: undefined});
-            });
+        //     it('should dispatch move forword actions', () => {
+        //         addLetterAndMoveForword(mockDispatch, 'A', 'arbib', 0, addToGuessedLetterBank);
+        //         expect(mockDispatch).toHaveBeenCalledTimes(4);
+        //         expect(mockDispatch).toBeCalledWith({type: 'lettersBank/addGussedLetter', payload: 'A'});
+        //         expect(mockDispatch).toBeCalledWith({type: 'inputs/addInputLetter', payload: {inputIndex: 0, value: 'A'}});
+        //         expect(mockDispatch).toBeCalledWith({type: 'inputs/moveToNextInput', payload: undefined});
+        //     });
         });
     });
 

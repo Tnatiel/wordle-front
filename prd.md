@@ -119,9 +119,9 @@ Top Bar
 ### Full Front End Game Logic
 
 * [x] For all lines
-    * [ ] After finish line logic, put the focus on the first character of the next line
+    * [x] After finish line logic, put the focus on the first character of the next line
     * [x] Do single line logic
-* [ ] If no success, display dialog "fail"
+* [x] If no success, display dialog "fail"
 
 ### Users
 
