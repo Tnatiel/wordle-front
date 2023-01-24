@@ -29,6 +29,16 @@ export const InputBoard = ({refs, handleInput}: BoardsProps) => {
         }
     }, [currentInputId, currentRow, refs.inputs, rows]);
 
+    useEffect(() => {
+        const lastId = currentInputId < 1 ? 0 : currentInputId - 1;
+        const lastInputRef = refs.inputs[lastId];
+        if (lastInputRef && lastInputRef.current) {
+            lastInputRef.current.classList.add('letter-animation')
+            lastInputRef.current.addEventListener('animationend', () => {
+                lastInputRef.current?.classList.remove('letter-animation');
+            });
+        }
+    }, [currentInputId, refs.inputs])
 
     return (
         <div className="user-input-sec">

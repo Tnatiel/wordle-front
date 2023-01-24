@@ -7,7 +7,7 @@ import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
 import { moveBackInput, updateNextRow, removeLastInputLetter, addInputLetter, moveToNextInput } from "../redux/features/InputState";
 import {  addGussedLetter, removeLastGussedLetter, resetGuess, } from "../redux/features/LettersState"; 
-import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addGuessArrayToColorsBank, addToGuessedLetterBank, checkGuess, handleAddAnimation, handleRemoveAnimation, findInputObjById, removeLetterFromStatusBank, addGuessArrayToColorsBankv2 } from "../wordle-components/wordle-logic";
+import {  addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess, handleAddAnimation, handleRemoveAnimation, findInputObjById, removeLetterFromStatusBank } from "../wordle-components/wordle-logic";
 
 
 
@@ -33,11 +33,6 @@ export function WordleApp() {
     const addGuessLetter = (letter: string) => {
         
         if (letter === 'Del') {
-            console.log('classes', currentGuessClassNames)
-            console.log('currentGuess', currentGuess)
-            console.log('correct', correct)
-            console.log('present', present)
-            console.log('wrong', wrong)
             const lastInputObj = findInputObjById(inputRows, currentInputId -1)
             if (lastInputObj && lastInputObj?.rowNumber !== currentRow) return
             removeLetterFromStatusBank({correct, present, wrong}, lastInputObj?.value as string, dispatch)
@@ -49,8 +44,6 @@ export function WordleApp() {
         }
         if (letter === 'Enter') {
             if (currentGuess.length < 5) return
-            // addGuessArrayToColorsBank(currentGuess, word, dispatch )
-            console.log(currentGuessClassNames)
             addInputClasses(dispatch, currentInputId, currentGuessClassNames);
             addKeyboardButtonsClasses({correct, present, wrong}, dispatch)
             checkGuess(currentGuess, word, currentRow, dispatch)
@@ -64,8 +57,6 @@ export function WordleApp() {
         dispatch(moveToNextInput());
         // handleAddAnimation(currentInputId, allRefs);
     }
-
-
 
 
     return (

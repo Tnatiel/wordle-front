@@ -1,5 +1,5 @@
 
-import { addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addToGuessedLetterBank, checkGuess, findInputObjById, findKeyButtonObjById, handleAddAnimation, handleKeypress, handleRemoveAnimation, shouldNotKeepFocus } from "./wordle-logic";
+import { addInputClasses, addKeyboardButtonsClasses, addToGuessedLetterBank, checkGuess, findInputObjById, findKeyButtonObjById, handleAddAnimation, handleKeypress, handleRemoveAnimation, shouldNotKeepFocus } from "./wordle-logic";
 import configureMockStore from 'redux-mock-store';
 
 

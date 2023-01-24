@@ -18,8 +18,6 @@ const lettersSlice = createSlice({
     initialState,
     reducers: {
         addToCorrectLetterBank: (state, action: PayloadAction<string>) => {
-            const letter = action.payload;
-            // if (state.correct.includes(letter)) return;
             state.correct.push(action.payload);
             state.currentGuessClasses.push('correct');
         },
@@ -28,8 +26,6 @@ const lettersSlice = createSlice({
             state.currentGuessClasses = state.currentGuessClasses.filter(letter => letter !== action.payload);;
         },
         addToPresentLetterBank: (state, action: PayloadAction<string>) => {
-            const letter = action.payload;
-            // if (state.present.includes(letter)) return;
             state.present.push(action.payload);
             state.currentGuessClasses.push('present');
         },
@@ -38,8 +34,6 @@ const lettersSlice = createSlice({
             state.currentGuessClasses = state.currentGuessClasses.filter(letter => letter !== action.payload);;
         },
         addToWrongLetterBank: (state, action: PayloadAction<string>) => {
-            const letter = action.payload;
-            // if (state.wrong.includes(letter)) return;
             state.wrong.push(action.payload);
             state.currentGuessClasses.push('wrong');
         },
