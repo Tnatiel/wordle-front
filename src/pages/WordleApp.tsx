@@ -5,9 +5,9 @@ import { InputBoard } from "../wordle-components/InputBoard";
 import { Keyboard } from "../wordle-components/Keyboard";
 import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
-import { moveBackInput, updateNextRow, removeInputLetter, addInputLetter, moveToNextInput } from "../redux/features/InputState";
+import { moveBackInput, updateNextRow, removeLastInputLetter, addInputLetter, moveToNextInput } from "../redux/features/InputState";
 import {  addGussedLetter, removeLastGussedLetter, resetGuess, } from "../redux/features/LettersState"; 
-import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addGuessArrayToColorsBank, addToGuessedLetterBank, checkGuess, handleAddAnimation, handleRemoveAnimation, findInputObjById } from "../wordle-components/wordle-logic";
+import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addGuessArrayToColorsBank, addToGuessedLetterBank, checkGuess, handleAddAnimation, handleRemoveAnimation, findInputObjById, removeLetterFromStatusBank, addGuessArrayToColorsBankv2 } from "../wordle-components/wordle-logic";
 
 
 
@@ -32,20 +32,24 @@ export function WordleApp() {
     
     const addGuessLetter = (letter: string) => {
         
-        
         if (letter === 'Del') {
+            console.log('classes', currentGuessClassNames)
+            console.log('currentGuess', currentGuess)
+            console.log('correct', correct)
+            console.log('present', present)
+            console.log('wrong', wrong)
             const lastInputObj = findInputObjById(inputRows, currentInputId -1)
             if (lastInputObj && lastInputObj?.rowNumber !== currentRow) return
-            // if (inputsRefs[currentInputId].current?.disabled) return
+            removeLetterFromStatusBank({correct, present, wrong}, lastInputObj?.value as string, dispatch)
             dispatch(moveBackInput());
-            dispatch(removeInputLetter());
+            dispatch(removeLastInputLetter());
             dispatch(removeLastGussedLetter());
             // handleRemoveAnimation(currentInputId, allRefs)
             return
         }
         if (letter === 'Enter') {
             if (currentGuess.length < 5) return
-            addGuessArrayToColorsBank(currentGuess, word, dispatch )
+            // addGuessArrayToColorsBank(currentGuess, word, dispatch )
             console.log(currentGuessClassNames)
             addInputClasses(dispatch, currentInputId, currentGuessClassNames);
             addKeyboardButtonsClasses({correct, present, wrong}, dispatch)
@@ -56,7 +60,7 @@ export function WordleApp() {
         if (currentGuess.length === 5) return;
         dispatch(addGussedLetter(letter));
         dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
-        // addToGuessedLetterBank(letter, word, currentInputId, dispatch);
+        addToGuessedLetterBank(letter, word, currentInputId, dispatch);
         dispatch(moveToNextInput());
         // handleAddAnimation(currentInputId, allRefs);
     }

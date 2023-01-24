@@ -25,28 +25,27 @@ const inputSlice = createSlice({
     name: 'inputs',
     initialState,
     reducers: {
-        addInputLetter(state, action: PayloadAction<{inputIndex: number,  value: string}>) {
-            
+        addInputLetter (state, action: PayloadAction<{inputIndex: number,  value: string}>) {
             const inputRow = state.rows[state.currentRowIndex];
             const input = inputRow.filter(ipt => ipt.id === action.payload.inputIndex)[0];
             input.value = action.payload.value;
         },
-        removeInputLetter(state) {
+        removeLastInputLetter (state) {
             const inputRow = state.rows[state.currentRowIndex];
             const input = inputRow.filter(ipt => ipt.id === state.currentInputId)[0]
             input.value = '';
         },
-        moveToNextInput(state) {
+        moveToNextInput (state) {
             state.currentInputId += 1
         },
-        moveBackInput(state) {
+        moveBackInput (state) {
             if (state.currentInputId === 0) {
                 state.currentInputId = 0;
                 return
             }
             state.currentInputId -= 1; 
         },
-        updateNextRow(state) {
+        updateNextRow (state) {
             state.currentRowIndex += 1
         },
 
@@ -62,7 +61,7 @@ const inputSlice = createSlice({
     }
 });
 
-export const {  moveToNextInput, removeInputLetter, addInputLetter, updateNextRow, updateInputClassName, moveBackInput } = inputSlice.actions;
+export const {  moveToNextInput, removeLastInputLetter, addInputLetter, updateNextRow, updateInputClassName, moveBackInput } = inputSlice.actions;
 export default inputSlice.reducer;
 
 
