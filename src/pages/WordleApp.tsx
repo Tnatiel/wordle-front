@@ -5,9 +5,9 @@ import { InputBoard } from "../wordle-components/InputBoard";
 import { Keyboard } from "../wordle-components/Keyboard";
 import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
-import { moveBackInput, updateNextRow, removeInputLetter } from "../redux/features/InputState";
-import {  removeGussedLetter, resetGuess, } from "../redux/features/LettersState"; 
-import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addToGuessedLetterBank, checkGuess, handleRemoveAnimation } from "../wordle-components/wordle-logic";
+import { moveBackInput, updateNextRow, removeInputLetter, addInputLetter, moveToNextInput } from "../redux/features/InputState";
+import {  addGussedLetter, removeLastGussedLetter, resetGuess, } from "../redux/features/LettersState"; 
+import {  addInputClasses, addKeyboardButtonsClasses, addLetterAndMoveForword, addGuessArrayToColorsBank, addToGuessedLetterBank, checkGuess, handleAddAnimation, handleRemoveAnimation, findInputObjById } from "../wordle-components/wordle-logic";
 
 
 
@@ -20,28 +20,33 @@ export function WordleApp() {
     const isGameWon = useAppSelector(state => state.dialog.winDialog);
     const isGameLost = useAppSelector(state => state.dialog.loseDialog);
     const currentGuess = useAppSelector(state => state.lettersBank.currentGuess);
-    const currentGuessClassNames = useAppSelector(state => state.lettersBank.currentGuessclasses);
+    const currentGuessClassNames = useAppSelector(state => state.lettersBank.currentGuessClasses);
     const correct = useAppSelector(state => state.lettersBank.correct);
     const present = useAppSelector(state => state.lettersBank.present);
     const wrong = useAppSelector(state => state.lettersBank.wrong);
     const currentRow = useAppSelector(state => state.inputs.currentRowIndex);
     const currentInputId = useAppSelector(state => state.inputs.currentInputId);
     const word = useAppSelector(state => state.game.word);
+    const inputRows = useAppSelector(state => state.inputs.rows)
     
     
     const addGuessLetter = (letter: string) => {
         
         
         if (letter === 'Del') {
-            if (inputsRefs[currentInputId].current?.disabled) return
+            const lastInputObj = findInputObjById(inputRows, currentInputId -1)
+            if (lastInputObj && lastInputObj?.rowNumber !== currentRow) return
+            // if (inputsRefs[currentInputId].current?.disabled) return
             dispatch(moveBackInput());
             dispatch(removeInputLetter());
-            dispatch(removeGussedLetter());
-            handleRemoveAnimation(currentInputId, allRefs)
+            dispatch(removeLastGussedLetter());
+            // handleRemoveAnimation(currentInputId, allRefs)
             return
         }
         if (letter === 'Enter') {
             if (currentGuess.length < 5) return
+            addGuessArrayToColorsBank(currentGuess, word, dispatch )
+            console.log(currentGuessClassNames)
             addInputClasses(dispatch, currentInputId, currentGuessClassNames);
             addKeyboardButtonsClasses({correct, present, wrong}, dispatch)
             checkGuess(currentGuess, word, currentRow, dispatch)
@@ -49,7 +54,11 @@ export function WordleApp() {
             dispatch(updateNextRow());
         }
         if (currentGuess.length === 5) return;
-        addLetterAndMoveForword(dispatch, letter, word, currentInputId, allRefs,  addToGuessedLetterBank);
+        dispatch(addGussedLetter(letter));
+        dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
+        // addToGuessedLetterBank(letter, word, currentInputId, dispatch);
+        dispatch(moveToNextInput());
+        // handleAddAnimation(currentInputId, allRefs);
     }
 
 

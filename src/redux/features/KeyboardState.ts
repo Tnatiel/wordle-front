@@ -70,4 +70,3 @@ export const { setCorrectClass, setPresentClass, setWrongClass} = keyboardSlice.
 export default keyboardSlice.reducer;
 
 
-//TODO change defaulValue to value and render page

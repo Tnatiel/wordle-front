@@ -8,7 +8,7 @@ import { GuessedLetters } from '../redux-types';
     present: [],
     wrong: [],
     currentGuess: [],
-    currentGuessclasses: [],
+    currentGuessClasses: [],
 
 }
 
@@ -17,31 +17,46 @@ const lettersSlice = createSlice({
     name: 'lettersBank',
     initialState,
     reducers: {
-        addCorrectLetter: (state, action: PayloadAction<string>) => {
+        addToCorrectLetterBank: (state, action: PayloadAction<string>) => {
             state.correct.push(action.payload);
-            state.currentGuessclasses.push('correct');
+            state.currentGuessClasses.push('correct');
         },
-        addPresentLetter: (state, action: PayloadAction<string>) => {
+        removeFromLetterBank: (state, action: PayloadAction<string>) => {
+            state.correct = state.correct.filter(letter => letter !== action.payload);
+
+        },
+        addToPresentLetterBank: (state, action: PayloadAction<string>) => {
             state.present.push(action.payload);
-            state.currentGuessclasses.push('present');
+            state.currentGuessClasses.push('present');
         },
-        addWrongLetter: (state, action: PayloadAction<string>) => {
+        removeFromPresentLetterBank: (state, action: PayloadAction<string>) => {
+            state.present = [...state.present, ...state.present.filter(letter => letter === action.payload)];
+            state.currentGuessClasses.pop();
+        },
+        addToWrongLetterBank: (state, action: PayloadAction<string>) => {
             state.wrong.push(action.payload);
-            state.currentGuessclasses.push('wrong');
+            state.currentGuessClasses.push('wrong');
+        },
+        removeFromWrongLetterBank: (state, action: PayloadAction<string>) => {
+            state.wrong = [...state.wrong, ...state.wrong.filter(letter => letter === action.payload)];
+            state.currentGuessClasses.pop();
         },
         addGussedLetter: (state, action: PayloadAction<string>) => {
             state.currentGuess.push(action.payload)
         },
-        removeGussedLetter: (state) => {
+        addGussedLetterClass: (state, action: PayloadAction<string>) => {
+            state.currentGuessClasses.push(action.payload)
+        },
+        removeLastGussedLetter: (state) => {
             state.currentGuess.pop();
-            state.currentGuessclasses.pop()
+            state.currentGuessClasses.pop()
         },
         resetGuess: (state) => {
             state.currentGuess = [];
-            state.currentGuessclasses = []
+            state.currentGuessClasses = []
         },
     }
 })
 
-export const { removeGussedLetter, addCorrectLetter, addWrongLetter, addPresentLetter, addGussedLetter, resetGuess} = lettersSlice.actions;
+export const { addGussedLetterClass, removeLastGussedLetter, addToCorrectLetterBank, addToWrongLetterBank, addToPresentLetterBank, addGussedLetter, resetGuess} = lettersSlice.actions;
 export default lettersSlice.reducer;

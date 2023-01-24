@@ -31,7 +31,7 @@ export interface GuessedLetters {
     present: string[],
     wrong: string[],
     currentGuess: string[],
-    currentGuessclasses: string[],
+    currentGuessClasses: string[],
 
 }
 

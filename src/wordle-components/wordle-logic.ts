@@ -3,7 +3,7 @@ import { setWin } from "../redux/features/GameState";
 import { AppDispatch } from "../redux/app/store";
 import { addInputLetter, moveToNextInput, updateInputClassName } from "../redux/features/InputState";
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
-import { addCorrectLetter, addGussedLetter, addPresentLetter, addWrongLetter } from "../redux/features/LettersState";
+import { addToCorrectLetterBank, addGussedLetter, addToPresentLetterBank, addToWrongLetterBank, addGussedLetterClass } from "../redux/features/LettersState";
 import { InputBox, KeyboardButton } from "../redux/redux-types";
 import { AllRefsObject, ClassesColors } from "./wordle-types";
 
@@ -37,15 +37,37 @@ export const addKeyboardButtonsClasses = (classes: ClassesColors, dispatch: AppD
 }
 
 export const addToGuessedLetterBank = (letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => {
-    if (letter === word[currentInputId % 5].toLocaleUpperCase())  {
-        dispatch(addCorrectLetter(letter));
+    if (letter === word[currentInputId % 5].toUpperCase())  {
+        dispatch(addToCorrectLetterBank(letter));
         return;
     }
-    if (word.toLocaleUpperCase().includes(letter)) { 
-        dispatch(addPresentLetter(letter));
+    if (word.toUpperCase().includes(letter)) { 
+        dispatch(addToPresentLetterBank(letter));
         return;
     } 
-    dispatch(addWrongLetter(letter));
+    dispatch(addToWrongLetterBank(letter));
+
+    // TODO the classes that hold keyboard classes dont update
+}
+export const addGuessArrayToColorsBank = (letters: string[], word: string, dispatch: AppDispatch) => {
+    for (let i = 0; i < letters.length; i++) {
+        const letter = letters[i]
+        if (letter === word[i].toUpperCase())  {
+            dispatch(addToCorrectLetterBank(letter));
+            dispatch(addGussedLetterClass('correct'));
+            continue;
+        }
+        if (word.toUpperCase().includes(letter)) { 
+            dispatch(addToPresentLetterBank(letter));
+            dispatch(addGussedLetterClass('present'));
+            continue;
+        } 
+        dispatch(addToWrongLetterBank(letter));
+        dispatch(addGussedLetterClass('wrong'));
+        
+    }
+
+    // TODO the classes that hold keyboard classes dont update
 }
 
 export const addLetterAndMoveForword = (dispatch: AppDispatch, letter: string,  word: string, currentInputId: number, refs: AllRefsObject, letterBankAdder:(letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => void) => {
@@ -103,11 +125,13 @@ export const shouldNotKeepFocus = (input: InputBox, gameStatus: boolean, current
     }
 }
 export const handleAddAnimation = (currentInputId: number, refs: AllRefsObject ) => {
-    const currentInputRef = refs.inputs[currentInputId].current;
-    if (currentInputRef) currentInputRef.classList.add("letter-animation");
+    const currentInputRef = refs.inputs[currentInputId]?.current;
+    if (!currentInputRef) return 
+    currentInputRef.classList.add("letter-animation");
     if (currentInputId - 1 < 0) return;
     const lastInputRef = refs.inputs[currentInputId - 1];
     if (lastInputRef) lastInputRef.current?.classList.remove('letter-animation');
+    
 
 }
 export const handleRemoveAnimation = (currentInputId: number, refs: AllRefsObject ) => {
