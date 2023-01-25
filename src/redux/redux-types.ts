@@ -1,6 +1,12 @@
 
+export interface WordHash {
+    content: string;
+    key: string;
+    iv: string;
+}
+
 export interface GameState {
-    word: string,
+    wordData: WordHash,
     win: boolean,
     
 };

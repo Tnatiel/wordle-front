@@ -19,7 +19,6 @@ const lettersSlice = createSlice({
     reducers: {
         addToCorrectLetterBank: (state, action: PayloadAction<string>) => {
             state.correct.push(action.payload);
-            state.currentGuessClasses.push('correct');
         },
         removeFromCorrectLetterBank: (state, action: PayloadAction<string>) => {
             state.correct = state.correct.filter(letter => letter !== action.payload);
@@ -27,7 +26,6 @@ const lettersSlice = createSlice({
         },
         addToPresentLetterBank: (state, action: PayloadAction<string>) => {
             state.present.push(action.payload);
-            state.currentGuessClasses.push('present');
         },
         removeFromPresentLetterBank: (state, action: PayloadAction<string>) => {
             state.present = state.present.filter(letter => letter !== action.payload);
@@ -35,13 +33,12 @@ const lettersSlice = createSlice({
         },
         addToWrongLetterBank: (state, action: PayloadAction<string>) => {
             state.wrong.push(action.payload);
-            state.currentGuessClasses.push('wrong');
         },
         removeFromWrongLetterBank: (state, action: PayloadAction<string>) => {
             state.wrong = state.present.filter(letter => letter !== action.payload);
             state.currentGuessClasses = state.currentGuessClasses.filter(letter => letter !== action.payload);;
         },
-        addGussedLetter: (state, action: PayloadAction<string>) => {
+        addLetterToGuess: (state, action: PayloadAction<string>) => {
             state.currentGuess.push(action.payload)
         },
         addGussedLetterClass: (state, action: PayloadAction<string>) => {
@@ -55,8 +52,11 @@ const lettersSlice = createSlice({
             state.currentGuess = [];
             state.currentGuessClasses = []
         },
+        setCurrentClasses: (state, action: PayloadAction<string[]>) => {
+            state.currentGuessClasses.concat(action.payload);
+        }
     }
 })
 
-export const { removeFromCorrectLetterBank, removeFromPresentLetterBank, removeFromWrongLetterBank, addGussedLetterClass, removeLastGussedLetter, addToCorrectLetterBank, addToWrongLetterBank, addToPresentLetterBank, addGussedLetter, resetGuess} = lettersSlice.actions;
+export const { setCurrentClasses, removeFromCorrectLetterBank, removeFromPresentLetterBank, removeFromWrongLetterBank, addGussedLetterClass, removeLastGussedLetter, addToCorrectLetterBank, addToWrongLetterBank, addToPresentLetterBank, addLetterToGuess, resetGuess} = lettersSlice.actions;
 export default lettersSlice.reducer;

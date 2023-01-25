@@ -1,8 +1,8 @@
 
 export interface ClassesColors {
-    correct: string[],
-    present: string[],
-    wrong: string[],
+    correctBank: string[],
+    presentBank: string[],
+    wrongBank: string[],
 }
 
 export interface RowsProps { 

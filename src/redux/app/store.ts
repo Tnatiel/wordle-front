@@ -1,9 +1,10 @@
-import { configureStore, } from '@reduxjs/toolkit';
+import { configureStore,  } from '@reduxjs/toolkit';
 import letterReducer from '../features/LettersState';
 import InputReducer from '../features/InputState';
 import gameReducer from '../features/GameState';
 import keyboardReducer from '../features/KeyboardState';
-import dialogReducer from '../features/DialogState'
+import dialogReducer from '../features/DialogState';
+import { wordApi } from '../apis/WordApi'
 
 
 
@@ -14,6 +15,10 @@ export const store = configureStore( {
         game: gameReducer,
         keyboard: keyboardReducer,
         dialog: dialogReducer,
+        [wordApi.reducerPath]: wordApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(wordApi.middleware)
     }
 });
 

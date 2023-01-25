@@ -1,19 +1,23 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { GameState } from '../redux-types';
+import { Hash } from 'react-router-dom';
+import { GameState, WordHash } from '../redux-types';
+
 
 
 const initialState: GameState = {
-    word: "moral",
+    wordData: {content: '', iv: '', key: ''},
     win: false,
     
 };
+
+
 
 const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
-        setWord: (state, action: PayloadAction<string>) => {
-            state.word = action.payload;
+        setWordData: (state, action: PayloadAction<WordHash>) => {
+            state.wordData = action.payload
         },
         setWin: (state, action: PayloadAction<boolean>) => {
             state.win = action.payload;
@@ -23,5 +27,5 @@ const gameSlice = createSlice({
     }
 });
 
-export const { setWord, setWin } = gameSlice.actions;
+export const { setWordData, setWin } = gameSlice.actions;
 export default gameSlice.reducer;

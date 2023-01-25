@@ -134,14 +134,14 @@ Top Bar
 
 ### Simple Backend
 
-* [ ] when game starts, fetch the word for the game from the server
-* [ ] move the check word mechanism to the server
+* [x] when game starts, fetch the word for the game from the server
+* [x] move the check word mechanism to the server
 
 ### Advanced Game
 
-* [ ] don't send the real word in the network
+* [x] don't send the real word in the network
 * [ ] any testable code should have tests (client & server)
-* [ ] the code should be in TypeScript
+* [x] the code should be in TypeScript
 * [ ] the code should be clean (should pass linter and formatter)
 
 ### UI Testing

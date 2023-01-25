@@ -3,7 +3,7 @@ import { setWin } from "../redux/features/GameState";
 import { AppDispatch } from "../redux/app/store";
 import {  updateInputClassName } from "../redux/features/InputState";
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
-import { addToCorrectLetterBank, addToPresentLetterBank, addToWrongLetterBank, removeFromCorrectLetterBank, removeFromPresentLetterBank, removeFromWrongLetterBank } from "../redux/features/LettersState";
+import { addToCorrectLetterBank, addToPresentLetterBank, addToWrongLetterBank, removeFromCorrectLetterBank, removeFromPresentLetterBank, removeFromWrongLetterBank} from "../redux/features/LettersState";
 import { InputBox, KeyboardButton } from "../redux/redux-types";
 import { AllRefsObject, ClassesColors } from "./wordle-types";
 
@@ -18,8 +18,17 @@ export const addInputClasses = (dispatch: AppDispatch , currentInputId: number ,
 }
 
 
-export const checkGuess = (currentGuess: string[], word: string, currentRow: number,  dispatch: AppDispatch) => {
+export const checkGuessLocally = (currentGuess: string[], word: string, currentRow: number,  dispatch: AppDispatch) => {
     if (currentGuess.join('') === word.toLocaleUpperCase()) {
+          dispatch(setWinDialog(true));
+          dispatch(setWin(true));
+          return
+        };
+    if (currentRow === 5) dispatch(setLoseDialog(true));  
+
+}
+export const setGuessResults = (status: boolean, currentRow: number,  dispatch: AppDispatch) => {
+    if (status) {
           dispatch(setWinDialog(true));
           dispatch(setWin(true));
           return
@@ -29,23 +38,45 @@ export const checkGuess = (currentGuess: string[], word: string, currentRow: num
 }
 
 export const addKeyboardButtonsClasses = (classes: ClassesColors, dispatch: AppDispatch) => {
-    const {correct, present, wrong} = classes
-    if(wrong.length)dispatch(setWrongClass(wrong));
-    if(present.length)dispatch(setPresentClass(present));
-    if(correct.length)dispatch(setCorrectClass(correct));
+    const {correctBank, presentBank, wrongBank} = classes
+    if(wrongBank.length)dispatch(setWrongClass(wrongBank));
+    if(presentBank.length)dispatch(setPresentClass(presentBank));
+    if(correctBank.length)dispatch(setCorrectClass(correctBank));
 }
 
-export const addToGuessedLetterBank = (letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => {
-    if (letter === word[currentInputId % 5].toUpperCase())  {
-        dispatch(addToCorrectLetterBank(letter));
-        return;
-    }
-    if (word.toUpperCase().includes(letter)) { 
-        dispatch(addToPresentLetterBank(letter));
-        return;
-    } 
-    dispatch(addToWrongLetterBank(letter));
+// export const addToGuessedLetterBank = (letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => {
+//     if (letter === word[currentInputId % 5].toUpperCase())  {
+//         dispatch(addToCorrectLetterBank(letter));
+//         return;
+//     }
+//     if (word.toUpperCase().includes(letter)) { 
+//         dispatch(addToPresentLetterBank(letter));
+//         return;
+//     } 
+//     dispatch(addToWrongLetterBank(letter));
 
+// }
+
+export const addLettersToStatusBank = (guess: string, currentGuessClasses: string[], dispatch: AppDispatch) => {
+    console.log('guess:', guess)
+    console.log('classes:', currentGuessClasses)
+    if (guess.length !== currentGuessClasses.length) {
+        throw new Error('The guees or classes too short enough');
+    }
+    for (let i = 0; i < guess.length; i++) {
+        if ('correct' === currentGuessClasses[i]) {
+            dispatch(addToCorrectLetterBank(guess[i]));
+            continue;
+        }
+        if ('present' === currentGuessClasses[i]) {
+            dispatch(addToPresentLetterBank(guess[i]));
+            continue;
+        }
+        if ('wrong' === currentGuessClasses[i]) {
+            dispatch(addToWrongLetterBank(guess[i]));
+        }
+        
+    }
 }
 
 export const findInputObjById = (rows: InputBox[][], inputId: number ) => {
@@ -108,11 +139,13 @@ export const handleRemoveAnimation = (currentInputId: number, refs: AllRefsObjec
 }
 
 export const removeLetterFromStatusBank = (colorsObg: ClassesColors ,letter: string, dispatch: AppDispatch) => {
-    if (colorsObg.correct.length===0 && colorsObg.present.length===0 && colorsObg.wrong.length ===0) return console.log('no classes!')
-    if (colorsObg.correct.includes(letter)) {
+    if (colorsObg.correctBank.length===0 && colorsObg.presentBank.length===0 && colorsObg.wrongBank.length ===0) {
+        throw new Error('No classes wer\'e provided')   ;
+    }
+    if (colorsObg.correctBank.includes(letter)) {
         dispatch(removeFromCorrectLetterBank(letter)) 
     }
-    else if (colorsObg.present.includes(letter)) {
+    else if (colorsObg.presentBank.includes(letter)) {
         dispatch(removeFromPresentLetterBank(letter))
     }
     else {
@@ -122,3 +155,28 @@ export const removeLetterFromStatusBank = (colorsObg: ClassesColors ,letter: str
 
 
 
+export const filterGuessToStatusBank = (guess: string, classes: string[]) => {
+    
+    if (guess.length !== classes.length) {
+        throw new Error('The guees or classes too short enough');
+    }
+    const correct: string[] = []
+    const present: string[] = []
+    const wrong: string[] = []
+    for (let i = 0; i < guess.length; i++) {
+        if ('correct' === classes[i]) {
+            correct.push(guess[i])
+            continue
+        }
+        if ('present' === classes[i]) {
+            present.push(guess[i])
+            continue
+        }
+        if ('wrong' === classes[i]) {
+            wrong.push(guess[i])
+            
+        }
+        
+    }
+    return {correct, present, wrong}
+}
