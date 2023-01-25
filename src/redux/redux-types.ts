@@ -39,3 +39,4 @@ export interface DialogState {
     winDialog: boolean;
     loseDialog: boolean;
 }
+
