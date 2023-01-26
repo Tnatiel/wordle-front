@@ -71,7 +71,7 @@ export function WordleApp() {
             
             const responseClasses = await data.classes
             setClasses(responseClasses)
-            const {correct, present, wrong} = filterGuessToStatusBank(currentGuess, responseClasses)
+            const {correct, present, wrong} = filterGuessToStatusBank(currentGuess, responseClasses) 
             setCorrectBank(correct);
             setPresentBank(present);
             setWrongBank(wrong);

@@ -1,12 +1,12 @@
 
-import { addInputClasses, addKeyboardButtonsClasses, checkGuessLocally, findInputObjById, findKeyButtonObjById, handleKeypress, shouldNotKeepFocus } from "./wordle-logic";
+import { addInputClasses, addKeyboardButtonsClasses, checkGuessLocally, filterGuessToStatusBank, findInputObjById, findKeyButtonObjById, handleKeypress, shouldNotKeepFocus } from "./wordle-logic";
 // import configureMockStore from 'redux-mock-store';
 
 
 
 describe('wordle-logic', () => {
 
-    describe.only('dispatch functions', () => {
+    describe('dispatch functions', () => {
         let mockDispatch: jest.Mock;
         // let mockStore: any;
         beforeEach(() => {
@@ -48,7 +48,7 @@ describe('wordle-logic', () => {
           });
         });
         
-        describe('checkGuess', () => {
+        describe('checkGuessLocally', () => {
             
             it('should dispatch win actions', () => {
             
@@ -170,41 +170,61 @@ describe('wordle-logic', () => {
             });
         });
 
-        // describe('handleKeypress', () => {
-        //     let inputEvent: jest.Mock;
-        //     beforeEach(() => {
-        //         inputEvent = jest.fn();
-        //     });
-        //     it('should call inputEvent with the correct letter when a valid key is pressed', () => {
-        //         const event = { key: "a" };
-        //         handleKeypress(event, inputEvent);
-        //         expect(inputEvent).toBeCalledWith("A");
-        //     });
-        //     it("should call inputEvent with the correct letter when enter key is pressed", () => {
-        //         const event = { key: "Enter" };
-        //         handleKeypress(event, inputEvent);
-        //         expect(inputEvent).toBeCalledWith("Enter");
-        //     });
+        describe('handleKeypress', () => {
+            let inputEvent: jest.Mock;
+            beforeEach(() => {
+                inputEvent = jest.fn();
+            });
+            it('should call inputEvent with the correct letter when a valid key is pressed', () => {
+                const event = { key: "a" };
+                handleKeypress(event, inputEvent);
+                expect(inputEvent).toBeCalledWith("A");
+            });
+            it("should call inputEvent with the correct letter when enter key is pressed", () => {
+                const event = { key: "Enter" };
+                handleKeypress(event, inputEvent);
+                expect(inputEvent).toBeCalledWith("Enter");
+            });
         
-        //     it("should call inputEvent with the correct letter when backspace key is pressed", () => {
-        //         const event = { key: "Backspace" };
-        //         handleKeypress(event, inputEvent);
-        //         expect(inputEvent).toBeCalledWith("Del");
-        //     });
+            it("should call inputEvent with the correct letter when backspace key is pressed", () => {
+                const event = { key: "Backspace" };
+                handleKeypress(event, inputEvent);
+                expect(inputEvent).toBeCalledWith("Del");
+            });
         
-        //     it("should not call inputEvent when an invalid key is pressed", () => {
-        //         const event = { key: "123" };
-        //         const hk = handleKeypress(event, inputEvent);
-        //         expect(inputEvent).not.toBeCalled();
-        //         expect(hk).toEqual(undefined);
-        //     });
+            it("should not call inputEvent when an invalid key is pressed", () => {
+                const event = { key: "123" };
+                const hk = handleKeypress(event, inputEvent);
+                expect(inputEvent).not.toBeCalled();
+                expect(hk).toEqual(undefined);
+            });
             
-        // });
+        });
 
+        describe('filterGuessToStatusBank', () => {
 
-        
+            it('should fill 2 arrays with 2 letters and 1 with a letter', () => {
+                const mockClasses = ['correct', 'correct', 'present', 'present', 'wrong']
+                const data = filterGuessToStatusBank('qwert', mockClasses);
+                expect(data.correct).toContain('q')
+                expect(data.correct).toContain('w')
+                expect(data.present).toContain('e')
+                expect(data.present).toContain('r')
+                expect(data.wrong).toContain('t')
+                
+            });
+            it('should mot fill any array. empty array', () => {
+                const mockClasses: string[] = []
+                const data = filterGuessToStatusBank('qwert', mockClasses);
+                expect(data.correct).toEqual([])
+                expect(data.present).toEqual([])
+                expect(data.wrong).toEqual([])
+                
+            });
         });
 
     });
+
+});
     
 

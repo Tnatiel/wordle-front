@@ -56,9 +56,10 @@ export const shouldNotKeepFocus = (input: InputBox, gameStatus: boolean, current
     if (gameStatus) return true;
     if (currentGuess.length === 5 
         && currentInputId  % 5 === 0 
-        && input.rowNumber === currentRow) return false
-      
-    if (currentInputId === input.id) return false
+        && input.rowNumber === currentRow) {
+            return false
+        }
+    if (currentInputId === input.id ) return false
     return true
     
   }
@@ -84,9 +85,7 @@ export const shouldNotKeepFocus = (input: InputBox, gameStatus: boolean, current
 
 export const filterGuessToStatusBank = (guess: string, classes: string[]) => {
     
-    if (guess.length !== classes.length) {
-        throw new Error('The guess or classes too short enough');
-    }
+    
     const correct: string[] = []
     const present: string[] = []
     const wrong: string[] = []
