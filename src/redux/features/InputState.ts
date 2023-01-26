@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { findInputObjById } from 'wordle-components/wordle-logic';
+import { findInputObjById } from '../../wordle-components/wordle-logic';
+
 import { InputsState } from '../redux-types';
 
 

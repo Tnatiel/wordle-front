@@ -1,12 +1,12 @@
 
 import { addInputClasses, addKeyboardButtonsClasses, checkGuessLocally, findInputObjById, findKeyButtonObjById, handleKeypress, shouldNotKeepFocus } from "./wordle-logic";
-import configureMockStore from 'redux-mock-store';
+// import configureMockStore from 'redux-mock-store';
 
 
 
 describe('wordle-logic', () => {
 
-    describe('dispatch functions', () => {
+    describe.only('dispatch functions', () => {
         let mockDispatch: jest.Mock;
         // let mockStore: any;
         beforeEach(() => {
@@ -32,6 +32,20 @@ describe('wordle-logic', () => {
             
     
           });
+          it("should return undifined class.lenght !== 5 -> (4)", () => {
+    
+            const classes = ["correct", "present", "wrong", "correct"];
+            const added = addInputClasses(mockDispatch, 10, classes);
+            expect(mockDispatch).toHaveBeenCalledTimes(0);
+            expect(added).toEqual(undefined);
+          });
+          it("should return undifined class.lenght !== 5 -> (7)", () => {
+    
+            const classes = ["correct", "present", "wrong", "correct", "correct", "correct", "correct"];
+            const added = addInputClasses(mockDispatch, 10, classes);
+            expect(mockDispatch).toHaveBeenCalledTimes(0);
+            expect(added).toEqual(undefined);
+          });
         });
         
         describe('checkGuess', () => {
@@ -53,48 +67,36 @@ describe('wordle-logic', () => {
             });
         });
     
-        describe('addKeyboardButtonClasses', () => {
+          describe('addKeyboardButtonClasses', () => {
     
-            // it('should dispath all class status adders', () => {
-            //     const classesObj = {correct:['a','b'], present:['c', 'd'], wrong: ['e']}
-            //     addKeyboardButtonsClasses(classesObj, mockDispatch);
-            //     expect(mockDispatch).toHaveBeenCalledTimes(3);
-            //     expect(mockDispatch).toBeCalledWith({type: 'keyboard/setWrongClass', payload: ['e']});
-            //     expect(mockDispatch).toBeCalledWith({type: 'keyboard/setPresentClass', payload: ['c', 'd']});
-            //     expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
-            // });
-            // it('should dispath 2 class status adders', () => {
-            //     const classesObj = {correct:['a','b'], present:['c', 'd'], wrong: []}
-            //     addKeyboardButtonsClasses(classesObj, mockDispatch);
-            //     expect(mockDispatch).toHaveBeenCalledTimes(2);
-            //     expect(mockDispatch).toBeCalledWith({type: 'keyboard/setPresentClass', payload: ['c', 'd']});
-            //     expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
-            // });
-            // it('should dispath 1 class status adders', () => {
-            //     const classesObj = {correct:['a','b'], present:[], wrong: []}
-            //     addKeyboardButtonsClasses(classesObj, mockDispatch);
-            //     expect(mockDispatch).toHaveBeenCalledTimes(1);
-            //     expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
-            // });
-            // it('shouldn\'t dispatch. no classes provided', () => {
-            //     const classesObj = {correct:[], present:[], wrong: []}
-            //     addKeyboardButtonsClasses(classesObj, mockDispatch);
-            //     expect(mockDispatch).toHaveBeenCalledTimes(0);
-            // });
+            it('should dispath all class status adders', () => {
+                const classesObj = {correctBank:['a','b'], presentBank:['c', 'd'], wrongBank: ['e']}
+                addKeyboardButtonsClasses(classesObj, mockDispatch);
+                expect(mockDispatch).toHaveBeenCalledTimes(3);
+                expect(mockDispatch).toBeCalledWith({type: 'keyboard/setWrongClass', payload: ['e']});
+                expect(mockDispatch).toBeCalledWith({type: 'keyboard/setPresentClass', payload: ['c', 'd']});
+                expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
+            });
+            it('should dispath 2 class status adders', () => {
+                const classesObj = {correctBank:['a','b'], presentBank:['c', 'd'], wrongBank: []}
+                addKeyboardButtonsClasses(classesObj, mockDispatch);
+                expect(mockDispatch).toHaveBeenCalledTimes(2);
+                expect(mockDispatch).toBeCalledWith({type: 'keyboard/setPresentClass', payload: ['c', 'd']});
+                expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
+            });
+            it('should dispath 1 class status adders', () => {
+                const classesObj = {correctBank:['a','b'], presentBank:[], wrongBank: []}
+                addKeyboardButtonsClasses(classesObj, mockDispatch);
+                expect(mockDispatch).toHaveBeenCalledTimes(1);
+                expect(mockDispatch).toBeCalledWith({type: 'keyboard/setCorrectClass', payload: ['a','b']});
+            });
+            it('shouldn\'t dispatch. no classes provided', () => {
+                const classesObj = {correctBank:[], presentBank:[], wrongBank: []}
+                addKeyboardButtonsClasses(classesObj, mockDispatch);
+                expect(mockDispatch).toHaveBeenCalledTimes(0);
+            });
         });
     
-    
-        describe('addLetterAndMoveForword', () => {
-    
-        //     it('should dispatch move forword actions', () => {
-        //         addLetterAndMoveForword(mockDispatch, 'A', 'arbib', 0, addToGuessedLetterBank);
-        //         expect(mockDispatch).toHaveBeenCalledTimes(4);
-        //         expect(mockDispatch).toBeCalledWith({type: 'lettersBank/addGussedLetter', payload: 'A'});
-        //         expect(mockDispatch).toBeCalledWith({type: 'inputs/addInputLetter', payload: {inputIndex: 0, value: 'A'}});
-        //         expect(mockDispatch).toBeCalledWith({type: 'inputs/moveToNextInput', payload: undefined});
-        //     });
-        
-        });
     });
 
     describe('regular functions', () => {

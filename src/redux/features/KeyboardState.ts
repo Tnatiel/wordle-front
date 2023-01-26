@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { findKeyButtonObjById } from 'wordle-components/wordle-logic';
+import { findKeyButtonObjById } from '../../wordle-components/wordle-logic';
 import { KeyboardState } from '../redux-types';
 
 const createKeyboardButtons = (ids: string[]) => ids.map( id => ({id, className: ''}));

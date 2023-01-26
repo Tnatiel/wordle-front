@@ -9,6 +9,7 @@ import { ClassesColors } from "./wordle-types";
 
 export const addInputClasses = (dispatch: AppDispatch , currentInputId: number ,classNames: string[]) => {
     let classIndex = 0;
+    if (classNames.length !== 5) return
     for (let i = 5; i > 0; i--) {
         dispatch(updateInputClassName({id: currentInputId - i, className: classNames[classIndex]}))
         classIndex++;
@@ -18,15 +19,6 @@ export const addInputClasses = (dispatch: AppDispatch , currentInputId: number ,
 
 export const checkGuessLocally = (currentGuess: string[], word: string, currentRow: number,  dispatch: AppDispatch) => {
     if (currentGuess.join('') === word.toLocaleUpperCase()) {
-          dispatch(setWinDialog(true));
-          dispatch(setWin(true));
-          return
-        };
-    if (currentRow === 5) dispatch(setLoseDialog(true));  
-
-}
-export const setGuessResults = (status: boolean, currentRow: number,  dispatch: AppDispatch) => {
-    if (status) {
           dispatch(setWinDialog(true));
           dispatch(setWin(true));
           return
