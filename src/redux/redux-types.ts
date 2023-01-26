@@ -8,6 +8,7 @@ export interface WordHash {
 export interface GameState {
     wordData: WordHash,
     win: boolean,
+    wordFetched: boolean
     
 };
 
@@ -33,9 +34,7 @@ export interface KeyboardState {
 }
 
 export interface GuessedLetters {
-    correct: string[],
-    present: string[],
-    wrong: string[],
+
     currentGuess: string[],
     currentGuessClasses: string[],
 

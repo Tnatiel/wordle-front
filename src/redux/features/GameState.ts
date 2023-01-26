@@ -5,7 +5,7 @@ import { GameState, WordHash } from '../redux-types';
 const initialState: GameState = {
     wordData: {content: '', iv: '', key: ''},
     win: false,
-    
+    wordFetched: false,
 };
 
 
@@ -14,7 +14,8 @@ const gameSlice = createSlice({
     initialState,
     reducers: {
         setWordData: (state, action: PayloadAction<WordHash>) => {
-            state.wordData = action.payload
+            state.wordData = action.payload;
+            state.wordFetched = true;
         },
         setWin: (state, action: PayloadAction<boolean>) => {
             state.win = action.payload;

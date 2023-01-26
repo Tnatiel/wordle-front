@@ -6,8 +6,8 @@ import { Keyboard } from "../wordle-components/Keyboard";
 import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
 import { moveBackInput, updateNextRow, removeLastInputLetter, addInputLetter, moveToNextInput } from "../redux/features/InputState";
-import {  addLetterToGuess, removeLastGussedLetter, resetGuess,  } from "../redux/features/LettersState"; 
-import {  addInputClasses, addKeyboardButtonsClasses,findInputObjById, removeLetterFromStatusBank, addLettersToStatusBank, filterGuessToStatusBank } from "../wordle-components/wordle-logic";
+import {  addLetterToGuess, removeLastGussedLetter, resetGuess,  } from "../redux/features/LettersBankState"; 
+import {  addInputClasses, addKeyboardButtonsClasses,findInputObjById, filterGuessToStatusBank } from "../wordle-components/wordle-logic";
 import { useEffect, useState } from "react";
 import { setWin, setWordData } from "redux/features/GameState";
 import { setLoseDialog, setWinDialog } from "redux/features/DialogState";
@@ -20,6 +20,7 @@ export function WordleApp() {
     const [presentBank, setPresentBank] = useState<string[]>([]);
     const [wrongBank, setWrongBank] = useState<string[]>([]);
     const wordData = useAppSelector(state => state.game.wordData);
+    const gotWord = useAppSelector(state => state.game.wordFetched);
     const dispatch = useAppDispatch();
     useEffect(() => {
         fetch('http://localhost:3333/word/random')
@@ -30,7 +31,7 @@ export function WordleApp() {
         .catch(err => {
             console.log(err)
         })
-    }, [])
+    }, [dispatch, gotWord])
 
     const inputsRefs = useInputRef();
     const keyboardRefs = useKeyboardRefs();
@@ -51,7 +52,8 @@ export function WordleApp() {
         }
 
         handleCheck()
-    },[ currentGuess]);
+        // eslint-disable-next-line
+    },[currentGuess]);
 
     const checkOnServer = async (currentGuess: string) => {
         try {
@@ -85,7 +87,6 @@ export function WordleApp() {
         if (letter === 'Del') {
             const lastInputObj = findInputObjById(inputRows, currentInputId -1)
             if (lastInputObj && lastInputObj?.rowNumber !== currentRow) return
-            removeLetterFromStatusBank({correctBank, presentBank, wrongBank}, lastInputObj?.value as string, dispatch)
             dispatch(moveBackInput());
             dispatch(removeLastInputLetter());
             dispatch(removeLastGussedLetter());
@@ -98,15 +99,13 @@ export function WordleApp() {
             if (wordData.correct) {
                 dispatch(setWin(true))
                 dispatch(setWinDialog(true))
-            }
-            addLettersToStatusBank(currentGuess.join(''), classes, dispatch)
+            } else if (currentRow > 4) dispatch(setLoseDialog(true))
+            
+            
             addInputClasses(dispatch, currentInputId, classes);
             addKeyboardButtonsClasses({correctBank, presentBank, wrongBank}, dispatch)
             dispatch(resetGuess());
             dispatch(updateNextRow());
-            if (currentRow > 4) {
-                dispatch(setLoseDialog(true))
-            }
             setClasses([])
 
         }

@@ -3,10 +3,8 @@ import { setWin } from "../redux/features/GameState";
 import { AppDispatch } from "../redux/app/store";
 import {  updateInputClassName } from "../redux/features/InputState";
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
-import { addToCorrectLetterBank, addToPresentLetterBank, addToWrongLetterBank, removeFromCorrectLetterBank, removeFromPresentLetterBank, removeFromWrongLetterBank} from "../redux/features/LettersState";
 import { InputBox, KeyboardButton } from "../redux/redux-types";
-import { AllRefsObject, ClassesColors } from "./wordle-types";
-
+import { ClassesColors } from "./wordle-types";
 
 
 export const addInputClasses = (dispatch: AppDispatch , currentInputId: number ,classNames: string[]) => {
@@ -44,40 +42,6 @@ export const addKeyboardButtonsClasses = (classes: ClassesColors, dispatch: AppD
     if(correctBank.length)dispatch(setCorrectClass(correctBank));
 }
 
-// export const addToGuessedLetterBank = (letter: string, word: string, currentInputId: number, dispatch: AppDispatch) => {
-//     if (letter === word[currentInputId % 5].toUpperCase())  {
-//         dispatch(addToCorrectLetterBank(letter));
-//         return;
-//     }
-//     if (word.toUpperCase().includes(letter)) { 
-//         dispatch(addToPresentLetterBank(letter));
-//         return;
-//     } 
-//     dispatch(addToWrongLetterBank(letter));
-
-// }
-
-export const addLettersToStatusBank = (guess: string, currentGuessClasses: string[], dispatch: AppDispatch) => {
-    console.log('guess:', guess)
-    console.log('classes:', currentGuessClasses)
-    if (guess.length !== currentGuessClasses.length) {
-        throw new Error('The guees or classes too short enough');
-    }
-    for (let i = 0; i < guess.length; i++) {
-        if ('correct' === currentGuessClasses[i]) {
-            dispatch(addToCorrectLetterBank(guess[i]));
-            continue;
-        }
-        if ('present' === currentGuessClasses[i]) {
-            dispatch(addToPresentLetterBank(guess[i]));
-            continue;
-        }
-        if ('wrong' === currentGuessClasses[i]) {
-            dispatch(addToWrongLetterBank(guess[i]));
-        }
-        
-    }
-}
 
 export const findInputObjById = (rows: InputBox[][], inputId: number ) => {
     for (let i = 0; i < rows.length; i++) {
@@ -124,34 +88,7 @@ export const shouldNotKeepFocus = (input: InputBox, gameStatus: boolean, current
         
     }
 }
-export const handleAddAnimation = (currentInputId: number, refs: AllRefsObject ) => {
-    const currentInputRef = refs.inputs[currentInputId]?.current;
-    if (!currentInputRef) return 
-    currentInputRef.classList.add("letter-animation");
-    if (currentInputId - 1 < 0) return;
-    const lastInputRef = refs.inputs[currentInputId - 1];
-    if (lastInputRef) lastInputRef.current?.classList.remove('letter-animation');
-    
-}
-export const handleRemoveAnimation = (currentInputId: number, refs: AllRefsObject ) => {
-    const lastInputRef = refs.inputs[currentInputId - 1]?.current;
-    if (lastInputRef) lastInputRef.classList.remove("letter-animation");
-}
 
-export const removeLetterFromStatusBank = (colorsObg: ClassesColors ,letter: string, dispatch: AppDispatch) => {
-    if (colorsObg.correctBank.length===0 && colorsObg.presentBank.length===0 && colorsObg.wrongBank.length ===0) {
-        throw new Error('No classes wer\'e provided')   ;
-    }
-    if (colorsObg.correctBank.includes(letter)) {
-        dispatch(removeFromCorrectLetterBank(letter)) 
-    }
-    else if (colorsObg.presentBank.includes(letter)) {
-        dispatch(removeFromPresentLetterBank(letter))
-    }
-    else {
-        dispatch(removeFromWrongLetterBank(letter))
-    }
-} 
 
 export const filterGuessToStatusBank = (guess: string, classes: string[]) => {
     

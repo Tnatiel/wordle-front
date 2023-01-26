@@ -1,5 +1,5 @@
 import { configureStore,  } from '@reduxjs/toolkit';
-import letterReducer from '../features/LettersState';
+import letterReducer from '../features/LettersBankState';
 import InputReducer from '../features/InputState';
 import gameReducer from '../features/GameState';
 import keyboardReducer from '../features/KeyboardState';

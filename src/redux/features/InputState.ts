@@ -51,13 +51,6 @@ const inputSlice = createSlice({
         },
 
         updateInputClassName(state, action: PayloadAction<{id: number, className: string}>) {
-            // for (let i = 0; i < 6; i++) {
-            //     let input = state.rows[i].find(b => b.id === action.payload.id);
-            //     if (input) {
-            //         input.className = action.payload.className;
-            //         break;
-            //     }
-            // }
             const inpt = findInputObjById(state.rows, action.payload.id);
             if (inpt) inpt.className = action.payload.className
         },
