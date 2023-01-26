@@ -1,0 +1,9 @@
+
+
+@mixin wordle-def {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    margin-top: 2vh;
+}

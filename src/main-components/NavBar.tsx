@@ -5,13 +5,26 @@ import Button from 'react-bootstrap/Button';
 import {BsInfoCircle} from 'react-icons/bs'
 import { Link, useNavigate } from 'react-router-dom';
 
-function NavBar({ openInstructionsModal, openSignInModal }: { openInstructionsModal: () => void, openSignInModal: () => void}) {
 
+interface NavBarProps {
+  openInstructionsModal: () => void,
+  openSignInModal: () => void,
+  handleLogout: () => void,
+}
+
+
+
+function NavBar({ openInstructionsModal, openSignInModal, handleLogout }:NavBarProps) {
+
+  
   let navigate = useNavigate();
 
   const showHome = () => {
     navigate('/')
   }
+
+  
+  
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -19,12 +32,20 @@ function NavBar({ openInstructionsModal, openSignInModal }: { openInstructionsMo
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-          <Button onClick={showHome} variant='dark'>
+            <Button onClick={showHome} variant='dark'>
               Home
              </Button>
+            { 
+            localStorage.getItem('name') === null ? 
+            
             <Button variant='dark' onClick={openSignInModal}>
               Sign in
             </Button>
+            :
+              <Button variant='dark' onClick={handleLogout}>
+                Logout 
+              </Button> 
+            }
           </Nav>
           <Nav>
             <Button onClick={openInstructionsModal} variant='dark'>

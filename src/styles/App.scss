@@ -1,8 +1,11 @@
 /* // ******************************IMPORTS************************** */
 @import './header.scss';
-@import './keyboard';
-@import './user_input';
+@import './keyboard.scss';
+@import './user_input.scss';
 @import './modal.scss';
+@import './home.scss';
+@import './navbar.scss';
+@import './wordle.scss';
 
 /* // ******************************VARIABLES************************** */
 $main-color: #0d1b2a;
@@ -21,7 +24,7 @@ $wrong-color: rgb(249 144 144 / 66%);
   }
 
 #wordle-header {
-    @include header
+    @include header;
 }
 
 body {
@@ -30,16 +33,11 @@ body {
     height: 100vh;
     overflow: hidden;
     background-color: $main-color;
-    // background: url('assests/background.jpg');
 }
     
 
 main {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 2vh;
-    margin-top: 2vh;
+    @include wordle-def;
 }
 
 .user-input-sec {
@@ -48,18 +46,13 @@ main {
 }
 .keyboard {
     @include keyboard-def;
+    @include letter-check;
 }
 
 
 
 .navbar {
-    padding-left:  1rem;
-    padding-right:  1rem;
-    width:  75vw;
-    
-    .info {
-        justify-self: flex-end;
-    }
+    @include navbar-def;
 }
 
 
@@ -70,11 +63,8 @@ main {
 
     
 .home {
-    // background: url('../../../2491665.jpg');
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+    @include home-def;
 }
+
 
 

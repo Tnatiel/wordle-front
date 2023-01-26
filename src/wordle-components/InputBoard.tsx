@@ -1,141 +1,53 @@
+import { useEffect } from "react";
+import { useAppSelector } from "../redux/app/hooks";
 import { InputRow } from "./InputRow";
-import { useEffect, useContext } from 'react';
-import { WordleApi, BoardsContext } from "../providors/boardslogic-context";
+import { findInputObjById } from "./wordle-logic";
+import { BoardsProps } from "./wordle-types";
 
 
-const word ='moral';
+export const InputBoard = ({refs, handleInput}: BoardsProps) => {
 
+    const currentInputId = useAppSelector(state => state.inputs.currentInputId);
+    const currentRow = useAppSelector(state => state.inputs.currentRowIndex);
+    const rows = useAppSelector( state => state.inputs.rows);
 
-export const InputBoard = ({initialInput}: {initialInput: number}) => {
-
-    const  {
-        rowOneInputs,
-        rowOneInputRefs,
-        rowTwoInputs,
-        rowTwoInputRefs,
-        rowThreeInputs,
-        rowThreeInputRefs,
-        rowFourInputs,
-        rowFourInputRefs,
-        rowFiveInputs,
-        rowFiveInputRefs,
-        rowSixInputs,
-        rowSixInputRefs,
-        allInputRefs,
-        focusNextInput,
-        getGuess,
-        boardDisabled,
-        setBoardDisabled,
-    } = useContext(BoardsContext) as WordleApi;
-    
     useEffect(() => {
-        const firstRef = rowOneInputRefs[0]
-        firstRef.current?.focus()
-    },)
-    const getNextInputId = () => {
-        initialInput += 1;
-        return initialInput;
-    };
-    
-   
-    const checkGuess = (guess: string[], firstInputId: number) => {
-        const guessResults: string[] = [];
-        let currentInputId = firstInputId
-        for (let i = 0; i < 5; i++) {
-            const currentInput = allInputRefs[currentInputId].current;
-            // const currentKeyboardButton = api.allKeyboardRefs[(guess[i].toUpperCase())].current;
-            if (guess[i] === word[i]) {
-                
-                currentInput?.classList.add('correct');
-                // currentKeyboardButton?.classList.add('correct');
-                guessResults.push('correct');
-            } else if (word.includes(guess[i])) {
-                currentInput?.classList.add('present');
-                // currentKeyboardButton?.classList.add('present');
-                guessResults.push('present');
-            } else {
-                currentInput?.classList.add('wrong');
-                // currentKeyboardButton?.classList.add('wrong');
-                guessResults.push('wrong');
+        if (currentInputId > 29) return;
+        if (currentInputId  % 5 === 0 && currentInputId !== 0) {
+            const inputObj = findInputObjById(rows, currentInputId)
+            if (inputObj && inputObj.rowNumber === currentRow) {
+                refs.inputs[currentInputId].current?.focus(); 
             }
-            currentInputId++
 
+            refs.inputs[currentInputId - 1].current?.focus(); 
+            return;
         }
-        
-        const guessCorrect = guessResults.filter( s => s === 'correct').length === 5;
-        if (guessCorrect) setBoardDisabled(true)
-        return guessCorrect
-    }
+
+        if (currentInputId !== undefined) {
+            const currentRef = refs.inputs[currentInputId].current;
+            currentRef?.focus();
+        }
+    }, [currentInputId, currentRow, refs.inputs, rows]);
+
+    useEffect(() => {
+        const lastId = currentInputId < 1 ? 0 : currentInputId - 1;
+        const lastInputRef = refs.inputs[lastId];
+        if (lastInputRef && lastInputRef.current) {
+            lastInputRef.current.classList.add('letter-animation')
+            lastInputRef.current.addEventListener('animationend', () => {
+                lastInputRef.current?.classList.remove('letter-animation');
+            });
+        }
+    }, [currentInputId, refs.inputs])
 
     return (
         <div className="user-input-sec">
-            <InputRow 
-            inputsIds={rowOneInputs} 
-            inputsRefs={rowOneInputRefs}
-            handleFocus={focusNextInput} 
-            getGuess={getGuess}
-            checkGuess={checkGuess}
-            boardDisabled={boardDisabled}
-            a={initialInput}
-            b={getNextInputId}
-           
-            
-            />
-            <InputRow 
-            inputsIds={rowTwoInputs} 
-            inputsRefs={rowTwoInputRefs}
-            handleFocus={focusNextInput}
-            getGuess={getGuess}
-            checkGuess={checkGuess}
-            boardDisabled={boardDisabled}
-            a={initialInput}
-            b={getNextInputId}
-                              
-            />
-            <InputRow 
-            inputsIds={rowThreeInputs} 
-            inputsRefs={rowThreeInputRefs}
-            handleFocus={focusNextInput}
-            getGuess={getGuess}
-            checkGuess={checkGuess}
-            boardDisabled={boardDisabled}
-            a={initialInput}
-            b={getNextInputId}
-            
-            />
-            <InputRow 
-            inputsIds={rowFourInputs}
-             inputsRefs={rowFourInputRefs}
-             handleFocus={focusNextInput}
-             getGuess={getGuess}
-            checkGuess={checkGuess}
-            boardDisabled={boardDisabled}
-            a={initialInput}
-            b={getNextInputId}
-            
-             />
-            <InputRow 
-            inputsIds={rowFiveInputs}
-             inputsRefs={rowFiveInputRefs}
-             handleFocus={focusNextInput}
-             getGuess={getGuess}
-            checkGuess={checkGuess}
-            boardDisabled={boardDisabled}
-            a={initialInput}
-            b={getNextInputId}
-            
-             />
-            <InputRow 
-            inputsIds={rowSixInputs} 
-            inputsRefs={rowSixInputRefs}
-            handleFocus={focusNextInput}
-            getGuess={getGuess}
-            checkGuess={checkGuess}
-            boardDisabled={boardDisabled}
-            a={initialInput}
-            b={getNextInputId}
-            
-            />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={0} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={1} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={2} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={3} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={4} />
+            <InputRow handleInput={handleInput} refs={refs} rowIndex={5} />
         </div>
     )
 }

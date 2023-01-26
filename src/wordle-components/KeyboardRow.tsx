@@ -1,32 +1,22 @@
-import { BoardsContext, WordleApi } from "../providors/boardslogic-context";
-import {useContext} from 'react';
+import { useKeyboardRow } from "../custom-hooks/useKeyboardRow";
+import { RowsProps } from "./wordle-types";
 
 
-interface KeyboardRowProps {
-    letters: string[];
-    buttonsRefs: {[key: string]: React.RefObject<HTMLButtonElement>};
-    a: number;
-}
-
-export function KeyboardRow({a,letters, buttonsRefs, }: KeyboardRowProps) {
-
-    const {allInputRefs, activeInput}  = useContext(BoardsContext) as WordleApi;
-
-    const handleClick = (event: Partial<Event>) => {
-        const letter = (event.target as HTMLButtonElement).id;
-        console.log(a)
-    }
+export function KeyboardRow({ rowIndex, refs, handleInput }: RowsProps) {
+    
+    const buttons = useKeyboardRow(rowIndex);
+    const handleClick = (event: Partial<Event>) => handleInput((event.target as HTMLButtonElement).id); 
 
     return (
         <div className="kboard-row">
-            {letters.map( letter => (
+            {buttons.map( button => (
                 <button 
-                id={letter} 
-                key={letter}
-                className="kbd-btn"
+                id={button.id} 
+                key={button.id}
+                ref={refs.keyboard.allKeyboardRefs[button.id]}
+                className={`kbd-btn ${button.className}`}
                 onClick={(e) => handleClick(e)}
-                ref={buttonsRefs[letter]}
-                >{letter}</button>
+                >{button.id}</button>
             ))}
         </div>
     )

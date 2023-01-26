@@ -1,30 +1,13 @@
 import { KeyboardRow } from "./KeyboardRow";
-import { useContext } from 'react';
-import { WordleApi, BoardsContext } from "../providors/boardslogic-context";
+import { BoardsProps } from "./wordle-types";
 
-
-
-export function Keyboard({initialInput: a}:{initialInput:number}) {
-    
-    const wordleApi = useContext(BoardsContext) as WordleApi
+export function Keyboard({refs, handleInput}: BoardsProps) {
 
     return (
         <div className="keyboard">
-            <KeyboardRow 
-            letters={wordleApi.rowOneLetters} 
-            buttonsRefs={wordleApi.rowOneKeyBoardRefs}
-            a={a}
-            />
-            <KeyboardRow 
-            letters={wordleApi.rowTwoLetters} 
-            buttonsRefs={wordleApi.rowTwoKeyBoardRefs}
-            a={a}
-            />
-            <KeyboardRow 
-            letters={wordleApi.rowThreeLetters} 
-            buttonsRefs={wordleApi.rowThreeKeyBoardRefs}
-            a={a}
-            />
+            <KeyboardRow handleInput={handleInput}  refs={refs} rowIndex={0} />
+            <KeyboardRow handleInput={handleInput}   refs={refs} rowIndex={1} />
+            <KeyboardRow handleInput={handleInput}   refs={refs} rowIndex={2} />
         </div>
     )
 }

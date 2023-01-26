@@ -13,7 +13,8 @@
     font-family: 'Josefin Slab', serif;
     font-size: 1rem;
     font-weight: bold;
-    padding: 0.6rem 0.8rem;
+    width: 2rem;
+    height: 3rem;
     text-decoration:none;
     
     
@@ -37,12 +38,11 @@
         .kbd-btn {
             @include btn-def()
         }
-        
-        // ENTER & DEL
+
         #Enter, #Del {
             width: 4rem;
         }
-        //  ROWS
+
         .kboard-row {
             display: flex;
             justify-content: center;

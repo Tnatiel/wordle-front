@@ -2,9 +2,16 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-function SignInModal(
-  { showSignIn, closeSignInModal, handleSubmit, formRef }: 
-  { showSignIn: boolean, closeSignInModal: () => void, handleSubmit: () => void, formRef: React.RefObject<HTMLFormElement> }) {
+
+interface SignInModalProps {
+  showSignIn: boolean, 
+  closeSignInModal: () => void, 
+  handleSubmit: () => void, 
+  formRef: React.RefObject<HTMLFormElement> 
+}
+
+
+const SignInModal =({ showSignIn, closeSignInModal, handleSubmit, formRef }: SignInModalProps) => {
 
 
   return (

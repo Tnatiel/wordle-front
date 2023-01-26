@@ -1,70 +1,32 @@
-import { BoardsContext, WordleApi } from "../providors/boardslogic-context";
-import { useContext } from "react";
 import { useInputRow } from "../custom-hooks/useInputRow";
-import { useInputBoard } from "../custom-hooks/useInputBoard";
+import {  useAppSelector } from "../redux/app/hooks";
+import { handleKeypress, shouldNotKeepFocus } from "./wordle-logic";
+import { RowsProps } from "./wordle-types";
 
-
-interface inputRowProps {
-    inputsIds: number[], 
-    inputsRefs: {[key: string]: React.RefObject<HTMLInputElement>}, 
-    handleFocus(nextFocusId: number): boolean,
-    getGuess(firstInputId: number): string[],
-    checkGuess(guess: string[], firstInputId: number): boolean,
-    boardDisabled: boolean;  
-    a: number;
-    b() : number;  
-}
-
-export function InputRow({b, inputsIds, inputsRefs, handleFocus, getGuess, checkGuess, boardDisabled}: inputRowProps) {
-
-    let {rowRender, setRowRender } = useInputRow()
-    const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-        
-
-        const nextId = b()
-        if (nextId % 5 === 0 && nextId !== 0) {
-            const guess = getGuess(nextId - 5);
-            const guessCorrect = checkGuess(guess, nextId - 5)
-            setRowRender(true)
-            if(guessCorrect){
-                setTimeout(() => {
-                    
-                    alert('Success')
-                }, 200);
-                return
-            }
-            if (nextId > 29) {
-                setTimeout(() => {
-                    alert('Faliure')
-                }, 200);
-            }
-            handleFocus(nextId);
-            return;
-        }
-
-        handleFocus(nextId)
-        
-    }
+export function InputRow({ handleInput, rowIndex, refs}: RowsProps) {
+    
+    const { inputs } = useInputRow(rowIndex);
+    const currentInputId = useAppSelector(state => state.inputs.currentInputId);
+    const gameWon = useAppSelector(state => state.game.win)
+    const currentGuess = useAppSelector(state => state.lettersBank.currentGuess)
+    const currentRow = useAppSelector(state => state.inputs.currentRowIndex)
 
     return (
         <div className="input-row">
-            
-            {inputsIds.map( (id: number) => (
+            {inputs.map(input => (
                 <input
-                    id={`${id}`}
-                    key={id}
-                    ref={inputsRefs[id]}
-                    className={`ur-input`}
-                    maxLength={1}
-                    onInput={handleInput}
-                    autoComplete='off'
-                    disabled={boardDisabled ? boardDisabled: rowRender}                
+                id={input.id.toString()}
+                key={input.id}
+                className={`ur-input ${input.className}`}
+                autoComplete="off"
+                maxLength={1}
+                ref={refs.inputs[input.id]}
+                readOnly={true}
+                value={input.value}
+                onKeyUp={(e: Partial<Event>) => handleKeypress(e,handleInput)}
+                disabled={shouldNotKeepFocus(input, gameWon, currentGuess, currentInputId, currentRow)}
                 />
-            )
-        )}
+            ))}
         </div>
-    )
+    );
 }
-
-
-
