@@ -7,7 +7,7 @@ import { InputsState } from '../redux-types';
 
 
 
-const createInputs = (ids: number[], rowNumber: number) => ids.map( id => ({id, value: '', className: '', rowNumber}));
+export const createInputs = (ids: number[], rowNumber: number) => ids.map( id => ({id, value: '', className: '', rowNumber}));
 
 const row1 = createInputs([0, 1, 2, 3, 4], 0)
 const row2 = createInputs([5, 6, 7, 8, 9], 1)
