@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "test:m": "mocha -r ts-node/register  src/**/*.test.ts",
+    "test-cy": "npx cypress open -b chrome --component ",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
