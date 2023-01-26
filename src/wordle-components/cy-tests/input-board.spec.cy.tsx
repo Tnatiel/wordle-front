@@ -1,19 +1,13 @@
 import { InputBoard } from "../InputBoard"
-import React, {useRef} from 'react';
+import React from 'react';
 // import configuremockStore from 'redux-mock-store'
 import { addInputLetter, createInputs, moveBackInput, moveToNextInput, removeLastInputLetter } from "redux/features/InputState";
 import { Provider } from "react-redux";
-import {InputBox} from '../../redux/redux-types'
-import { store, AppDispatch } from "redux/app/store";
+import { AppDispatch } from "redux/app/store";
 import { mount } from 'cypress/react18';
 import { addLetterToGuess, removeLastGussedLetter, resetGuess } from "redux/features/LettersBankState";
 import { expect } from "chai";
-// import { configureStore  } from '@reduxjs/toolkit';
-// import letterReducer from '../features/LettersBankState';
-// import InputReducer from '../features/InputState';
-// import gameReducer from '../features/GameState';
-// import keyboardReducer from '../features/KeyboardState';
-// import dialogReducer from '../features/DialogState';
+
 import { configureStore,  } from '@reduxjs/toolkit';
 import letterReducer from '../../redux/features/LettersBankState';
 import InputReducer from '../../redux/features/InputState';
@@ -22,7 +16,6 @@ import keyboardReducer from '../../redux/features/KeyboardState';
 import dialogReducer from '../../redux/features/DialogState';
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 
-// const mockStore = configureStore()
 
 describe('InputBoard', () => {
 
@@ -54,16 +47,15 @@ describe('InputBoard', () => {
     let mockStore: ToolkitStore;
     
     beforeEach(() => {
-        console.log('hi')
-    mockStore = configureStore( {
-    reducer: { 
-        lettersBank: letterReducer,
-        inputs: InputReducer,
-        game: gameReducer,
-        keyboard: keyboardReducer,
-        dialog: dialogReducer,
-            },
-        });
+        mockStore = configureStore( {
+        reducer: { 
+            lettersBank: letterReducer,
+            inputs: InputReducer,
+            game: gameReducer,
+            keyboard: keyboardReducer,
+            dialog: dialogReducer,
+                },
+            });
         const handleInput = cy.stub();
 
         mount(
@@ -72,6 +64,10 @@ describe('InputBoard', () => {
                     </Provider>
             )
     })
+
+    it('should render 30 input elements', () => {
+        cy.get('.ur-input').should('have.length', 30)
+    });
     
     it('should add value and pass focus to next input', () => {
         moveForword(mockStore.dispatch, 'a', 0)
