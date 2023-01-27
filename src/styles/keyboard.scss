@@ -35,9 +35,9 @@
         gap: 0.5vh;
     
         // BUTTONS
-        .kbd-btn {
-            @include btn-def()
-        }
+        // .kbd-btn {
+        //     @include btn-def()
+        // }
 
         #Enter, #Del {
             width: 4rem;

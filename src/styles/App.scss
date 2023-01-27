@@ -44,11 +44,25 @@ main {
     @include input-sec-def;
     @include letter-check;
 }
+.ur-input {
+    @include ur-input-def;
+
+}
+.input-row {
+    @include rows-def;
+}
+
 .keyboard {
     @include keyboard-def;
     @include letter-check;
 }
+.kbd-btn {
+    @include btn-def()
 
+}
+#Enter, #Del {
+    width: 4rem;
+}
 
 
 .navbar {

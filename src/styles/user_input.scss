@@ -83,12 +83,12 @@
             100% { transform: scale(1); }
           }
     
-    .ur-input {
-        @include ur-input-def;
+    // .ur-input {
+    //     @include ur-input-def;
         
-    }
+    // }
 
-    .input-row {
-        @include rows-def;
-    }
+    // .input-row {
+    //     @include rows-def;
+    // }
 }
