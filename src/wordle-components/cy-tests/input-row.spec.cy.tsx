@@ -1,52 +1,18 @@
-import { mount } from 'cypress/react18';
-import { configureStore,  } from '@reduxjs/toolkit';
-import letterReducer from '../../redux/features/LettersBankState';
-import InputReducer from '../../redux/features/InputState';
-import gameReducer from '../../redux/features/GameState';
-import keyboardReducer from '../../redux/features/KeyboardState';
-import dialogReducer from '../../redux/features/DialogState';
-import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
+
 import { Provider } from 'react-redux';
-import React from 'react';
 import { InputRow } from 'wordle-components/InputRow';
+import { initializeTests } from './keyboard.spec.cy';
 
 
 describe('InputRow', () => {
-    const refs = {
-        inputs: {},
-        keyboard: {
-            allKeyboardRefs: {}
-        }
-    }
-    const init = (refs: any ) => {
-        for (let i = 0; i < 30; i++) {
-            refs.inputs[i] = React.createRef<HTMLInputElement>();
-        }
-
-        for (let i = 0; i < 26; i++) {
-            refs.keyboard.allKeyboardRefs[i] = React.createRef<HTMLButtonElement>();
-        }
-      
-    }
-    init({...refs})
-    let mockStore: ToolkitStore;
     beforeEach(() => {
-        mockStore = configureStore( {
-            reducer: { 
-                lettersBank: letterReducer,
-                inputs: InputReducer,
-                game: gameReducer,
-                keyboard: keyboardReducer,
-                dialog: dialogReducer,
-                    },
-                });
-            const handleInput = cy.stub();
-    
-            mount(
-                <Provider store={mockStore} >
-                        <InputRow refs={refs}  rowIndex={0} handleInput={handleInput}/>
-                    </Provider>
-                )
+        const {mockStore, refs} = initializeTests()
+        const handleInput = cy.stub();
+        cy.mount(
+            <Provider store={mockStore} >
+                    <InputRow rowIndex={0} refs={refs} handleInput={handleInput}/>
+                </Provider>
+            )
     })
     it('should render 30 input elements', () => {
         cy.get('.ur-input').should('have.length', 5)

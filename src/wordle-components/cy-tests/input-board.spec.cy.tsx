@@ -1,13 +1,10 @@
 import { InputBoard } from "../InputBoard"
 import React from 'react';
-// import configuremockStore from 'redux-mock-store'
-import { addInputLetter, createInputs, moveBackInput, moveToNextInput, removeLastInputLetter } from "redux/features/InputState";
+import { addInputLetter, moveBackInput, moveToNextInput } from "redux/features/InputState";
 import { Provider } from "react-redux";
 import { AppDispatch } from "redux/app/store";
-import { mount } from 'cypress/react18';
-import { addLetterToGuess, removeLastGussedLetter, resetGuess } from "redux/features/LettersBankState";
+import { addLetterToGuess, resetGuess } from "redux/features/LettersBankState";
 import { expect } from "chai";
-
 import { configureStore,  } from '@reduxjs/toolkit';
 import letterReducer from '../../redux/features/LettersBankState';
 import InputReducer from '../../redux/features/InputState';
@@ -58,7 +55,7 @@ describe('InputBoard', () => {
             });
         const handleInput = cy.stub();
 
-        mount(
+        cy.mount(
             <Provider store={mockStore} >
                     <InputBoard refs={refs} handleInput={handleInput} />
                     </Provider>
