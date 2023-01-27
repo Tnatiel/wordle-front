@@ -49,7 +49,7 @@ describe('Keyboard', () => {
                     <Keyboard refs={refs} handleInput={handleInput}/>
                 </Provider>
             )
-    })
+    });
     it('should render all keyboard buttons', () => {
         cy.get('button.kbd-btn').should('have.length', 28)
     });
