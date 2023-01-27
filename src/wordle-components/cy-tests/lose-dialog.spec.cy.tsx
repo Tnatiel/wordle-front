@@ -7,15 +7,15 @@ import { initializeTests } from "./keyboard.spec.cy";
 
 describe('WinDialog', () => {
 
+    const {mockStore} = initializeTests();
     beforeEach(() => {
-        mockStore.dispatch(setLoseDialog(true))
+        mockStore.dispatch(setLoseDialog(true));
         cy.mount(
             <Provider store={mockStore} >
                     <LoseDialog/>
                  </Provider>
             )
-    })
-    const {mockStore} = initializeTests()
+    });
 
     it('modal header should be "TOO BAD.."', () => {
         cy.get('h3').should('have.text', 'TOO BAD..')
