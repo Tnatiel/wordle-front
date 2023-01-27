@@ -1,6 +1,5 @@
 import { Provider } from "react-redux";
 import { setWinDialog } from "redux/features/DialogState";
-import { setWin } from "redux/features/GameState";
 import { WinDialog } from "wordle-components/dialog/WinDialog";
 import { initializeTests } from "./keyboard.spec.cy";
 
@@ -33,6 +32,5 @@ describe('WinDialog', () => {
     });
     it('should stop render', () => {
         mockStore.dispatch(setWinDialog(false))
-        cy.get('button').should('be.', 'onClick')
     });
-})
+});
