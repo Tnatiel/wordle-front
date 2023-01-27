@@ -3,8 +3,8 @@
 
 export function Header() {
     return (
-        <header id="wordle-header">
-            <h1>Wordle</h1>
+        <header >
+            <h1 id="wordle-header">Wordle</h1>
         </header>
     )
 }

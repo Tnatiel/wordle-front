@@ -1,5 +1,5 @@
 /* // ******************************IMPORTS************************** */
-@import './header.scss';
+@import './wordle-header.scss';
 @import './keyboard.scss';
 @import './user_input.scss';
 @import './modal.scss';
@@ -24,7 +24,7 @@ $wrong-color: rgb(249 144 144 / 66%);
   }
 
 #wordle-header {
-    @include header;
+    @include wordle-header-def;
 }
 
 body {

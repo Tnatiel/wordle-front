@@ -6,4 +6,10 @@
     align-items: center;
     height: 100%;
     text-align: center;
+
+    #app-header {
+        font-size: 12vh;
+        color: $font-color;
+        font-family: 'Titan One', cursive;
+    }
 }

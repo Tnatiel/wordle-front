@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "test-cy": "npx cypress open --component ",
+    "test-cy": "npx cypress open -b chrome --component ",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
