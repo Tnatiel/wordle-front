@@ -10,11 +10,12 @@ interface NavBarProps {
   openInstructionsModal: () => void,
   openSignInModal: () => void,
   handleLogout: () => void,
+  openSignUpModal: () => void,
 }
 
 
 
-function NavBar({ openInstructionsModal, openSignInModal, handleLogout }:NavBarProps) {
+function NavBar({ openSignUpModal, openInstructionsModal, openSignInModal, handleLogout }:NavBarProps) {
 
   
   let navigate = useNavigate();
@@ -37,10 +38,14 @@ function NavBar({ openInstructionsModal, openSignInModal, handleLogout }:NavBarP
              </Button>
             { 
             localStorage.getItem('name') === null ? 
-            
+            <>
             <Button cy-data="sign-in-btn" variant='dark' onClick={openSignInModal}>
               Sign in
             </Button>
+            <Button cy-data="sign-up-btn" variant='dark' onClick={openSignUpModal}>
+              Sign up
+            </Button>
+            </>
             :
               <Button cy-data="sign-out-btn" variant='dark' onClick={handleLogout}>
                 Logout 
