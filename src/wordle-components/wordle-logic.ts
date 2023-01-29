@@ -1,10 +1,11 @@
 import { setLoseDialog, setWinDialog } from "../redux/features/DialogState";
 import { setWin } from "../redux/features/GameState";
 import { AppDispatch } from "../redux/app/store";
-import {  updateInputClassName } from "../redux/features/InputState";
+import {  addInputLetter, moveBackInput, moveToNextInput, removeLastInputLetter, updateInputClassName, updateNextRow } from "../redux/features/InputState";
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
 import { InputBox, KeyboardButton } from "../redux/redux-types";
 import { ClassesColors } from "./wordle-types";
+import { addLetterToGuess, removeLastGussedLetter, resetGuess } from "redux/features/LettersBankState";
 
 
 export const addInputClasses = (dispatch: AppDispatch , currentInputId: number ,classNames: string[]) => {
@@ -106,3 +107,45 @@ export const filterGuessToStatusBank = (guess: string, classes: string[]) => {
     }
     return {correct, present, wrong}
 }
+
+
+export const deleteLetter = (dispatcher: AppDispatch, inputRows: InputBox[][], currentInputId: number, currentRow: number) => {
+    const lastInputObj = findInputObjById(inputRows, currentInputId -1)
+            if (lastInputObj && lastInputObj?.rowNumber !== currentRow) return
+            dispatcher(moveBackInput());
+            dispatcher(removeLastInputLetter());
+            dispatcher(removeLastGussedLetter());
+}
+
+// export const addGuessLetter2 = async (dispatch: AppDispatch,  letter: string, inputRows: InputBox[][],
+//      currentInputId: number, currentRow: number, currentGuess: string[],
+//       classes: string[], 
+//       classesObj: ClassesColors, setClasses: (value: React.SetStateAction<string[]>) => void, 
+//        checkOnServer: (currentGuess: string) => Promise<any>) => {
+        
+//     if (letter === 'Del') {
+//         deleteLetter(dispatch, inputRows, currentInputId, currentRow);
+//         return
+//     }
+
+//     if (letter === 'Enter') {
+//         if (currentGuess.length < 5) return
+//         const wordData = await checkOnServer(currentGuess.join(''))
+//         if (wordData.correct) {
+//             dispatch(setWin(true))
+//             dispatch(setWinDialog(true))
+//         } else if (currentRow > 4) dispatch(setLoseDialog(true))
+        
+        
+//         addInputClasses(dispatch, currentInputId, classes);
+//         addKeyboardButtonsClasses(classesObj, dispatch)
+//         dispatch(resetGuess());
+//         dispatch(updateNextRow());
+//         setClasses([])
+
+//     }
+//     if (currentGuess.length === 5) return;
+//     dispatch(addLetterToGuess(letter));
+//     dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
+//     dispatch(moveToNextInput());
+// }

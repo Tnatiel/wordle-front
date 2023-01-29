@@ -26,7 +26,7 @@ export const initializeTests = () => {
       
     }
     init({...refs})
-    
+    const formRef = React.createRef<HTMLFormElement>()
     const  mockStore = configureStore( {
             reducer: { 
                 lettersBank: letterReducer,
@@ -37,7 +37,7 @@ export const initializeTests = () => {
                     },
                 });
 
-    return {mockStore, refs}
+    return {mockStore, refs, formRef}
 }
 
 describe('Keyboard', () => {

@@ -7,18 +7,9 @@ import { initializeTests } from "./keyboard.spec.cy";
 
 describe('KeyboardRow', () => {
 
-    // beforeEach(() => {
-    //     const {mockStore, refs} = initializeTests()
-    //     const handleInput = cy.stub();
-    //     cy.mount(
-    //         <Provider store={mockStore} >
-    //                 <KeyboardRow rowIndex={0} refs={refs} handleInput={handleInput}/>
-    //             </Provider>
-    //         )
-    // });
-
+    
     it('should render row 1 buttons and kbd-btn class', () => {
-        const {mockStore, refs} = initializeTests()
+        const {mockStore, refs} = initializeTests();
         const handleInput = cy.stub();
         cy.mount(
             <Provider store={mockStore} >

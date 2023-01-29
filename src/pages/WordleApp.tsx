@@ -7,7 +7,7 @@ import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
 import { moveBackInput, updateNextRow, removeLastInputLetter, addInputLetter, moveToNextInput } from "../redux/features/InputState";
 import {  addLetterToGuess, removeLastGussedLetter, resetGuess,  } from "../redux/features/LettersBankState"; 
-import {  addInputClasses, addKeyboardButtonsClasses,findInputObjById, filterGuessToStatusBank } from "../wordle-components/wordle-logic";
+import {  addInputClasses, addKeyboardButtonsClasses,findInputObjById, filterGuessToStatusBank, deleteLetter } from "../wordle-components/wordle-logic";
 import { useEffect, useState } from "react";
 import { setWin, setWordData } from "redux/features/GameState";
 import { setLoseDialog, setWinDialog } from "redux/features/DialogState";
@@ -85,12 +85,8 @@ export function WordleApp() {
     const addGuessLetter = async (letter: string) => {
         
         if (letter === 'Del') {
-            const lastInputObj = findInputObjById(inputRows, currentInputId -1)
-            if (lastInputObj && lastInputObj?.rowNumber !== currentRow) return
-            dispatch(moveBackInput());
-            dispatch(removeLastInputLetter());
-            dispatch(removeLastGussedLetter());
-            return
+            deleteLetter(dispatch, inputRows, currentInputId, currentRow);
+            return;
         }
 
         if (letter === 'Enter') {
