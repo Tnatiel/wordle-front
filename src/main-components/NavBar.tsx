@@ -32,23 +32,23 @@ function NavBar({ openInstructionsModal, openSignInModal, handleLogout }:NavBarP
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Button onClick={showHome} variant='dark'>
+            <Button cy-data="home-btn" onClick={showHome} variant='dark'>
               Home
              </Button>
             { 
             localStorage.getItem('name') === null ? 
             
-            <Button variant='dark' onClick={openSignInModal}>
+            <Button cy-data="sign-in-btn" variant='dark' onClick={openSignInModal}>
               Sign in
             </Button>
             :
-              <Button variant='dark' onClick={handleLogout}>
+              <Button cy-data="sign-out-btn" variant='dark' onClick={handleLogout}>
                 Logout 
               </Button> 
             }
           </Nav>
           <Nav>
-            <Button onClick={openInstructionsModal} variant='dark'>
+            <Button cy-data="inst-btn" onClick={openInstructionsModal} variant='dark'>
               <BsInfoCircle />
             </Button>
           </Nav>

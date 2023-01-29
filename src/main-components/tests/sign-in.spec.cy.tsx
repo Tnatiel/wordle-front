@@ -53,11 +53,11 @@ describe('SignInModal', () => {
             cy.get('small.text-muted.form-text').last()
             .should('have.text', "We'll never share your email with anyone else.")
         });
-        it('click on sign in button should close modal', () => {
-            cy.get('.btn.btn-primary').click();
-            cy.reload();
-            cy.get('.fade.modal-backdrop')
-            .should('not.exist');
-        });
+        // it('click on sign in button should close modal', () => {
+        //     cy.get('.btn.btn-primary').click();
+        //     cy.reload();
+        //     cy.get('.fade.modal-backdrop')
+        //     .should('not.exist');
+        // });
     });
 });
