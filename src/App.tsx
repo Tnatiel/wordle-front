@@ -1,5 +1,5 @@
 
-import {useState, useEffect} from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {InstructionsModal} from './main-components/InstructionsModal'
 import './styles/App.scss';
 import NavBar from './main-components/NavBar';
@@ -10,14 +10,22 @@ import { HomePage } from './pages/HomePage';
 import { useGreet } from './custom-hooks/useGreet';
 import SignUpModal from 'main-components/SignUpModal';
 import useUserDb from 'custom-hooks/useUserDb';
+import { UserDetails, validateUserDetails } from 'wordle-components/wordle-logic';
+import { access } from 'fs';
+import { useAppSelector } from 'redux/app/hooks';
 function App() {
 
   useEffect(() => {
     localStorage.clear()
   }, [])
+
   
   const { userName, formRef, handleSubmit,  logoutUser, handleSignInClose, handleSignInShow, showSignIn } = useGreet();
-  const { signUpFormRef, handleSignUpSubmit, handleSignUpClose, handleSignUpShow, showSignUp } = useUserDb()
+  // const gotUser = useAppSelector(state => state.signUp.gotUser);
+  // const showSignUp = useAppSelector( state => state.signUp.showSignUp);
+  const {handleSignUpClose, handleSignUpShow, showSignUp, signUpRef, userDetails, handleSignUpSubmit, setUserDetails } = useUserDb()
+
+ 
   const [showInsructions, setShowInstructions] = useState(false);
   const handleInstructionsClose = (): void => setShowInstructions(false);
   const handleInstructionsShow = (): void => setShowInstructions(true);
@@ -42,7 +50,7 @@ function App() {
       />
       <SignUpModal 
         closeSignUpModal={handleSignUpClose}
-        formRef={signUpFormRef}
+        signUpRef={signUpRef}
         handleSubmit={handleSignUpSubmit}
         showSignUp={showSignUp}
       />

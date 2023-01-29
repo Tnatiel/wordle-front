@@ -43,7 +43,7 @@ function NavBar({ openSignUpModal, openInstructionsModal, openSignInModal, handl
               Sign in
             </Button>
             <Button cy-data="sign-up-btn" variant='dark' onClick={openSignUpModal}>
-              Sign up
+              Register
             </Button>
             </>
             :

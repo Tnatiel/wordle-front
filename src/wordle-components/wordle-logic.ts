@@ -117,35 +117,18 @@ export const deleteLetter = (dispatcher: AppDispatch, inputRows: InputBox[][], c
             dispatcher(removeLastGussedLetter());
 }
 
-// export const addGuessLetter2 = async (dispatch: AppDispatch,  letter: string, inputRows: InputBox[][],
-//      currentInputId: number, currentRow: number, currentGuess: string[],
-//       classes: string[], 
-//       classesObj: ClassesColors, setClasses: (value: React.SetStateAction<string[]>) => void, 
-//        checkOnServer: (currentGuess: string) => Promise<any>) => {
-        
-//     if (letter === 'Del') {
-//         deleteLetter(dispatch, inputRows, currentInputId, currentRow);
-//         return
-//     }
+export interface UserDetails {
+    fname: string;
+    lname: string;
+    email : string;
+    password : string;
+}
 
-//     if (letter === 'Enter') {
-//         if (currentGuess.length < 5) return
-//         const wordData = await checkOnServer(currentGuess.join(''))
-//         if (wordData.correct) {
-//             dispatch(setWin(true))
-//             dispatch(setWinDialog(true))
-//         } else if (currentRow > 4) dispatch(setLoseDialog(true))
-        
-        
-//         addInputClasses(dispatch, currentInputId, classes);
-//         addKeyboardButtonsClasses(classesObj, dispatch)
-//         dispatch(resetGuess());
-//         dispatch(updateNextRow());
-//         setClasses([])
+export const validateUserDetails = (data: UserDetails) => {
+    if (data.fname.length < 2) return ('first name too short');
+    if (data.lname.length < 2) return ('last name too short');
+    if (!data.email.toString().includes('@' || !data.email.toString().includes('.'))) return ('invalid email');
+    if (data.password.length < 6) return ('password too short');
+}   
 
-//     }
-//     if (currentGuess.length === 5) return;
-//     dispatch(addLetterToGuess(letter));
-//     dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
-//     dispatch(moveToNextInput());
-// }
+

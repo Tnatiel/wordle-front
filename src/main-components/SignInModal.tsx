@@ -33,14 +33,14 @@ const SignInModal =({ showSignIn, closeSignInModal, handleSubmit, formRef }: Sig
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label id="label1">Email address</Form.Label>
-                    <Form.Control name='email' type="email" placeholder="Enter email" />
+                    <Form.Control name='email' type="email" placeholder="Enter email" required/>
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text>
                  </Form.Group>
                 <Form.Group  className="mb-3" controlId="formBasicPassword">
                     <Form.Label id="label2">Password</Form.Label>
-                    <Form.Control name='name' type="text" placeholder="Enter name" />
+                    <Form.Control name='name' type="text" placeholder="Enter name" required/>
                     <Form.Text className="text-muted">
                         We'll never share your password with anyone else.
                     </Form.Text>
