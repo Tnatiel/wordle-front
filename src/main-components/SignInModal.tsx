@@ -30,8 +30,8 @@ const SignInModal =({ showSignIn, closeSignInModal, handleSubmit, formRef }: Sig
         <Modal.Body>
 
             <Form ref={formRef} >
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Name</Form.Label>
+                <Form.Group  className="mb-3" controlId="formBasicName">
+                    <Form.Label id="label1">Name</Form.Label>
                     <Form.Control name='name' type="text" placeholder="Enter name" />
                     <Form.Text className="text-muted">
                         We'll never share your name with anyone else.
@@ -39,7 +39,7 @@ const SignInModal =({ showSignIn, closeSignInModal, handleSubmit, formRef }: Sig
                  </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label id="label2">Email address</Form.Label>
                     <Form.Control name='email' type="email" placeholder="Enter email" />
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
