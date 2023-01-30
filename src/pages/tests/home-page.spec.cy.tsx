@@ -1,4 +1,4 @@
-import { HomePage } from "./HomePage";
+import { HomePage } from "../HomePage";
 
 describe('HomePage', () => {
     // it('should have prop text', () => {

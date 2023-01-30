@@ -1,8 +1,7 @@
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
-import { expect } from "chai";
 import { Provider } from "react-redux";
 import { initializeTests } from "wordle-components/cy-tests/keyboard.spec.cy";
-import { WordleApp } from "./WordleApp";
+import { WordleApp } from "../WordleApp";
 
 
 
@@ -31,7 +30,7 @@ describe('WordleApp', () => {
     });
 
     describe('virtual keyboard functionality', () => {
-        let currentMockStore: ToolkitStore;
+        let currentMockStore: ToolkitStore; // eslint-disable-line
         beforeEach(() => {
             cy.viewport(550, 750)
             const testData = initializeTests();

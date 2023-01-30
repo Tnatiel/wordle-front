@@ -12,6 +12,7 @@ interface NavBarProps {
   handleLogout: () => void,
   openSignUpModal: () => void,
   showLogout: boolean,
+  
 }
 
 

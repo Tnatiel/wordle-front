@@ -1,11 +1,11 @@
 import { setLoseDialog, setWinDialog } from "../redux/features/DialogState";
 import { setWin } from "../redux/features/GameState";
 import { AppDispatch } from "../redux/app/store";
-import {  addInputLetter, moveBackInput, moveToNextInput, removeLastInputLetter, updateInputClassName, updateNextRow } from "../redux/features/InputState";
+import {   moveBackInput, removeLastInputLetter, updateInputClassName, } from "../redux/features/InputState";
 import { setCorrectClass, setPresentClass, setWrongClass } from "../redux/features/KeyboardState";
 import { InputBox, KeyboardButton } from "../redux/redux-types";
 import { ClassesColors } from "./wordle-types";
-import { addLetterToGuess, removeLastGussedLetter, resetGuess } from "redux/features/LettersBankState";
+import { removeLastGussedLetter } from "redux/features/LettersBankState";
 
 
 export const addInputClasses = (dispatch: AppDispatch , currentInputId: number ,classNames: string[]) => {

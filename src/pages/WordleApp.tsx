@@ -5,9 +5,9 @@ import { InputBoard } from "../wordle-components/InputBoard";
 import { Keyboard } from "../wordle-components/Keyboard";
 import {  useAppSelector, useAppDispatch } from '../redux/app/hooks';
 import { GameDialog } from "../wordle-components/dialog/GameDialog";
-import { moveBackInput, updateNextRow, removeLastInputLetter, addInputLetter, moveToNextInput } from "../redux/features/InputState";
-import {  addLetterToGuess, removeLastGussedLetter, resetGuess,  } from "../redux/features/LettersBankState"; 
-import {  addInputClasses, addKeyboardButtonsClasses,findInputObjById, filterGuessToStatusBank, deleteLetter } from "../wordle-components/wordle-logic";
+import {  updateNextRow,  addInputLetter, moveToNextInput } from "../redux/features/InputState";
+import {  addLetterToGuess,  resetGuess,  } from "../redux/features/LettersBankState"; 
+import {  addInputClasses, addKeyboardButtonsClasses, filterGuessToStatusBank, deleteLetter } from "../wordle-components/wordle-logic";
 import { useEffect, useState } from "react";
 import {  setWin, setWordData } from "redux/features/GameState";
 import { setLoseDialog, setWinDialog } from "redux/features/DialogState";
@@ -19,7 +19,6 @@ export function WordleApp() {
     const [correctBank, setCorrectBank] = useState<string[]>([]);
     const [presentBank, setPresentBank] = useState<string[]>([]);
     const [wrongBank, setWrongBank] = useState<string[]>([]);
-    const [gameOver, setGameOver] = useState(false)
     const wordData = useAppSelector(state => state.game.wordData);
     const gotWord = useAppSelector(state => state.game.wordFetched);
     const dispatch = useAppDispatch();
@@ -84,9 +83,7 @@ export function WordleApp() {
     }
     
     const addGuessLetter = async (letter: string) => {
-        console.log('gameOver', gameOver)
-
-        if (gameOver) return
+        
         
         if (letter === 'Del') {
             deleteLetter(dispatch, inputRows, currentInputId, currentRow);
@@ -101,7 +98,7 @@ export function WordleApp() {
                 dispatch(setWinDialog(true))
             } else if (currentRow > 4) {
                 dispatch(setLoseDialog(true))
-                setGameOver(true)
+                
             }
             
             
@@ -112,7 +109,7 @@ export function WordleApp() {
             setClasses([])
 
         }
-        
+
         if (currentGuess.length === 5) return;
         dispatch(addLetterToGuess(letter));
         dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))

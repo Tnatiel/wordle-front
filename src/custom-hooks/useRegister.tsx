@@ -28,16 +28,16 @@ const useUserDb = (setLogout: React.Dispatch<React.SetStateAction<boolean>>) => 
         }
         try {
           const user = await addNewUser(valuesObj);
-          if (user) {
+          if (user.userCreated !== false) {
             localStorage.setItem('name', user.fname);
-            localStorage.setItem('user_token', user.password as string);
+            localStorage.setItem('user_token', user.user_token as string);
             localStorage.setItem('new', 'true');
             handleRegisterClose();
             setRegisterErrorMessage('')
             setLogout(true)
             return user;
           } else {
-            setRegisterErrorMessage('Couldn\'t add new user')
+            setRegisterErrorMessage('Server couldn\'t add new user')
           }
         } catch (e) {
           console.log(e);
@@ -57,7 +57,7 @@ const useUserDb = (setLogout: React.Dispatch<React.SetStateAction<boolean>>) => 
         },
         body: JSON.stringify({...user}),
       });
-      const data: UserDetails = await res.json() ;
+      const data = await res.json() ;
       return data
 
     }

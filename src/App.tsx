@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import {InstructionsModal} from './main-components/InstructionsModal'
 import './styles/App.scss';
 import NavBar from './main-components/NavBar';
@@ -14,7 +14,7 @@ import useUserDb from 'custom-hooks/useRegister';
 function App() {
 
   
-  
+
   const [logout, setLogout] = useState(false);
   const { signUpErrorMessage, signInRef, handleSignIn, handleSignInClose, handleSignInShow, showSignIn } = useSignIn(setLogout);
   const { registerErrorMessage, handleSignUpClose, handleRegisterShow, showRegister, registerRef, handleRegister } = useUserDb(setLogout);
@@ -54,6 +54,7 @@ function App() {
         handleLogout={logoutUser}
         openSignUpModal={handleRegisterShow}
         showLogout={logout}
+        
       />
       <InstructionsModal 
         showInstructions={showInsructions} 
