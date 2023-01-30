@@ -40,15 +40,5 @@ describe('InputRow', () => {
             cy.get(`#${i}`).should('have.attr', 'readonly')
         }
     });
-    // it('each input should have a disabled property', () => {
-    //     for (let i = 0; i < 5; i++) {
-    //         cy.get(`#${i}`).should('have.property', 'disabled')
-    //     }
-    // });
     
-    // it('each input should have a ref property', () => {
-    //     for (let i = 0; i < 5; i++) {
-    //         cy.get(`#${i}`).should('have.prop', 'ref');
-    //     }
-    // });
 });

@@ -1,4 +1,5 @@
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
+import { objectTraps } from "immer/dist/internal";
 import { Provider } from "react-redux";
 import { initializeTests } from "wordle-components/cy-tests/keyboard.spec.cy";
 import { WordleApp } from "../WordleApp";
@@ -30,11 +31,9 @@ describe('WordleApp', () => {
     });
 
     describe('virtual keyboard functionality', () => {
-        let currentMockStore: ToolkitStore; // eslint-disable-line
         beforeEach(() => {
             cy.viewport(550, 750)
             const testData = initializeTests();
-            currentMockStore = testData.mockStore;
             cy.mount(    
         <Provider store={testData.mockStore}>
                 <WordleApp />
@@ -90,7 +89,10 @@ describe('WordleApp', () => {
             cy.focused().should('have.id', 5)
         });
 
+      
     
     });
+
+    
 
 });

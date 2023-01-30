@@ -22,6 +22,7 @@ const SignInModal =({ errorMessage,  showSignIn, closeSignInModal, handleSubmit,
             onHide={closeSignInModal}
             backdrop="static"
             keyboard={true}
+            cy-data='sign-in-modal'
         >
       
         <Modal.Header closeButton>
@@ -31,7 +32,7 @@ const SignInModal =({ errorMessage,  showSignIn, closeSignInModal, handleSubmit,
 
             <Form ref={formRef} >
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group  className="mb-3" controlId="formBasicEmail">
                     <Form.Label id="label1">Email address</Form.Label>
                     <Form.Control name='email' type="email" placeholder="Enter email" required/>
                     <Form.Text className="text-muted">

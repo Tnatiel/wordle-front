@@ -26,6 +26,7 @@ const RegisterModal =({ errorMessage, registerRef, showRegister, closeSignUpModa
               onHide={closeSignUpModal}
               backdrop="static"
               keyboard={true}
+              cy-data="reg-modal"
           >
         
           <Modal.Header closeButton>

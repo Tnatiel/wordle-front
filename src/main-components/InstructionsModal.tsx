@@ -10,6 +10,7 @@ export function InstructionsModal({showInstructions: show, closeModal}: {showIns
         onHide={closeModal}
         backdrop="static"
         keyboard={true}
+        cy-data="inst-modal"
         
       >
         <Modal.Header closeButton>

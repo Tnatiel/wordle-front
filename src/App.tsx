@@ -52,7 +52,7 @@ function App() {
         openSignInModal={handleSignInShow} 
         openInstructionsModal={handleInstructionsShow}
         handleLogout={logoutUser}
-        openSignUpModal={handleRegisterShow}
+        openRegisterModal={handleRegisterShow}
         showLogout={logout}
         
       />

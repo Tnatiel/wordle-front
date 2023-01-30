@@ -18,7 +18,6 @@ export const useSignIn = (setLogout: React.Dispatch<React.SetStateAction<boolean
         const userData  = new FormData(signInRef.current);
         const valuesObj = Array.from(userData.entries())
         .reduce((acc, [key, value]) => ({...acc, [key]: value}), {} as UserDetails);
-        console.log('valuesObj: ', valuesObj)
         if(!valuesObj.email.length || ! valuesObj.password.length) {
           setSignUpErrorMessage('Email and password required')
           return

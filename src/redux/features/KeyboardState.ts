@@ -23,7 +23,7 @@ const keyboardSlice = createSlice({
                 const button = findKeyButtonObjById( state.rows, letters[j])
                 if (button) {
                     button.className = 'correct'
-                } else console.log(`button: ${letters[j]} don't exist`)
+                } else throw new Error(`button: ${letters[j]} don't exist`)
                 
             }
         },
@@ -33,7 +33,7 @@ const keyboardSlice = createSlice({
                 const button = findKeyButtonObjById( state.rows, letters[j])
                 if (button) {
                     button.className = 'present'
-                } else console.log(`button: ${letters[j]} don't exist`)
+                } else throw new Error(`button: ${letters[j]} don't exist`)
                 
             }
         },
@@ -43,7 +43,7 @@ const keyboardSlice = createSlice({
                 const button = findKeyButtonObjById( state.rows, letters[j])
                 if (button) {
                     button.className = 'wrong'
-                } else console.log(`button: ${letters[j]} don't exist`)
+                } else throw new Error(`button: ${letters[j]} don't exist`)
                 
             }
         },

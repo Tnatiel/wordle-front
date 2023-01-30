@@ -10,14 +10,14 @@ interface NavBarProps {
   openInstructionsModal: () => void,
   openSignInModal: () => void,
   handleLogout: () => void,
-  openSignUpModal: () => void,
+  openRegisterModal: () => void,
   showLogout: boolean,
   
 }
 
 
 
-function NavBar({ showLogout, openSignUpModal, openInstructionsModal, openSignInModal, handleLogout }:NavBarProps) {
+function NavBar({ showLogout, openRegisterModal, openInstructionsModal, openSignInModal, handleLogout }:NavBarProps) {
 
   let navigate = useNavigate();
 
@@ -28,7 +28,7 @@ function NavBar({ showLogout, openSignUpModal, openInstructionsModal, openSignIn
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand><Link className="navbar-brand" to='wordle'>Wordle</Link></Navbar.Brand>
+        <Navbar.Brand><Link cy-data="wordle-btn" className="navbar-brand" to='wordle'>Wordle</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -41,7 +41,7 @@ function NavBar({ showLogout, openSignUpModal, openInstructionsModal, openSignIn
             <Button cy-data="sign-in-btn" variant='dark' onClick={openSignInModal}>
               Sign in
             </Button>
-            <Button cy-data="sign-up-btn" variant='dark' onClick={openSignUpModal}>
+            <Button cy-data="reg-btn" variant='dark' onClick={openRegisterModal}>
               Register
             </Button>
             </>

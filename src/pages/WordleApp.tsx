@@ -117,7 +117,7 @@ export function WordleApp() {
     }
 
     return (
-        <main>
+        <main cy-data="wordle-comp">
             <Header />
             <InputBoard handleInput={addGuessLetter} refs={allRefs}/>
             <Keyboard handleInput={addGuessLetter} refs={allRefs}/>
