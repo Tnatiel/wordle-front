@@ -7,12 +7,11 @@ import SignInModal from './main-components/SignInModal';
 import { Route, Routes } from 'react-router-dom';
 import { WordleApp } from './pages/WordleApp';
 import { HomePage } from './pages/HomePage';
-import { useGreet } from './custom-hooks/useGreet';
+import { useSignIn } from './custom-hooks/useSignIn';
 import SignUpModal from 'main-components/SignUpModal';
 import useUserDb from 'custom-hooks/useUserDb';
 import { UserDetails, validateUserDetails } from 'wordle-components/wordle-logic';
-import { access } from 'fs';
-import { useAppSelector } from 'redux/app/hooks';
+;
 function App() {
 
   useEffect(() => {
@@ -20,15 +19,27 @@ function App() {
   }, [])
 
   
-  const { userName, formRef, handleSubmit,  logoutUser, handleSignInClose, handleSignInShow, showSignIn } = useGreet();
-  // const gotUser = useAppSelector(state => state.signUp.gotUser);
-  // const showSignUp = useAppSelector( state => state.signUp.showSignUp);
-  const {handleSignUpClose, handleSignUpShow, showSignUp, signUpRef, userDetails, handleSignUpSubmit, setUserDetails } = useUserDb()
-
+  const [userDetails, setUserDetails] = useState<UserDetails | undefined>();
+  const [logout, setLogout] = useState(false);
+  const { formRef, handleSignIn, handleSignInClose, handleSignInShow, showSignIn } = useSignIn(setUserDetails);
+  const {handleSignUpClose, handleSignUpShow, showSignUp, signUpRef, addAndCloseModal } = useUserDb();
+  // const handleSignUpUser = () => {
+  //   const newUser = addAndCloseModal();
+  //   setUserDetails(newUser);
+  //   console.log(newUser)
+  // }
+  
+  const logoutUser = () => {
+    localStorage.clear();
+    setLogout(true)
+  }
  
   const [showInsructions, setShowInstructions] = useState(false);
   const handleInstructionsClose = (): void => setShowInstructions(false);
   const handleInstructionsShow = (): void => setShowInstructions(true);
+
+  const userName = localStorage.getItem('name') !== null ?
+    localStorage.getItem('name') : 'Guest';
   
   return (
     <>
@@ -45,13 +56,13 @@ function App() {
       <SignInModal 
         showSignIn={showSignIn} 
         closeSignInModal={handleSignInClose}
-        handleSubmit={handleSubmit}
+        handleSubmit={handleSignIn}
         formRef={formRef}
       />
       <SignUpModal 
         closeSignUpModal={handleSignUpClose}
         signUpRef={signUpRef}
-        handleSubmit={handleSignUpSubmit}
+        handleSubmit={addAndCloseModal}
         showSignUp={showSignUp}
       />
       <Routes>

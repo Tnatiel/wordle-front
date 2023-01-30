@@ -11,7 +11,7 @@ interface SignUpModalProps {
     closeSignUpModal: () => void, 
     handleSubmit: () => void 
     signUpRef: React.RefObject<HTMLFormElement>
-    // handleAddUser: () => Promise<void>
+    
   }
   
 
@@ -32,7 +32,7 @@ const SignUpModal =({ signUpRef, showSignUp, closeSignUpModal, handleSubmit }: S
           >
         
           <Modal.Header closeButton>
-            <Modal.Title>Sign In</Modal.Title>
+            <Modal.Title>Sign Up</Modal.Title>
           </Modal.Header>
           <Modal.Body>
   

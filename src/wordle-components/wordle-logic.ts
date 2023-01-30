@@ -121,7 +121,8 @@ export interface UserDetails {
     fname: string;
     lname: string;
     email : string;
-    password : string;
+    password: string;
+    user_token?: string;
 }
 
 export const validateUserDetails = (data: UserDetails) => {

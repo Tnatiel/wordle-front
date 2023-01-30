@@ -1,19 +1,30 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
-
+import { UserDetails } from 'wordle-components/wordle-logic';
+import { useState } from 'react';
 interface SignInModalProps {
   showSignIn: boolean, 
   closeSignInModal: () => void, 
-  handleSubmit: () => void, 
-  formRef: React.RefObject<HTMLFormElement> 
+  handleSubmit: () =>void, 
+  formRef: React.RefObject<HTMLFormElement> ,
+  // updateUser?: React.Dispatch<React.SetStateAction<UserDetails | undefined>>
 }
 
 
-const SignInModal =({ showSignIn, closeSignInModal, handleSubmit, formRef }: SignInModalProps) => {
+const SignInModal =({  showSignIn, closeSignInModal, handleSubmit, formRef }: SignInModalProps) => {
 
+  const [errorMessage, setErrorMessage] = useState('');
 
+  // const handleError = () => {
+  //   const gotUser = handleSubmit()
+  //   if (!gotUser) {
+  //     setErrorMessage('Incorrect username or password');
+  //   } else {
+  //     // successful sign in, reset error message
+  //     setErrorMessage('');
+  //   }
+  // }
   return (
     <>
     
@@ -40,11 +51,12 @@ const SignInModal =({ showSignIn, closeSignInModal, handleSubmit, formRef }: Sig
                  </Form.Group>
                 <Form.Group  className="mb-3" controlId="formBasicPassword">
                     <Form.Label id="label2">Password</Form.Label>
-                    <Form.Control name='name' type="text" placeholder="Enter name" required/>
+                    <Form.Control name='password' type="password" placeholder="Enter password" required/>
                     <Form.Text className="text-muted">
                         We'll never share your password with anyone else.
                     </Form.Text>
                  </Form.Group>
+                 {errorMessage && <Form.Text className="text-danger">{errorMessage}</Form.Text>}
             </Form>
 
         </Modal.Body>

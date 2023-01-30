@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState} from 'react';
+import {  useRef, useState} from 'react';
 import { UserDetails, validateUserDetails } from 'wordle-components/wordle-logic';
 
 
@@ -12,7 +12,7 @@ const useUserDb = () => {
     const handleSignUpShow = (): void => setShowSignUp(true);
     
     
-    const handleSignUpSubmit = () => {
+    const addAndCloseModal = () => {
       if (signUpRef && signUpRef.current) {
 
         const userData  = new FormData(signUpRef.current);
@@ -26,14 +26,15 @@ const useUserDb = () => {
         }
         addNewUser(valuesObj);
         handleSignUpClose();
-      
-      }
+        setUserDetails(valuesObj)
+        // return valuesObj;
+        }
       }
     
 
     const addNewUser = async (user: UserDetails) => {
 
-      const res = await fetch('http://localhost:3333/user' ,{
+      const res = await fetch('http://localhost:3333/user/sign-up' ,{
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -42,10 +43,22 @@ const useUserDb = () => {
       });
       const data: UserDetails = await res.json() 
       localStorage.setItem('name', data.fname)
-      setUserDetails(data)
     }
+    // const validateUser = async (user: UserDetails) => {
 
-    return { signUpRef, userDetails, setUserDetails,  handleSignUpSubmit,  showSignUp, handleSignUpClose, handleSignUpShow}
+    //   const res = await fetch('http://localhost:3333/user/sign-up' ,{
+    //     method: 'POST',
+    //     headers: {
+    //       'content-type': 'application/json'
+    //     },
+    //     body: JSON.stringify({email: user.email, password: user.password}),
+    //   });
+    //   const data: UserDetails = await res.json() 
+    //   localStorage.setItem('name', data.fname)
+    //   setUserDetails(data)
+    // }
+
+    return { signUpRef,   addAndCloseModal,  showSignUp, handleSignUpClose, handleSignUpShow}
 
   }
 
