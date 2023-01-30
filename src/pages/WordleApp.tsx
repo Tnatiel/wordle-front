@@ -112,6 +112,7 @@ export function WordleApp() {
             setClasses([])
 
         }
+        
         if (currentGuess.length === 5) return;
         dispatch(addLetterToGuess(letter));
         dispatch(addInputLetter({inputIndex: currentInputId, value: letter}))
