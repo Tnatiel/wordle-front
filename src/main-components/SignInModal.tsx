@@ -6,22 +6,21 @@ import { useState } from 'react';
 interface SignInModalProps {
   showSignIn: boolean, 
   closeSignInModal: () => void, 
-  handleSubmit: () =>void, 
+  handleSubmit:   () => Promise<UserDetails | "Email and password required" | "Incorrect password or email" | "Error occurred" | undefined>, 
   formRef: React.RefObject<HTMLFormElement> ,
-  // updateUser?: React.Dispatch<React.SetStateAction<UserDetails | undefined>>
+  errorMessage?: string,
 }
 
 
-const SignInModal =({  showSignIn, closeSignInModal, handleSubmit, formRef }: SignInModalProps) => {
+const SignInModal =({ errorMessage,  showSignIn, closeSignInModal, handleSubmit, formRef }: SignInModalProps) => {
 
-  const [errorMessage, setErrorMessage] = useState('');
 
-  // const handleError = () => {
-  //   const gotUser = handleSubmit()
-  //   if (!gotUser) {
-  //     setErrorMessage('Incorrect username or password');
+  // const handleError =  async () => {
+  //   const gotUser =  await handleSubmit()
+  //   console.log('sign in modal got user', gotUser)
+  //   if (typeof(gotUser) === 'string') {
+  //     setErrorMessage(gotUser);
   //   } else {
-  //     // successful sign in, reset error message
   //     setErrorMessage('');
   //   }
   // }

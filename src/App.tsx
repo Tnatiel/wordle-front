@@ -14,24 +14,20 @@ import { UserDetails, validateUserDetails } from 'wordle-components/wordle-logic
 ;
 function App() {
 
+  
+  
+  const [userDetails, setUserDetails] = useState<UserDetails | undefined>();
+  const [logout, setLogout] = useState(false);
+  const { errorMessage, formRef, handleSignIn, handleSignInClose, handleSignInShow, showSignIn } = useSignIn(setLogout);
+  const {handleSignUpClose, handleSignUpShow, showSignUp, signUpRef, addAndCloseModal } = useUserDb();
   useEffect(() => {
     localStorage.clear()
   }, [])
 
-  
-  const [userDetails, setUserDetails] = useState<UserDetails | undefined>();
-  const [logout, setLogout] = useState(false);
-  const { formRef, handleSignIn, handleSignInClose, handleSignInShow, showSignIn } = useSignIn(setUserDetails);
-  const {handleSignUpClose, handleSignUpShow, showSignUp, signUpRef, addAndCloseModal } = useUserDb();
-  // const handleSignUpUser = () => {
-  //   const newUser = addAndCloseModal();
-  //   setUserDetails(newUser);
-  //   console.log(newUser)
-  // }
-  
   const logoutUser = () => {
     localStorage.clear();
-    setLogout(true)
+    setLogout(false)
+    console.log(logout)
   }
  
   const [showInsructions, setShowInstructions] = useState(false);
@@ -40,6 +36,7 @@ function App() {
 
   const userName = localStorage.getItem('name') !== null ?
     localStorage.getItem('name') : 'Guest';
+
   
   return (
     <>
@@ -48,6 +45,7 @@ function App() {
         openInstructionsModal={handleInstructionsShow}
         handleLogout={logoutUser}
         openSignUpModal={handleSignUpShow}
+        showLogout={logout}
       />
       <InstructionsModal 
         showInstructions={showInsructions} 
@@ -58,12 +56,15 @@ function App() {
         closeSignInModal={handleSignInClose}
         handleSubmit={handleSignIn}
         formRef={formRef}
+        errorMessage={errorMessage}
       />
       <SignUpModal 
         closeSignUpModal={handleSignUpClose}
         signUpRef={signUpRef}
         handleSubmit={addAndCloseModal}
         showSignUp={showSignUp}
+        
+        
       />
       <Routes>
         <Route path='*'  element={<HomePage user={userName as string} />  } />
