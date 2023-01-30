@@ -6,7 +6,6 @@ import keyboardReducer from '../features/KeyboardState';
 import dialogReducer from '../features/DialogState';
 
 
-
 export const store = configureStore( {
     reducer: { 
         lettersBank: letterReducer,

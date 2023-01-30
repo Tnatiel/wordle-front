@@ -9,7 +9,7 @@ import { moveBackInput, updateNextRow, removeLastInputLetter, addInputLetter, mo
 import {  addLetterToGuess, removeLastGussedLetter, resetGuess,  } from "../redux/features/LettersBankState"; 
 import {  addInputClasses, addKeyboardButtonsClasses,findInputObjById, filterGuessToStatusBank, deleteLetter } from "../wordle-components/wordle-logic";
 import { useEffect, useState } from "react";
-import { setWin, setWordData } from "redux/features/GameState";
+import {  setWin, setWordData } from "redux/features/GameState";
 import { setLoseDialog, setWinDialog } from "redux/features/DialogState";
 
 
@@ -19,6 +19,7 @@ export function WordleApp() {
     const [correctBank, setCorrectBank] = useState<string[]>([]);
     const [presentBank, setPresentBank] = useState<string[]>([]);
     const [wrongBank, setWrongBank] = useState<string[]>([]);
+    const [gameOver, setGameOver] = useState(false)
     const wordData = useAppSelector(state => state.game.wordData);
     const gotWord = useAppSelector(state => state.game.wordFetched);
     const dispatch = useAppDispatch();
@@ -41,7 +42,7 @@ export function WordleApp() {
     const currentGuess = useAppSelector(state => state.lettersBank.currentGuess);
     const currentRow = useAppSelector(state => state.inputs.currentRowIndex);
     const currentInputId = useAppSelector(state => state.inputs.currentInputId);
-    const inputRows = useAppSelector(state => state.inputs.rows)
+    const inputRows = useAppSelector(state => state.inputs.rows);
 
     useEffect(() => {
         const handleCheck =  () => {
@@ -83,6 +84,9 @@ export function WordleApp() {
     }
     
     const addGuessLetter = async (letter: string) => {
+        console.log('gameOver', gameOver)
+
+        if (gameOver) return
         
         if (letter === 'Del') {
             deleteLetter(dispatch, inputRows, currentInputId, currentRow);
@@ -95,7 +99,10 @@ export function WordleApp() {
             if (wordData.correct) {
                 dispatch(setWin(true))
                 dispatch(setWinDialog(true))
-            } else if (currentRow > 4) dispatch(setLoseDialog(true))
+            } else if (currentRow > 4) {
+                dispatch(setLoseDialog(true))
+                setGameOver(true)
+            }
             
             
             addInputClasses(dispatch, currentInputId, classes);

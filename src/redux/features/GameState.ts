@@ -6,6 +6,7 @@ const initialState: GameState = {
     wordData: {content: '', iv: '', key: ''},
     win: false,
     wordFetched: false,
+    
 };
 
 

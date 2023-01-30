@@ -18,15 +18,12 @@ interface NavBarProps {
 
 function NavBar({ showLogout, openSignUpModal, openInstructionsModal, openSignInModal, handleLogout }:NavBarProps) {
 
-  
   let navigate = useNavigate();
 
   const showHome = () => {
     navigate('/')
   }
 
-  
-  
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>

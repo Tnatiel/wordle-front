@@ -2,14 +2,11 @@ import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { GuessedLetters } from '../redux-types';
 
 
-
  const initialState: GuessedLetters = {
 
     currentGuess: [],
     currentGuessClasses: [],
-
 }
-
 
 const lettersSlice = createSlice({
     name: 'lettersBank',

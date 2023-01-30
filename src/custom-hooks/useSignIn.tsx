@@ -4,52 +4,23 @@ import { UserDetails } from 'wordle-components/wordle-logic';
 
 export const useSignIn = (setLogout: React.Dispatch<React.SetStateAction<boolean>>) => {
 
-    const formRef = useRef<HTMLFormElement>(null)
-    const [errorMessage, setErrorMessage] = useState('');
-
-    // const handleSignIn = () => {
-    //     if (formRef.current) {
-    //       const userData  = new FormData(formRef.current);
-    //       const valuesObj = Array.from(userData.entries())
-    //       .reduce((acc, [key, value]) => ({...acc, [key]: value}), {} as UserDetails);
-    //       console.log('valuesObj: ', valuesObj)
-    //       if(!valuesObj.email.length || ! valuesObj.password.length) {
-    //         // setErrorMessage('Email and password required');
-    //         return 'Email and password required'
-    //       }
-          
-    //       validateUser(valuesObj).then( user => {
-    //         console.log('validate fufiled res: ',user)
-    //         if (user) {
-              
-    //           console.log('user.fname: ', user.fname)
-    //           console.log('user: ', user)
-    //           console.log('user.token: ', user.user_token)
-    //           localStorage.setItem('name', user.fname);
-    //           localStorage.setItem('user_token', user.user_token as string);
-    //           setUserDetails(user);
-    //           handleSignInClose();
-    //           return user
-    //         } else {
-    //           return 'Incorrect password or email'
-    //         }
-
-    //       }).catch( e => {
-    //         console.log(e);
-            
-    //       })
-  
-    //   }
-    // }
+    const signInRef = useRef<HTMLFormElement>(null)
+    const [signUpErrorMessage, setSignUpErrorMessage] = useState('');
+    const [showSignIn, setShowSignIn] = useState(false);
+    const handleSignInClose = (): void => {
+      setShowSignIn(false); 
+      setSignUpErrorMessage('')
+    }
+    const handleSignInShow = (): void => setShowSignIn(true);
 
     const handleSignIn = async () => {
-      if (formRef.current) {
-        const userData  = new FormData(formRef.current);
+      if (signInRef.current) {
+        const userData  = new FormData(signInRef.current);
         const valuesObj = Array.from(userData.entries())
         .reduce((acc, [key, value]) => ({...acc, [key]: value}), {} as UserDetails);
         console.log('valuesObj: ', valuesObj)
         if(!valuesObj.email.length || ! valuesObj.password.length) {
-          setErrorMessage('Email and password required')
+          setSignUpErrorMessage('Email and password required')
           return
         }
         
@@ -60,15 +31,15 @@ export const useSignIn = (setLogout: React.Dispatch<React.SetStateAction<boolean
             localStorage.setItem('user_token', user.user_token as string);
             localStorage.setItem('new', 'false');
             handleSignInClose();
-            setErrorMessage('')
+            setSignUpErrorMessage('')
             setLogout(true)
             return user;
           } else {
-            setErrorMessage('Incorrect password or email')
+            setSignUpErrorMessage('Incorrect password or email')
           }
         } catch (e) {
           console.log(e);
-          setErrorMessage('Error occurred')
+          setSignUpErrorMessage('Error occurred')
         }
       }
   }
@@ -86,16 +57,5 @@ export const useSignIn = (setLogout: React.Dispatch<React.SetStateAction<boolean
       return data;
     }
 
-    const [showSignIn, setShowSignIn] = useState(false);
-    const handleSignInClose = (): void => {
-      setShowSignIn(false); 
-      setErrorMessage('')
-    }
-    const handleSignInShow = (): void => setShowSignIn(true);
-
-    const userName = localStorage.getItem('name') !== null ?
-    localStorage.getItem('name') : 'Guest';
-
-
-      return { errorMessage, userName,  handleSignIn, formRef, handleSignInShow, handleSignInClose, showSignIn }
+      return { signUpErrorMessage, handleSignIn,  signInRef, handleSignInShow, handleSignInClose, showSignIn }
 }

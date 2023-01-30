@@ -4,9 +4,6 @@ import { findInputObjById } from '../../wordle-components/wordle-logic';
 import { InputsState } from '../redux-types';
 
 
-
-
-
 export const createInputs = (ids: number[], rowNumber: number) => ids.map( id => ({id, value: '', className: '', rowNumber}));
 
 const row1 = createInputs([0, 1, 2, 3, 4], 0)

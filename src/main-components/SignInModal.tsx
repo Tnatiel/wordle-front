@@ -14,16 +14,6 @@ interface SignInModalProps {
 
 const SignInModal =({ errorMessage,  showSignIn, closeSignInModal, handleSubmit, formRef }: SignInModalProps) => {
 
-
-  // const handleError =  async () => {
-  //   const gotUser =  await handleSubmit()
-  //   console.log('sign in modal got user', gotUser)
-  //   if (typeof(gotUser) === 'string') {
-  //     setErrorMessage(gotUser);
-  //   } else {
-  //     setErrorMessage('');
-  //   }
-  // }
   return (
     <>
     

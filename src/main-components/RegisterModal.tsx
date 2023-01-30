@@ -1,31 +1,28 @@
-import { Sign } from 'crypto';
-import { FormEvent, useState } from 'react';
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { UserDetails, validateUserDetails } from 'wordle-components/wordle-logic';
 
 
 interface SignUpModalProps {
-    showSignUp: boolean, 
+    showRegister: boolean, 
     closeSignUpModal: () => void, 
-    handleSubmit: () => void 
-    signUpRef: React.RefObject<HTMLFormElement>
+    handleSubmit: () => void,
+    registerRef: React.RefObject<HTMLFormElement>,
+    errorMessage?: string,
+
     
   }
   
 
 
-const SignUpModal =({ signUpRef, showSignUp, closeSignUpModal, handleSubmit }: SignUpModalProps) => {
+const RegisterModal =({ errorMessage, registerRef, showRegister, closeSignUpModal, handleSubmit }: SignUpModalProps) => {
 
-
-
-        
     return (
       <>
       
           <Modal
-              show={showSignUp}
+              show={showRegister}
               onHide={closeSignUpModal}
               backdrop="static"
               keyboard={true}
@@ -36,7 +33,7 @@ const SignUpModal =({ signUpRef, showSignUp, closeSignUpModal, handleSubmit }: S
           </Modal.Header>
           <Modal.Body>
   
-              <Form ref={signUpRef} >
+              <Form ref={registerRef} >
 
                 <Form.Group  className="mb-3" controlId="formBasicFName">
                     <Form.Label>First Name</Form.Label>
@@ -67,6 +64,7 @@ const SignUpModal =({ signUpRef, showSignUp, closeSignUpModal, handleSubmit }: S
                           We'll never share your password with anyone else.
                       </Form.Text>
                    </Form.Group>
+                   {errorMessage && <Form.Text className="text-danger">{errorMessage}</Form.Text>}
               </Form>
   
           </Modal.Body>
@@ -83,4 +81,4 @@ const SignUpModal =({ signUpRef, showSignUp, closeSignUpModal, handleSubmit }: S
     );
   }
   
-  export default SignUpModal;
+  export default RegisterModal;

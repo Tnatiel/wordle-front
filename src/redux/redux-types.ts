@@ -8,7 +8,7 @@ export interface WordHash {
 export interface GameState {
     wordData: WordHash,
     win: boolean,
-    wordFetched: boolean
+    wordFetched: boolean,
     
 };
 
