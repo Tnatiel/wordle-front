@@ -13,8 +13,6 @@ import useUserDb from 'custom-hooks/useRegister';
   
 function App() {
 
-  
-
   const [logout, setLogout] = useState(false);
   const { signUpErrorMessage, signInRef, handleSignIn, handleSignInClose, handleSignInShow, showSignIn } = useSignIn(setLogout);
   const { registerErrorMessage, handleSignUpClose, handleRegisterShow, showRegister, registerRef, handleRegister } = useUserDb(setLogout);

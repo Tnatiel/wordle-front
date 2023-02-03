@@ -36,12 +36,13 @@ export function WordleApp() {
     const inputsRefs = useInputRef();
     const keyboardRefs = useKeyboardRefs();
     const allRefs = {inputs: inputsRefs, keyboard: keyboardRefs};
-    const isGameWon = useAppSelector(state => state.dialog.winDialog);
-    const isGameLost = useAppSelector(state => state.dialog.loseDialog);
+    const showWonDialog = useAppSelector(state => state.dialog.winDialog);
+    const showLoseDialog = useAppSelector(state => state.dialog.loseDialog);
     const currentGuess = useAppSelector(state => state.lettersBank.currentGuess);
     const currentRow = useAppSelector(state => state.inputs.currentRowIndex);
     const currentInputId = useAppSelector(state => state.inputs.currentInputId);
     const inputRows = useAppSelector(state => state.inputs.rows);
+    const isGameOver = useAppSelector(state => state.game.win)
 
     useEffect(() => {
         const handleCheck =  () => {
@@ -83,8 +84,7 @@ export function WordleApp() {
     }
     
     const addGuessLetter = async (letter: string) => {
-        
-        
+        if (isGameOver) return
         if (letter === 'Del') {
             deleteLetter(dispatch, inputRows, currentInputId, currentRow);
             return;
@@ -121,7 +121,7 @@ export function WordleApp() {
             <Header />
             <InputBoard handleInput={addGuessLetter} refs={allRefs}/>
             <Keyboard handleInput={addGuessLetter} refs={allRefs}/>
-            <GameDialog isWon={isGameWon} isLost={isGameLost} />
+            <GameDialog isWon={showWonDialog} isLost={showLoseDialog} />
         </main>
     )
 }
