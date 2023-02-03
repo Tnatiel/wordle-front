@@ -2,7 +2,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { UserDetails } from 'wordle-components/wordle-logic';
-import { useState } from 'react';
+
+
 interface SignInModalProps {
   showSignIn: boolean, 
   closeSignInModal: () => void, 

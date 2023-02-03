@@ -65,4 +65,4 @@ describe('App', () => {
             cy.get('div[cy-data="inst-modal"]').should('exist');
         });
     });
-});
+})
