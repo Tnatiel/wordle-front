@@ -1,7 +1,7 @@
 // ******************************MINIXS**************************
-@mixin header {
-    font-family: 'Stardos Stencil', cursive;
-    font-size: 13vh;
+@mixin wordle-header-def {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 10vh;
     font-weight: 500;
     color: $font-color;
 }

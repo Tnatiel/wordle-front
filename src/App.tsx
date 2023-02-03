@@ -1,5 +1,5 @@
 
-import {useState, useRef, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import {InstructionsModal} from './main-components/InstructionsModal'
 import './styles/App.scss';
 import NavBar from './main-components/NavBar';
@@ -7,24 +7,55 @@ import SignInModal from './main-components/SignInModal';
 import { Route, Routes } from 'react-router-dom';
 import { WordleApp } from './pages/WordleApp';
 import { HomePage } from './pages/HomePage';
-import { useGreet } from './custom-hooks/useGreet';
+import { useSignIn } from './custom-hooks/useSignIn';
+import RegisterModal from 'main-components/RegisterModal';
+import useUserDb from 'custom-hooks/useRegister';
+
 function App() {
 
-  useEffect(() => {
-    localStorage.clear()
-  })
   
-  const { greet, formRef, getUserData } = useGreet()
+
+  const [logout, setLogout] = useState(false);
+  const { signUpErrorMessage, signInRef, handleSignIn, handleSignInClose, handleSignInShow, showSignIn } = useSignIn(setLogout);
+  const { registerErrorMessage, handleSignUpClose, handleRegisterShow, showRegister, registerRef, handleRegister } = useUserDb(setLogout);
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", () => {
+      localStorage.clear();
+    });
+    return () => {
+      window.removeEventListener("beforeunload", () => {
+        localStorage.clear();
+      });
+    };
+  }, []);
+
+
+  const logoutUser = () => {
+    localStorage.clear();
+    setLogout(false)
+  }
+ 
   const [showInsructions, setShowInstructions] = useState(false);
   const handleInstructionsClose = (): void => setShowInstructions(false);
   const handleInstructionsShow = (): void => setShowInstructions(true);
 
-  const [showSignIn, setShowSignIn] = useState(false);
-  const handleSignInClose = (): void => setShowSignIn(false);
-  const handleSignInShow = (): void => setShowSignIn(true);
+  const homeGreet = localStorage.getItem('name') !== null 
+  ? localStorage.getItem('new') === 'true' 
+  ? `Welcome ${localStorage.getItem('name')}!`
+  : `Welcome Back ${localStorage.getItem('name')}!` : 'Welcome Guest';
+
+  
   return (
     <>
-      <NavBar openSignInModal={handleSignInShow} openInstructionsModal={handleInstructionsShow}/>
+      <NavBar 
+        openSignInModal={handleSignInShow} 
+        openInstructionsModal={handleInstructionsShow}
+        handleLogout={logoutUser}
+        openRegisterModal={handleRegisterShow}
+        showLogout={logout}
+        
+      />
       <InstructionsModal 
         showInstructions={showInsructions} 
         closeModal={handleInstructionsClose}
@@ -32,11 +63,21 @@ function App() {
       <SignInModal 
         showSignIn={showSignIn} 
         closeSignInModal={handleSignInClose}
-        handleSubmit={getUserData}
-        formRef={formRef}
+        handleSubmit={handleSignIn}
+        formRef={signInRef}
+        errorMessage={signUpErrorMessage}
+      />
+      <RegisterModal 
+        closeSignUpModal={handleSignUpClose}
+        registerRef={registerRef}
+        handleSubmit={handleRegister}
+        showRegister={showRegister}
+        errorMessage={registerErrorMessage}
+        
+        
       />
       <Routes>
-        <Route path='*'  element={<HomePage user={greet} />  } />
+        <Route path='*'  element={<HomePage greet={homeGreet as string} />  } />
         <Route path='wordle'  element={<WordleApp />}  />
       </Routes>
     </>

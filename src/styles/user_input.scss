@@ -14,6 +14,7 @@
     text-transform:uppercase;
     cursor: default;
     font-family: 'Josefin Slab', serif;
+    // font-family:  'IBM Plex Serif', serif;
 
     &:focus { 
         outline: none;
@@ -32,13 +33,17 @@
 
 @mixin input-sec-def {
     display: grid;
-    gap: 0.1vh;
-    
-    .ur-input {
-        @include ur-input-def()
-    }
 
-    .input-row {
-        @include rows-def()
-    }
+    .letter-animation {
+       
+        animation: bounce 0.3s ease-in;
+        // animation: zoomIn 0.3s ease-in;
+      }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+            100% { transform: translateY(0); }
+          }
+
 }

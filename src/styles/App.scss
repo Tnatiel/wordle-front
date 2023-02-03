@@ -1,8 +1,11 @@
 /* // ******************************IMPORTS************************** */
-@import './header.scss';
-@import './keyboard';
-@import './user_input';
+@import './wordle-header.scss';
+@import './keyboard.scss';
+@import './user_input.scss';
 @import './modal.scss';
+@import './home.scss';
+@import './navbar.scss';
+@import './wordle.scss';
 
 /* // ******************************VARIABLES************************** */
 $main-color: #0d1b2a;
@@ -21,7 +24,7 @@ $wrong-color: rgb(249 144 144 / 66%);
   }
 
 #wordle-header {
-    @include header
+    @include wordle-header-def;
 }
 
 body {
@@ -30,35 +33,40 @@ body {
     height: 100vh;
     overflow: hidden;
     background-color: $main-color;
-    background: url('../../../2491665.jpg');
 }
     
 
 main {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 2vh;
-    margin-top: 2vh;
+    @include wordle-def;
 }
 
 .user-input-sec {
-    @include input-sec-def
+    @include input-sec-def;
+    @include letter-check;
 }
-.keyboard {
-    @include keyboard-def
+.ur-input {
+    @include ur-input-def;
+
+}
+.input-row {
+    @include rows-def;
 }
 
+.keyboard {
+    @include keyboard-def;
+    @include letter-check;
+}
+.kbd-btn {
+    @include btn-def()
+
+}
+#Enter, #Del {
+    width: 4rem;
+}
 
 
 .navbar {
-    padding-left:  1rem;
-    padding-right:  1rem;
-    width:  75vw;
-    
-    .info {
-        justify-self: flex-end;
-    }
+    @include navbar-def;
 }
 
 
@@ -69,11 +77,8 @@ main {
 
     
 .home {
-    // background: url('../../../2491665.jpg');
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+    @include home-def;
 }
+
 
 
