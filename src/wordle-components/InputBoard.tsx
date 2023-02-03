@@ -40,16 +40,6 @@ export const InputBoard = ({refs, handleInput}: BoardsProps) => {
         }
     }, [currentInputId, refs.inputs])
 
-    // return (
-    //     <div className="user-input-sec">
-    //         <InputRow handleInput={handleInput} refs={refs} rowIndex={0} />
-    //         <InputRow handleInput={handleInput} refs={refs} rowIndex={1} />
-    //         <InputRow handleInput={handleInput} refs={refs} rowIndex={2} />
-    //         <InputRow handleInput={handleInput} refs={refs} rowIndex={3} />
-    //         <InputRow handleInput={handleInput} refs={refs} rowIndex={4} />
-    //         <InputRow handleInput={handleInput} refs={refs} rowIndex={5} />
-    //     </div>
-    // )
     return (
         <div className="user-input-sec">
             {[0, 1, 2, 3, 4, 5].map( rowIndex => 
