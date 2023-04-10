@@ -26,7 +26,7 @@ function NavBar({ showLogout, openRegisterModal, openInstructionsModal, openSign
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand><Link cy-data="wordle-btn" className="navbar-brand" to='wordle'>Wordle</Link></Navbar.Brand>
+        <Button  variant='dark'><Link cy-data="wordle-btn" className="navbar-brand" to='wordle'>Wordle</Link></Button>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
