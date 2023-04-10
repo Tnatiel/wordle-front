@@ -27,7 +27,6 @@ function NavBar({ showLogout, openRegisterModal, openInstructionsModal, openSign
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      {/* <Container> */}
         <Navbar.Brand><Link cy-data="wordle-btn" className="navbar-brand" to='wordle'>Wordle</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -57,7 +56,6 @@ function NavBar({ showLogout, openRegisterModal, openInstructionsModal, openSign
             </Button>
           </Nav>
         </Navbar.Collapse>
-      {/* </Container> */}
     </Navbar>
   );
 }
