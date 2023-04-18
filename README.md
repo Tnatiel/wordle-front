@@ -1,4 +1,7 @@
-# Wordle Frontend - A Typescript Game
+
+# Wordle Frontend - A Typescript Game <a href="https://github.com/Tnatiel/wordle-backend" target="_blank"><img src="https://img.shields.io/badge/Backend-Repo-blue?style=flat-square" alt="Backend Repo" />
+</a>
+
 
 ## Introduction
 
